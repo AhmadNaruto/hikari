@@ -302,15 +302,8 @@
     <string name="pref_show_navigation_mode">Érintési zónák átfedésének mutatása</string>
     <string name="ext_app_info">Alkalmazás információ</string>
     <string name="categorized_display_settings">Kategóriakénti beállítások rendezéshez</string>
-    <string name="theme_tako">Polip</string>
-    <string name="theme_strawberrydaiquiri">Eper koktél</string>
     <string name="relative_time_today">Ma</string>
     <string name="pref_dark_theme_pure_black">Teljesen fekete sötét mód</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Jin és Jang</string>
-    <string name="theme_tealturquoise">Cián-zöld és türkiz</string>
-    <string name="theme_midnightdusk">Éjfél szürkület</string>
-    <string name="theme_greenapple">Zöldalma</string>
     <string name="theme_monet">Dinamikus</string>
     <string name="pref_app_theme">Alkalmazás témája</string>
     <string name="pref_category_appearance">Kinézet</string>
@@ -507,7 +500,6 @@
     <string name="updated_version">Frissítve erre: v%1$s</string>
     <string name="pref_navigate_pan">Széles képek pásztázása</string>
     <string name="save_chapter_as_cbz">Mentés CBZ archívumkén</string>
-    <string name="theme_lavender">Levendula</string>
     <string name="pref_clear_webview_data">WebView adatok törlése</string>
     <string name="pref_dump_crash_logs_summary">Feljegyzi a hibát egy fájlba, hogy meg lehessen osztani a fejlesztővel</string>
     <string name="invalid_backup_file_missing_manga">A biztonsági mentés nem tartalmazza az elemeket.</string>
@@ -629,7 +621,6 @@
     <string name="download_ahead_info">Csak akkor működik, ha az aktuális és a következő fejezet már letöltött.</string>
     <string name="download_ahead">Letöltés előre</string>
     <string name="pref_reader_summary">Olvasó mód, kijelző, navigáció</string>
-    <string name="theme_tidalwave">Szökőár</string>
     <string name="action_not_now">Ne most</string>
     <string name="pref_downloads_summary">Automatikus letöltés, letöltés előre</string>
     <string name="pref_tracking_summary">Egyirányú haladás szinkronizálás, fejlesztett szinkronizálás</string>
@@ -768,7 +759,6 @@
     <string name="day_short">%d nap</string>
     <string name="hour_short">%d óra</string>
     <string name="action_sort_tracker_score">Nyilvántartási pont</string>
-    <string name="theme_nord">Nord</string>
     <string name="private_settings">Érzékeny beállítások megadása (Pl. szolgáltatások bejelentkezési tokenei)</string>
     <string name="pref_invalidate_download_cache">Letöltések újraindexelése</string>
     <string name="manga_interval_expected_update">Új fejezetek megjelenése %1$s múlva várható, frissítési időköz: %2$s.</string>
@@ -831,7 +821,6 @@
     <string name="ext_confirm_remove">Bővítmény eltávolítása?</string>
     <string name="pref_download_new_unread_chapters_only">Duplikált fejezetek letöltésének kihagyása</string>
     <string name="file_picker_uri_permission_unsupported">Nem sikerült megszerezni a mappához való állandó hozzáférést. Az alkalmazás váratlanul viselkedhet.</string>
-    <string name="theme_monochrome">Monokróm</string>
     <string name="confirm_tracker_update">Nyilvántartók frissítése a(z) %d. fejezetre?</string>
     <string name="tracked_privately">Privátan nyilvántartva</string>
     <string name="remove_private_extension_message">Tényleg el akarja távolítani a(z) \"%s\" bővítményt?</string>

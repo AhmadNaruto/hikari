@@ -123,12 +123,6 @@
     <string name="theme_light">បិទ</string>
     <string name="theme_dark">បើក</string>
     <string name="theme_monet">ឌីណាមិច</string>
-    <string name="theme_greenapple">ប៉ោមបៃតង</string>
-    <string name="theme_midnightdusk">មីដណាយdusk</string>
-    <string name="theme_strawberrydaiquiri">ស្ត្របឺរីដៃគីរី</string>
-    <string name="theme_tako">តាកូ</string>
-    <string name="theme_tealturquoise">បៃតងខ្ចី</string>
-    <string name="theme_yinyang">យីងនិងយ៉ាង</string>
     <string name="pref_dark_theme_pure_black">ខ្មៅដិត</string>
     <string name="pref_date_format">ទម្រង់ថ្ងៃខែ</string>
     <string name="pref_manage_notifications">កំណត់ការជូនដំណឹង</string>
@@ -150,7 +144,6 @@
     <string name="action_webview_refresh">រីហ្វ្រេស</string>
     <string name="pref_category_general">ទូទៅ</string>
     <string name="pref_app_theme">ពណ៌កម្មវិធី</string>
-    <string name="theme_yotsuba">យ៉ុតស្ស៊ូបា</string>
     <string name="hide_notification_content">លាក់ការជូនដំណឹង</string>
     <string name="secure_screen_summary">ការពារអេក្រង់លាក់contentរបស់កម្មវិធីនៅពេលswitchingកម្មីធីនិងប្លុកscreenshots</string>
     <string name="lock_never">មិនដែល</string>

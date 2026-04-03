@@ -492,12 +492,6 @@
     <string name="rotation_landscape">横向き</string>
     <string name="rotation_portrait">縦向き</string>
     <string name="pref_dark_theme_pure_black">真っ黒モード</string>
-    <string name="theme_yotsuba">四つ葉</string>
-    <string name="theme_yinyang">陰陽</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">ストロベリーダイキリ</string>
-    <string name="theme_midnightdusk">黄昏</string>
-    <string name="theme_greenapple">青りんご</string>
     <string name="pref_app_theme">アプリテーマ</string>
     <string name="action_start_downloading_now">ダウンロードを開始します</string>
     <string name="theme_monet">ダイナミック</string>
@@ -516,7 +510,6 @@
     <string name="action_track">追跡</string>
     <string name="pref_remove_exclude_categories">除外されるカテゴリー</string>
     <string name="pref_hide_threshold">メニューを自動非表示するスクロール量</string>
-    <string name="theme_tealturquoise">ティール &amp; ターコイズ</string>
     <string name="pref_category_appearance">外観</string>
     <string name="confirm_lock_change">認証を行って変更を確認してください</string>
     <string name="label_default">デフォルト</string>
@@ -594,7 +587,6 @@
     <string name="custom_cover">カスタム表紙</string>
     <string name="not_installed">未インストール</string>
     <string name="pref_app_language">アプリ言語</string>
-    <string name="theme_lavender">ラベンダー</string>
     <string name="description_placeholder">説明がありません</string>
     <string name="delete_category_confirmation">カテゴリー「%s」を削除しますか？</string>
     <string name="delete_category">カテゴリーを削除</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_unavailable_locked">アプリロックがONの時、ウィジェットは利用できません</string>
     <string name="update_already_running">アップデートはすでに進行中です</string>
     <string name="error_user_agent_string_blank">ユーザーエージェント文字列を入力してください</string>
-    <string name="theme_tidalwave">津波</string>
     <string name="download_ahead">事前ダウンロード</string>
     <string name="auto_download_while_reading">読書中に自動でダウンロード</string>
     <string name="download_ahead_info">現在のと次の章は既にダウンロード済みの場合のみ有効です。</string>
@@ -777,7 +768,6 @@
     <string name="onboarding_storage_help_info">古いバージョンからバージョンアップしたばかりで、選択に悩んでいますか？ストレージ ガイドにご参照ください。</string>
     <string name="information_empty_repos">リポジトリを設定していません。</string>
     <string name="label_add_repo_input">リポジトリURL</string>
-    <string name="theme_nord">Nord</string>
     <string name="pref_library_update_smart_update">スマート・アップデート</string>
     <string name="pref_webtoon_disable_zoom_out">ズームアウトを無効にする</string>
     <string name="action_add_anyway">追加</string>
@@ -848,8 +838,6 @@
     <string name="possible_duplicates_title">重複の可能性</string>
     <string name="label_donate">寄付する</string>
     <string name="label_auto">自動</string>
-    <string name="theme_catppuccin">キャットプッチン</string>
-    <string name="theme_monochrome">モノクロ</string>
     <string name="pref_display_images_description">マンガの描写で画像をレンダリングする</string>
     <string name="pref_hide_missing_chapter_indicators">欠落している章のインジケーターを非表示にする</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">レガシーデコーダーを長尺ストリップリーダーに使用する</string>

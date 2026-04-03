@@ -234,7 +234,6 @@
     <string name="pref_custom_brightness">Distira pertsonalizatua</string>
     <string name="filter_mode_multiply">Biderkatu</string>
     <string name="creating_backup_error">Babeskopia egiteak huts egin du</string>
-    <string name="theme_midnightdusk">Gauerdiko ilunabarra</string>
     <string name="ext_installed">Instalatuak</string>
     <string name="ext_app_info">Aplikazioaren informazioa</string>
     <string name="pref_page_transitions">Animatu orrialdeen trantsizioak</string>
@@ -401,7 +400,6 @@
     <string name="theme_dark">Piztu</string>
     <string name="pref_app_theme">Aplikazioaren gaia</string>
     <string name="theme_monet">Dinamikoa</string>
-    <string name="theme_greenapple">Sagar Berdea</string>
     <string name="pref_date_format">Dataren formatua</string>
     <string name="pref_manage_notifications">Kudeatu jakinarazpenak</string>
     <string name="pref_category_security">Segurtasuna</string>
@@ -488,11 +486,6 @@
     <string name="pref_category_tracking">Jarraipena</string>
     <string name="pref_category_advanced">Aurreratua</string>
     <string name="action_display_language_badge">Hizkuntza</string>
-    <string name="theme_strawberrydaiquiri">Marrubi Daiquiri-a</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_tealturquoise">Urdin-berdea eta turkesa</string>
-    <string name="theme_yinyang">Yin eta Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="pref_dark_theme_pure_black">Beltz hutseko modu iluna</string>
     <string name="ext_trust">Fidagarritzat jo</string>
     <string name="tapping_inverted_both">Biak</string>

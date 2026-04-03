@@ -497,13 +497,6 @@
     <string name="restrictions">বিধিনিষেধ: %s</string>
     <string name="relative_time_today">সম্প্রতি</string>
     <string name="pref_dark_theme_pure_black">খাঁটি কালো ডার্ক মোড</string>
-    <string name="theme_yotsuba">ইয়োৎসুবা</string>
-    <string name="theme_yinyang">ইয়িন এবং ইয়াং</string>
-    <string name="theme_tealturquoise">টিল এবং ফিরোজা</string>
-    <string name="theme_tako">টাকো</string>
-    <string name="theme_strawberrydaiquiri">স্ট্রবেরি ডাইকুইরি</string>
-    <string name="theme_midnightdusk">মধ্যরাতের সন্ধ্যা</string>
-    <string name="theme_greenapple">সবুজ আপেল</string>
     <string name="theme_monet">প্রগতিশীল</string>
     <string name="pref_app_theme">অ্যাপ থিম</string>
     <string name="pref_category_appearance">দৃশ্য</string>
@@ -555,7 +548,6 @@
     <string name="action_remove_everything">সবকিছু মুছে ফেলুন</string>
     <string name="action_show_manga">লেখা দেখান</string>
     <string name="delete_category">ক্যাটাগরি ডিলিট</string>
-    <string name="theme_lavender">ল্যাভেণ্ডার</string>
     <string name="action_search_hint">খুঁজুন…</string>
     <string name="action_display_cover_only_grid">শুধু প্রচ্ছদসহ গ্রিড</string>
     <string name="action_move_to_top_all_for_series">সিরিজ কে উপরে তুলুন</string>
@@ -644,7 +636,6 @@
     <string name="onboarding_permission_action_grant">অনুমতি দিন</string>
     <string name="onboarding_guides_new_user">%s‑এ নতুন? আমাদের শুরু হওয়ারগাইড পড়ে দেখুন।</string>
     <string name="onboarding_guides_returning_user">%s পুনরায় ইনস্টল করছেন?</string>
-    <string name="theme_tidalwave">টাইডাল ওয়েভ</string>
     <string name="pref_relative_format">আপেক্ষিক সময়চিহ্ন</string>
     <string name="pref_relative_format_summary">\"%1$s\" এর পরিবর্তে \"%2$s\"</string>
     <string name="pref_display_images_description">মাঙ্গা বিবরণে ছবি প্রদর্শন</string>
@@ -686,9 +677,6 @@
     <string name="pref_tracking_summary">ওয়ান-ওয়ে প্রগ্রেস সিঙ্ক, এনহ্যান্সড সিঙ্ক</string>
     <string name="pref_browse_summary">সোর্স, এক্সটেনশন, গ্লোবাল সার্চ</string>
     <string name="pref_advanced_summary">ক্র্যাশ লগ ডাম্প, ব্যাটারি অপ্টিমাইজেশন</string>
-    <string name="theme_catppuccin">ক্যাটপুচিন</string>
-    <string name="theme_monochrome">মনোক্রোম</string>
-    <string name="theme_nord">নর্ড</string>
     <string name="pref_disallow_non_ascii_filenames">নন‑ASCII ফাইলনেম নিষিদ্ধ</string>
     <string name="pref_disallow_non_ascii_filenames_details">কিছু স্টোরেজ মিডিয়া ইউনিকোড সমর্থন করে না। এই অপশন চালু করলে সোর্স এবং মাঙ্গা ফোল্ডারগুলো আপনাকে ম্যানুয়ালি নতুন নাম দিতে হবে। নন‑ASCII অক্ষরগুলোর পরিবর্তে ছোট হাতের UTF‑8 হেক্সাডেসিমাল কোড ব্যবহার করতে হবে। অধ্যায় ফাইলগুলো আলাদা করে নাম বদলানোর দরকার নেই।</string>
     <string name="ext_remove">সরান</string>

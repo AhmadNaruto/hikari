@@ -497,16 +497,11 @@
     <string name="restrictions">Ograniczenia: %s</string>
     <string name="about_dont_kill_my_app">Niektórzy producenci mają dodatkowe ograniczenia, które zabijają usługi działające w tle. Ta strona zawiera więcej informacji na ten temat.</string>
     <string name="action_start_downloading_now">Zacznij pobierać teraz</string>
-    <string name="theme_greenapple">Zielone jabłko</string>
     <string name="theme_monet">Dynamiczny</string>
     <string name="pref_app_theme">Motyw aplikacji</string>
     <string name="restore_miui_warning">Funkcje kopii zapasowej mogą nie działać, jeśli optymalizacja nakładki MIUI jest wyłączona.</string>
-    <string name="theme_yotsuba">Yotsuba •</string>
-    <string name="theme_yinyang">Yin i Yang</string>
     <string name="pref_dark_theme_pure_black">Czysty czarny motyw</string>
-    <string name="theme_strawberrydaiquiri">Truskawkowe daiquiri</string>
     <string name="pref_hide_threshold">Czułość ukrywania dolnego paska podczas przewijania</string>
-    <string name="theme_tako">Tako</string>
     <string name="label_background_activity">Aktywność w tle</string>
     <string name="action_track">Śledź</string>
     <string name="pref_category_appearance">Wygląd</string>
@@ -523,8 +518,6 @@
     <string name="pref_inverted_colors">Odwrócone</string>
     <string name="ext_app_info">Informacje o aplikacji</string>
     <string name="relative_time_today">Dzisiaj</string>
-    <string name="theme_tealturquoise">Błękitny &amp; Turkusowy</string>
-    <string name="theme_midnightdusk">Zmierzch północy</string>
     <string name="notification_size_warning">Ostrzeżenie: duże aktualizacje biblioteki mogą prowadzić do zwiększonego zużycia baterii oraz spowolnienia działania źródeł. Kliknij, by dowiedzieć się więcej.</string>
     <string name="ext_installer_shizuku_unavailable_dialog">Zainstaluj i uruchom Shizuku, aby używać go jako instalatora rozszerzeń.</string>
     <string name="ext_installer_pref">Instalator</string>
@@ -572,7 +565,6 @@
     <string name="ext_info_version">Wersja</string>
     <string name="cant_open_last_read_chapter">Nie można otworzyć ostatnio czytanego rozdziału</string>
     <string name="not_installed">Niezainstalowane</string>
-    <string name="theme_lavender">Lawenda</string>
     <string name="pref_app_language">Język aplikacji</string>
     <string name="disabled_nav">Nieaktywny</string>
     <string name="empty_backup_error">Brak pozycji w bibliotece do utworzenia kopii zapasowej</string>
@@ -608,7 +600,6 @@
     <string name="action_remove_everything">Usuń wszystko</string>
     <string name="error_user_agent_string_blank">Pole user agent nie może być puste</string>
     <string name="update_already_running">Aktualizacja już trwa</string>
-    <string name="theme_tidalwave">Tsunami</string>
     <string name="download_ahead">Pobierz z wyprzedzeniem</string>
     <string name="auto_download_while_reading">Pobieraj podczas czytania</string>
     <string name="appwidget_updates_description">Zobacz ostatnio zaktualizowane wpisy</string>
@@ -748,7 +739,6 @@
     <string name="pref_onboarding_guide">Szybka konfiguracja</string>
     <string name="onboarding_permission_ignore_battery_opts_description">Unikaj przerywania długich operacji takich jak pobieranie rozdziałów, aktualizacje bibliotek lub przywracanie kopii zapasowej.</string>
     <string name="onboarding_permission_notifications_description">Otrzymuj powiadomienia ze swojej biblioteki i więcej.</string>
-    <string name="theme_nord">Nord</string>
     <string name="pref_relative_format">Użyj dat względnych</string>
     <string name="pref_relative_format_summary">\"%1$s\" zamiast \"%2$s\"</string>
     <string name="pref_library_update_smart_update">Inteligentna aktualizacja</string>
@@ -832,7 +822,6 @@
     <string name="action_notes">Notatki</string>
     <string name="action_edit_notes">Edytuj notatki</string>
     <string name="action_webview_close_tab">Zamknij kartę</string>
-    <string name="theme_monochrome">Monochromatyczny</string>
     <string name="pref_display_images_description">Wyświetlaj obrazy w opisach mang</string>
     <string name="storage_failed_to_create_download_directory">Nie udało się utworzyć folderu pobierania</string>
     <string name="storage_failed_to_create_directory">Nie udało się utworzyć folderu: %s</string>

@@ -502,18 +502,11 @@
     <string name="pref_highest">Найвища</string>
     <string name="pref_hide_threshold">Чутливість приховування меню при прокручуванні</string>
     <string name="pref_dark_theme_pure_black">Чистий чорний темний режим</string>
-    <string name="theme_yotsuba">Йоцуба</string>
-    <string name="theme_yinyang">Інь та Янь</string>
-    <string name="theme_tako">Тако</string>
-    <string name="theme_strawberrydaiquiri">Полуничний Дайкірі</string>
-    <string name="theme_midnightdusk">Опівнічні Сутінки</string>
-    <string name="theme_greenapple">Зелене яблуко</string>
     <string name="theme_monet">Динамічна</string>
     <string name="pref_app_theme">Тема застосунку</string>
     <string name="action_start_downloading_now">Розпочати завантаження зараз</string>
     <string name="pref_inverted_colors">Інвертовано</string>
     <string name="relative_time_today">Сьогодні</string>
-    <string name="theme_tealturquoise">Бірюзова</string>
     <string name="confirm_lock_change">Виконайте автентифікацію, щоб підтвердити зміну</string>
     <string name="label_default">Типово</string>
     <string name="pref_category_appearance">Вигляд</string>
@@ -572,7 +565,6 @@
     <string name="action_sort_last_manga_update">Остання перевірка оновлень</string>
     <string name="action_sort_unread_count">Кількість непрочитаного</string>
     <string name="pref_reset_viewer_flags_summary">Скидує режим читання та орієнтацію всіх серій</string>
-    <string name="theme_lavender">Лаванда</string>
     <string name="description_placeholder">Без опису</string>
     <string name="pref_reset_viewer_flags">Скинути налаштування читалки для кожної серії</string>
     <string name="pref_reset_viewer_flags_success">Скидання всіх налаштувань</string>
@@ -610,7 +602,6 @@
     <string name="download_ahead">Завантажувати наперед</string>
     <string name="download_ahead_info">Працює, якщо поточний розділ + наступний вже завантажені.</string>
     <string name="remove_manga">Ви збираєтесь видалити \"%s\" з вашої бібліотеки</string>
-    <string name="theme_tidalwave">Приливна Хвиля</string>
     <string name="are_you_sure">Ви впевнені?</string>
     <string name="update_already_running">Оновлення вже розпочато</string>
     <string name="error_user_agent_string_blank">Рядок User agent не може бути пустим</string>
@@ -750,7 +741,6 @@
     <string name="onboarding_storage_help_info">Оновлюєтесь з попередньої версії і не впевнені яку обрати? Перегляньте гайд по сховищу для додаткової інформації.</string>
     <string name="onboarding_storage_help_action">Гайд по сховищу</string>
     <string name="manga_interval_custom_amount">Своя частота оновлення:</string>
-    <string name="theme_nord">Північ</string>
     <string name="invalid_repo_name">Недійсне посилання на репозиторій</string>
     <string name="delete_repo_confirmation">Бажаєте видалити репозиторій \"%s\"?</string>
     <string name="no_location_set">Не встановлено місце сховища</string>
@@ -804,7 +794,6 @@
     <string name="pref_download_new_unread_chapters_only">Пропустити завантаження копій прочитаних розділів</string>
     <string name="add_repo_confirmation">Дійсно додати репозиторій \"%s\"?</string>
     <string name="label_auto">Автоматичний</string>
-    <string name="theme_monochrome">Монохромний режим</string>
     <string name="pref_behavior">Поведінка</string>
     <string name="action_notes">Примітки</string>
     <string name="action_edit_notes">Редагувати примітки</string>

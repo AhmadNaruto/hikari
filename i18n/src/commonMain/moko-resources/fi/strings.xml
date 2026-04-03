@@ -489,17 +489,11 @@
     <string name="action_show_manga">Näytä manga</string>
     <string name="action_display_cover_only_grid">Kansikuva ruudukko</string>
     <string name="theme_monet">Dynaaminen</string>
-    <string name="theme_greenapple">Vihreä omena</string>
     <string name="label_default">Oletus</string>
     <string name="action_display_local_badge">Laitteelle tallennettu manga</string>
     <string name="action_sort_count">Yhteenlaskettu manga</string>
     <string name="action_start_downloading_now">Aloita lataaminen nyt</string>
-    <string name="theme_yinyang">Ying ja Yang</string>
-    <string name="theme_midnightdusk">Keskiyön hämärä</string>
-    <string name="theme_strawberrydaiquiri">Mansikka Daiquiri</string>
     <string name="pref_category_appearance">Ulkonäkö</string>
-    <string name="theme_tealturquoise">Sinivihreä ja turkoosi</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="pref_dark_theme_pure_black">Täysin musta pimeätila</string>
     <string name="pref_update_only_started">Ei lukemattomia lukuja</string>
     <string name="relative_time_today">Tänään</string>
@@ -509,7 +503,6 @@
     <string name="confirm_lock_change">Tunnistaudu vahvistaaksesi muutokset</string>
     <string name="action_display_language_badge">Kieli</string>
     <string name="action_move_to_top_all_for_series">Siirrä sarja päällimmäiseksi</string>
-    <string name="theme_tako">Tako</string>
     <string name="connected_to_wifi">Ainoastaan WiFillä</string>
     <string name="pref_inverted_colors">Käänteisväri</string>
     <string name="ext_app_info">Sovelluksen tiedot</string>
@@ -539,11 +532,9 @@
     <string name="pref_highest">Korkein</string>
     <string name="ext_info_language">Kieli</string>
     <string name="action_search_hint">Haku…</string>
-    <string name="theme_lavender">Laventeli</string>
     <string name="pref_app_language">Sovelluksen kieli</string>
     <string name="ext_info_version">Versio</string>
     <string name="action_close">Sulje</string>
-    <string name="theme_tidalwave">Vuorovesiaalto</string>
     <string name="pref_high">Korkea</string>
     <string name="download_ahead">Etukäteen lataus</string>
     <string name="auto_download_while_reading">Automaattinen lataus luetessa</string>
@@ -636,7 +627,6 @@
     <string name="pref_backup_summary">Manuaaliset ja automaattiset varmuuskopiot, tallennustila</string>
     <string name="pref_security_summary">Applikaation lukko, turvallinen ruutu</string>
     <string name="pref_advanced_summary">Kaatumislokien vedos, akun optimoinnit</string>
-    <string name="theme_nord">Pohjoismainen</string>
     <string name="pref_relative_format">Suhteelliset aikaleimat</string>
     <string name="pref_relative_format_summary">Käytä muotoa \"%1$s\", kuin muotoa \"%2$s\"</string>
     <string name="ext_permission_install_apps_warning">Laajennosten asentamiseen tarvitaan lupia. Napauta tästä myöntääksesi luvat.</string>

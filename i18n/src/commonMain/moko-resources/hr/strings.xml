@@ -493,17 +493,11 @@
     <string name="restrictions">Ograničenja: %s</string>
     <string name="action_start_downloading_now">Pokreni preuzimanje sada</string>
     <string name="about_dont_kill_my_app">Neki proizvođači imaju dodatna ograničenja za aplikaciju koja onemogućuju usluge u pozadini. Ova web-stranica sadrži daljnje informacije o tome kako to popraviti.</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_midnightdusk">Ponoćni sumrak</string>
-    <string name="theme_greenapple">Zelena jabuka</string>
     <string name="theme_monet">Dinamički</string>
     <string name="pref_app_theme">Tema aplikacije</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Jin i Jang</string>
     <string name="pref_inverted_colors">Invertirano</string>
     <string name="relative_time_today">Danas</string>
     <string name="pref_dark_theme_pure_black">Potpuno crna tamna tema</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri jagoda</string>
     <string name="pref_category_appearance">Izgled</string>
     <string name="getting_started_guide">Vodič za pokretanje</string>
     <string name="confirm_lock_change">Ovjeri za potvrditi promjenu</string>
@@ -520,7 +514,6 @@
     <string name="ext_app_info">Podaci aplikacije</string>
     <string name="connected_to_wifi">Samo putem Wi-Fi veze</string>
     <string name="download_queue_size_warning">Upozorenje: velika skupna preuzimanja mogu dovesti do usporavanja izvora i/ili blokiranja %s. Za daljnje informacije dodirni.</string>
-    <string name="theme_tealturquoise">Plavozelena i tirkiz</string>
     <string name="clear_database_source_item_count">Broj unosa u bazi odataka koje nisu u zbirci: %1$d</string>
     <string name="pref_verbose_logging">Opširno zapisivanje</string>
     <string name="pref_verbose_logging_summary">Ispiši opširan zapis u zapisnik sustava (smanjuje performanse aplikacije)</string>
@@ -584,7 +577,6 @@
     <string name="pref_app_language">Jezik aplikacije</string>
     <string name="action_close">Zatvori</string>
     <string name="action_remove_everything">Ukloni sve</string>
-    <string name="theme_lavender">Lavanda</string>
     <string name="ext_info_language">Jezik</string>
     <string name="ext_info_version">Verzija</string>
     <string name="popular">Popularni</string>
@@ -592,7 +584,6 @@
     <string name="download_ahead">Preuzmi unaprijed</string>
     <string name="multi_lang">Višejezičnost</string>
     <string name="missing_storage_permission">Dozvole za spremište nisu odobrena</string>
-    <string name="theme_tidalwave">Tsunami</string>
     <string name="invalid_location">Nevažeće mjesto: %s</string>
     <string name="pref_advanced_summary">Zapisnici iznenadnog gašenja aplikacije, optimizacije baterije</string>
     <string name="label_started">Započeto</string>
@@ -757,7 +748,6 @@
 \nPreporučujemo koristiti zasebnu mapu.
 \n
 \nOdabrana mapa: %2$s</string>
-    <string name="theme_nord">Nord</string>
     <string name="ext_permission_install_apps_warning">Za instaliranje proširenja su potrebne dozvole. Dodirni ovdje za odobrenje.</string>
     <string name="invalid_backup_file_error">Potpuna greška:</string>
     <string name="label_extension_repos">Repozitoriji proširenja</string>
@@ -829,8 +819,6 @@
     <string name="action_display_unread_badge">Nepročitana poglavlja</string>
     <string name="action_notes">Bilješke</string>
     <string name="action_edit_notes">Uredi bilješke</string>
-    <string name="theme_catppuccin">Catppuccin</string>
-    <string name="theme_monochrome">Jednobojno</string>
     <string name="storage_failed_to_create_download_directory">Stvaranje direktorija za preuzimanje nije uspjelo</string>
     <string name="storage_failed_to_create_directory">Stvaranje direktorija nije uspjelo: %s</string>
     <string name="export">Izvezi</string>

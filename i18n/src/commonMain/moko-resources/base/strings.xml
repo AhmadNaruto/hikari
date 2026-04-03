@@ -230,18 +230,6 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_monet">Dynamic</string>
-    <string name="theme_catppuccin">Catppuccin</string>
-    <string name="theme_greenapple">Green Apple</string>
-    <string name="theme_lavender">Lavender</string>
-    <string name="theme_midnightdusk">Midnight Dusk</string>
-    <string name="theme_monochrome">Monochrome</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_strawberrydaiquiri">Strawberry Daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_tealturquoise">Teal &amp; Turquoise</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_tidalwave">Tidal Wave</string>
     <string name="pref_dark_theme_pure_black">Pure black dark mode</string>
     <string name="pref_relative_format">Relative timestamps</string>
     <!-- "Today" instead of "2023-12-31" -->

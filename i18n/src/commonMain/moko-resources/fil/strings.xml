@@ -496,15 +496,9 @@
     <string name="restore_miui_warning">Maaaring hindi gumana nang maayos ang pag-backup/pag-restore kung nakasara ang MIUI optimization.</string>
     <string name="enhanced_tracking_info">Nagbibigay ng mga pinahusay na mga feature para sa ilang mga source. Awtomatikong tina-track ang mga entry kapag naidagdag ito sa iyong aklatan.</string>
     <string name="enhanced_services">Pinahusay na mga tracker</string>
-    <string name="theme_midnightdusk">Hatinggabi</string>
-    <string name="theme_greenapple">Berdeng Mansanas</string>
     <string name="theme_monet">Nagbabago</string>
     <string name="pref_app_theme">Tema</string>
     <string name="pref_dark_theme_pure_black">Purong itim</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin at Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Presas</string>
     <string name="label_background_activity">Aktibidad sa background</string>
     <string name="pref_lowest">Pinakamababa</string>
     <string name="pref_low">Mababa</string>
@@ -513,7 +507,6 @@
     <string name="pref_hide_threshold">Sensitivity para sa pagtatago ng menu sa scroll</string>
     <string name="pref_inverted_colors">Baligtad</string>
     <string name="relative_time_today">Ngayon</string>
-    <string name="theme_tealturquoise">Teal at Turquoise</string>
     <string name="pref_category_appearance">Hitsura</string>
     <string name="confirm_lock_change">Patotohanan para makumpirma ang pagbabago</string>
     <string name="label_default">Default</string>
@@ -594,7 +587,6 @@
     <string name="custom_cover">Custom na pabalat</string>
     <string name="not_installed">Di naka-install</string>
     <string name="pref_app_language">Wika ng app</string>
-    <string name="theme_lavender">Lila</string>
     <string name="description_placeholder">Walang paglalarawan</string>
     <string name="delete_category">Burahin ang kategorya</string>
     <string name="internal_error">InternalError: Tingnan ang mga crash log para sa karagdagang impormasyon</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_unavailable_locked">Di available ang widget kapag nakabukas ang lock</string>
     <string name="update_already_running">May ina-update sa ngayon</string>
     <string name="error_user_agent_string_blank">Hindi dapat blangko ang user agent string</string>
-    <string name="theme_tidalwave">Daluyong</string>
     <string name="download_ahead">I-download agad</string>
     <string name="auto_download_while_reading">Awtomatikong mag-download habang nagbabasa</string>
     <string name="download_ahead_info">Gumagana lamang sa kasalukuyang kabanata + ang susunod ay na-download na.</string>
@@ -775,7 +766,6 @@
     <string name="invalid_repo_name">Di-wastong URL ng repo</string>
     <string name="delete_repo_confirmation">Gusto mo bang tanggalin ang repo na \"%s\"?</string>
     <string name="manga_interval_custom_amount">Custom na frequency sa pag-update:</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_soon">Malapit na</string>
     <string name="ext_revoke_trust">Bawiin ang mga pinagkakatiwalaang hindi kilalang extension</string>
     <string name="action_open_repo">Open source na repo</string>
@@ -835,7 +825,6 @@
     <string name="action_toggle_private_on">Pribadong I-track</string>
     <string name="export">I-export</string>
     <string name="library_list">Listahan ng Aklatan</string>
-    <string name="theme_monochrome">Monokromatiko</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">Gamitin ang legacy decoder para sa long strip reader</string>
     <string name="pref_mark_duplicate_read_chapter_read">Markahan ang duplikadong nabasang kabanata bilang nabasa na</string>
     <string name="action_display_unread_badge">Di nabasang kabanata</string>
@@ -901,7 +890,6 @@
     <string name="pref_download_concurrent_pages">Kasabay na pag-download ng pahina</string>
     <string name="pref_download_concurrent_pages_summary">Mga pahina na nai-download nang sabay-sabay kada source</string>
     <string name="action_webview_close_tab">Isara ang tab</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="migrationConfigScreen.availableHeader">Maaaring Magamit</string>
     <string name="action_filter_excluded_scanlators">I-filter ang na-ibukod na mga scanlator</string>
     <string name="download_bookmarked">Na-bookmark</string>

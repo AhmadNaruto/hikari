@@ -268,8 +268,6 @@
     <string name="pref_category_library_update">ကမ္ဘာလုံးဆိုင်ရာ အပ်ဒိတ်</string>
     <string name="pref_library_update_schedule">အပ်ဒိတ် အချိန်ဇယား</string>
     <string name="update_schedule_none">အချိန်မရွေးချယ်ရသေးပါ</string>
-    <string name="theme_greenapple">နီစိမ်းရောင်</string>
-    <string name="theme_lavender">ခရမ်းနုရောင်</string>
     <string name="pref_relative_format">အနီးစပ်ဆုံး အချိန်အမှတ်အသား</string>
     <string name="pref_relative_format_summary">\"%2$s\" မဟုတ်ဘဲ \"%1$s\" ဟုပြရန်</string>
     <string name="pref_library_update_refresh_metadata">metadataကို အလိုလျောက် ပြန်လည်ဆန်းသစ်ပေးပါ။</string>

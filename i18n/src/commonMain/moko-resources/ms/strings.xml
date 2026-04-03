@@ -493,18 +493,12 @@
     <string name="information_empty_category_dialog">Anda belum mempunyai kategori.</string>
     <string name="action_start_downloading_now">Mula memuat turun sekarang</string>
     <string name="pref_dark_theme_pure_black">Mod gelap hitam asli</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_midnightdusk">Tengah malam senja</string>
-    <string name="theme_greenapple">Epal Hijau</string>
     <string name="theme_monet">Dinamik</string>
     <string name="pref_app_theme">Tema aplikasi</string>
     <string name="enhanced_tracking_info">Perkidmatan yang menyediakan fungsi yang dipertingkatkan untuk sumber tertentu. Entri akan dijejaki secara automatik apabila ditambahkan ke pustaka.</string>
     <string name="restore_miui_warning">Sandaran/memulih mungkin tidak berfungsi dengan betul jika pengoptimuman MIUI dinyahaktifkan.</string>
     <string name="about_dont_kill_my_app">Sesetengah pengeluar ada sekatan tambahan pada aplikasi yang akan menghentikan perkidmatan latar belakang. Laman web ini ada maklumat cara membaikinya.</string>
     <string name="enhanced_services">Pertingkat penjejak</string>
-    <string name="theme_strawberrydaiquiri">Strawberry Daiquiri</string>
     <string name="pref_lowest">Terendah</string>
     <string name="pref_low">Rendah</string>
     <string name="pref_high">Tinggi</string>
@@ -513,7 +507,6 @@
     <string name="label_background_activity">Aktiviti latar belakang</string>
     <string name="pref_inverted_colors">Songsang</string>
     <string name="relative_time_today">Hari ini</string>
-    <string name="theme_tealturquoise">Teal &amp; Turquoise</string>
     <string name="confirm_lock_change">Sahkan untuk mengesahkan perubahan</string>
     <string name="label_default">Lalai</string>
     <string name="pref_category_appearance">Tampilan</string>
@@ -594,7 +587,6 @@
     <string name="custom_cover">Muka hadapan tersuai</string>
     <string name="not_installed">Tidak dipasang</string>
     <string name="pref_app_language">Bahasa aplikasi</string>
-    <string name="theme_lavender">Lavender</string>
     <string name="description_placeholder">Tiada deskripsi</string>
     <string name="delete_category_confirmation">Adakah anda ingin padam kategori \"%s\"?</string>
     <string name="internal_error">RalatDalam: semak log kerosakan untuk maklumat lanjut</string>
@@ -607,7 +599,6 @@
     <string name="update_already_running">Kemas kini sedang berjalan</string>
     <string name="error_user_agent_string_blank">Untaian ejen pengguna tidak boleh kosong</string>
     <string name="auto_download_while_reading">Muat turun automatik semasa membaca</string>
-    <string name="theme_tidalwave">Tidal Wave</string>
     <string name="download_ahead">Muat turun maju</string>
     <string name="download_ahead_info">Hanya berguna sekiranya bab sekarang + seterusnya telah dimuat turun.</string>
     <string name="are_you_sure">Adakah anda pasti?</string>
@@ -710,7 +701,6 @@
     <string name="unlock_app_title">Buka kunci %s</string>
     <string name="pref_library_update_smart_update">Kemaskini pintar</string>
     <string name="action_move_to_bottom_all_for_series">Gerak siri ke bawah</string>
-    <string name="theme_nord">Nord</string>
     <string name="action_apply">Gunakan</string>
     <string name="action_revert_to_default">Kembali ke lalai</string>
     <string name="not_selected">Tidak dipilih</string>
@@ -797,10 +787,8 @@
     <string name="onboarding_permission_crashlytics_description">Hantar log kemalangan tanpa nama kepada pemaju.</string>
     <string name="onboarding_permission_analytics">Benarkan analisis</string>
     <string name="onboarding_permission_analytics_description">Hantar data penggunaan tanpa nama untuk meningkatkan ciri aplikasi.</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="action_add_anyway">Tambah sahaja</string>
     <string name="pref_display_profile">Paparan profil tersuai</string>
-    <string name="theme_monochrome">Monokrom</string>
     <string name="pref_display_images_description">Memaparkan imej dalam huraian manga</string>
     <string name="pref_security">cagaran</string>
     <string name="pref_firebase">Analitis dan Log Ranap</string>

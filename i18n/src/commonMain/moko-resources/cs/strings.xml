@@ -496,12 +496,6 @@
     <string name="enhanced_services">Vylepšené sledovače</string>
     <string name="tracking_guide">Návod ke sledování</string>
     <string name="pref_dark_theme_pure_black">Čistě černý tmavý režim</string>
-    <string name="theme_yotsuba">Jotsuba</string>
-    <string name="theme_yinyang">Jin a Jang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Jahodové Daiquiri</string>
-    <string name="theme_midnightdusk">Půlnoční Soumrak</string>
-    <string name="theme_greenapple">Zelené Jablko</string>
     <string name="theme_monet">Dynamické</string>
     <string name="pref_app_theme">Motiv aplikace</string>
     <string name="label_background_activity">Činnost na pozadí</string>
@@ -514,7 +508,6 @@
     <string name="pref_tablet_ui_mode">Uživatelské rozhraní tabletu</string>
     <string name="action_track">Sledovat</string>
     <string name="relative_time_today">Dnes</string>
-    <string name="theme_tealturquoise">Modrozelená a Tyrkysová</string>
     <string name="pref_category_appearance">Vzhled</string>
     <string name="confirm_lock_change">Potvrďte změnu ověřením</string>
     <string name="label_default">Výchozí</string>
@@ -595,7 +588,6 @@
     <string name="not_installed">Nenainstalováno</string>
     <string name="pref_app_language">Jazyk aplikace</string>
     <string name="description_placeholder">Bez popisu</string>
-    <string name="theme_lavender">Levandule</string>
     <string name="delete_category_confirmation">Přejete si smazat kategorii \"%s\"?</string>
     <string name="delete_category">Smazat kategorii</string>
     <string name="internal_error">InternalError: Zkontrolujte záznamy pádu pro další informace</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_updates_description">Podívejte se na své nedávno aktualizované záznamy v knihovně</string>
     <string name="update_already_running">Aktualizace již probíhá</string>
     <string name="error_user_agent_string_blank">Řetězec uživatelského agenta nemůže být prázdný</string>
-    <string name="theme_tidalwave">Přílivová Vlna</string>
     <string name="download_ahead">Stáhování dopředu</string>
     <string name="auto_download_while_reading">Automatické stahování při čtení</string>
     <string name="download_ahead_info">Funguje pouze v případě, že aktuální kapitola + následující kapitola jsou již staženy.</string>
@@ -773,7 +764,6 @@
     <string name="label_add_repo_input">URL repozitáře</string>
     <string name="information_empty_repos">Nemáte nastaveny žádné repozitáře.</string>
     <string name="onboarding_storage_help_action">Průvodce uložištěm</string>
-    <string name="theme_nord">Nord</string>
     <string name="action_add_repo">Přidat repozitář</string>
     <string name="ext_revoke_trust">Zrušit důvěryhodná neznámá rozšíření</string>
     <string name="action_open_repo">Open source repozitář</string>
@@ -828,7 +818,6 @@
     <string name="upcoming_guide">Návod k nadcházejícím kapitolám</string>
     <string name="label_auto">Automaticky</string>
     <string name="pref_mark_duplicate_read_chapter_read">Označit duplicitní přečtenou kapitolu jako přečtenou</string>
-    <string name="theme_monochrome">Černobílý</string>
     <string name="author">Autor</string>
     <string name="artist">Umělec</string>
     <string name="tracked_privately">Sledováno soukromě</string>
@@ -855,7 +844,6 @@
     <string name="clear_database_text">Chystáte se odstranit položky z databáze</string>
     <string name="clear_db_exclude_read">Ponechat položky s přečtenými kapitolami</string>
     <string name="label_donate">Přispěj</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="pref_hide_missing_chapter_indicators">Skrýt indikátory chybějících kapitol</string>
     <string name="pref_disallow_non_ascii_filenames">Nepovolovat soubory s non-ASCII znaky</string>
     <string name="pref_disallow_non_ascii_filenames_details">Zajišťuje kompatibilitu s určitými úložnými médii, která nepodporují Unicode. Pokud je tato funkce povolena, budete muset ručně přejmenovat názvy složkek source a manga tak, že nahradíte non-ASCII znaky jejich malými hexadecimálními znaky v UTF-8. Názvy souborů kapitol není nutné přejmenovávat.</string>

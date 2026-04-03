@@ -248,16 +248,6 @@
     <string name="theme_light">হালধীয়া</string>
     <string name="theme_dark">গাঢ়</string>
     <string name="theme_monet">ডাইনামিক</string>
-    <string name="theme_greenapple">সেউজ আপেল</string>
-    <string name="theme_lavender">লাভেণ্ডাৰ</string>
-    <string name="theme_midnightdusk">মধ্যৰাতি দুঃখ</string>
-    <string name="theme_nord">ন\'ৰ্ড</string>
-    <string name="theme_strawberrydaiquiri">ষ্ট্ৰ’বেৰী ডাইকুৱাৰী</string>
-    <string name="theme_tako">তাকো</string>
-    <string name="theme_tealturquoise">টীল আৰু টাৰকুৱইজ</string>
-    <string name="theme_yinyang">ইন আৰু ইয়াং</string>
-    <string name="theme_yotsuba">ইয়তছুবা</string>
-    <string name="theme_tidalwave">টাইডেল ৱেভ</string>
     <string name="pref_dark_theme_pure_black">বিশুদ্ধ ক\'লা গাঢ় ম’ড</string>
     <string name="pref_relative_format">আপেক্ষিক টাইমষ্টেম্প</string>
     <string name="pref_relative_format_summary">%1$sৰ সলনি %2$s</string>
@@ -827,7 +817,6 @@
     <string name="pref_always_decode_long_strip_with_ssiv_summary">কাৰ্য্যক্ষমতাক প্ৰভাৱিত কৰে। কেৱল সামৰ্থবান কৰক যদি বিটমেপ থ্ৰেছহোল্ড হ্ৰাস কৰিলে খালী প্ৰতিমুৰ্তি সমস্যা সমাধান নহয়</string>
     <string name="pref_incognito_mode_extension_summary">সম্প্ৰসাৰণৰ বাবে ইতিহাস পঢ়া বন্ধ কৰক</string>
     <string name="label_auto">অটো</string>
-    <string name="theme_monochrome">একবৰ্ণী</string>
     <string name="clear_db_exclude_read">পঢ়া অধ্যায়সহ এন্ট্ৰিসমূহ ৰক্ষা কৰক</string>
     <string name="author">লেখক</string>
     <string name="artist">কলা</string>

@@ -495,12 +495,6 @@
     <string name="about_dont_kill_my_app">部分厂商杀掉后台服务的现象比较严重，此网站提供了一些解决方法。</string>
     <string name="restore_miui_warning">如果关闭 MIUI 优化，备份与还原可能会出现问题。</string>
     <string name="pref_dark_theme_pure_black">纯黑深色模式</string>
-    <string name="theme_yotsuba">四叶草</string>
-    <string name="theme_yinyang">阴阳</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">草莓黛绮莉</string>
-    <string name="theme_midnightdusk">午夜幽暗</string>
-    <string name="theme_greenapple">青苹果</string>
     <string name="pref_app_theme">应用主题</string>
     <string name="enhanced_tracking_info">为特定图源提供增强功能。作品在添加到书架时会自动同步进度。</string>
     <string name="enhanced_services">增强平台</string>
@@ -513,7 +507,6 @@
     <string name="pref_hide_threshold">滑动时隐藏菜单的灵敏度</string>
     <string name="pref_inverted_colors">反色</string>
     <string name="relative_time_today">今天</string>
-    <string name="theme_tealturquoise">青绿</string>
     <string name="confirm_lock_change">验证后完成修改</string>
     <string name="label_default">默认</string>
     <string name="pref_category_appearance">外观</string>
@@ -594,7 +587,6 @@
     <string name="custom_cover">自定义封面</string>
     <string name="not_installed">未安装</string>
     <string name="pref_app_language">应用语言</string>
-    <string name="theme_lavender">薰衣草</string>
     <string name="description_placeholder">无简介</string>
     <string name="delete_category_confirmation">确定要删除 \"%s\" 分类吗？</string>
     <string name="delete_category">删除分类</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_updates_description">查看最近更新的作品</string>
     <string name="update_already_running">有其他更新尚未完成</string>
     <string name="error_user_agent_string_blank">User Agent 字符串不能为空</string>
-    <string name="theme_tidalwave">浪潮</string>
     <string name="download_ahead">预先下载</string>
     <string name="auto_download_while_reading">阅读时自动下载</string>
     <string name="download_ahead_info">要求当前章节和下一章节都已下载。</string>
@@ -775,7 +766,6 @@
 \n已选文件夹：%2$s</string>
     <string name="onboarding_storage_selection_required">必须选择一个文件夹</string>
     <string name="available_disk_space_info">%1$s / %2$s</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_soon">即将更新</string>
     <string name="ext_revoke_trust">撤销已信任的未知插件</string>
     <string name="action_open_repo">打开图源仓库</string>
@@ -827,7 +817,6 @@
     <string name="pref_always_decode_long_strip_with_ssiv_summary">会影响性能。仅当降低位图阈值无法解决空白图像问题时才启用</string>
     <string name="pref_incognito_mode_extension_summary">暂停记录插件的阅读历史</string>
     <string name="label_auto">自动</string>
-    <string name="theme_monochrome">单色</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">在长条阅读模式中使用旧版解码器</string>
     <string name="pref_mark_duplicate_read_chapter_read">将重复的已读章节都标记为已读</string>
     <string name="author">作者</string>
@@ -861,7 +850,6 @@
     <string name="migrationConfigScreen.selectEnabledLabel">选择已启用的图源</string>
     <string name="migrationConfigScreen.selectPinnedLabel">选择已置顶图源</string>
     <string name="migrationConfigScreen.continueButtonText">继续</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="migrationConfigScreen.availableHeader">可选</string>
     <string name="migrationConfigScreen.dataToMigrateHeader">需要迁移的数据</string>
     <string name="migrationConfigScreen.deepSearchModeTitle">高级搜索模式</string>

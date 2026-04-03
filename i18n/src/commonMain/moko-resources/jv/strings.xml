@@ -168,7 +168,6 @@
     <string name="theme_system">Tumuti sistem</string>
     <string name="pref_app_theme">Tema aplikasi</string>
     <string name="theme_monet">Dinamis</string>
-    <string name="theme_greenapple">Ijo apel</string>
     <string name="parental_controls_info">Iki ora nyegah ekstensi kang ora resmi utawa salah dilabeli kanggo nampilake konten NSFW (18+) ing aplikasi.</string>
     <string name="relative_time_today">Dinten puniki</string>
     <string name="pref_category_security">Kaamanan</string>
@@ -178,13 +177,8 @@
     <string name="pref_update_only_completely_read">Karo bab durung diwaca</string>
     <string name="pref_manage_notifications">Kelola notifikasi</string>
     <string name="secure_screen_summary">Amanaken layar sembunikan konten aplikasi wektu ngaleh aplikasi lan blokir tangkapan layar</string>
-    <string name="theme_midnightdusk">Surup wengi</string>
     <string name="lock_when_idle">Kunci wektu meneng</string>
     <string name="action_move_to_top_all_for_series">Pindah seri mendhuwur</string>
-    <string name="theme_strawberrydaiquiri">Stroberi Daiquiri</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_yinyang">Yin lan Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="pref_dark_theme_pure_black">Mode ireng banget</string>
     <string name="hide_notification_content">Umpetake konten notifikasi</string>
     <string name="secure_screen">Amanaken layar</string>
@@ -257,7 +251,6 @@
     <string name="pref_show_reading_mode_summary">Tampilake mode saiki kanthi ringkes nalika maca dibukak</string>
     <string name="internal_error">InternalError: Priksa log kacilakan kanggo informasi luwih lengkap</string>
     <string name="on">Morop</string>
-    <string name="theme_lavender">Lavender</string>
     <string name="pref_crop_borders">Ketok pinggiran</string>
     <string name="pref_dual_page_invert">Ganti panggonan pamisah kaca kaping pindho</string>
     <string name="pref_dual_page_invert_summary">Yen panggonan pamisah kaca dobel ora cocog karo arah maca</string>

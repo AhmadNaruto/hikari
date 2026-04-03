@@ -511,17 +511,10 @@
     <string name="pref_tablet_ui_mode">Nettbrettsgrensesnitt</string>
     <string name="pref_hide_threshold">Følsomhet for å skjule menyen når du ruller</string>
     <string name="categorized_display_settings">Innstillinger per kategori for sortering</string>
-    <string name="theme_yinyang">Yin og yang</string>
-    <string name="theme_tealturquoise">Blågrønn og turkis</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Jordbær-Daiquiri</string>
-    <string name="theme_midnightdusk">Midnattsskumring</string>
-    <string name="theme_greenapple">Grønt eple</string>
     <string name="action_display_local_badge">Lokal kilde</string>
     <string name="error_no_match">Ingen treff funnet</string>
     <string name="notification_incognito_text">Skru av inkognito-modus</string>
     <string name="help_translate">Bistå oversettelsen</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="ext_installer_shizuku_unavailable_dialog">Installer og start Shizuku for å bruke det som utvidelsesinstallatør.</string>
     <string name="ext_installer_shizuku_stopped">Shizuku kjører ikke</string>
     <string name="ext_installer_legacy">Foreldet</string>
@@ -573,7 +566,6 @@
     <string name="pref_tracking_summary">Enveis fremdriftssynkronisering, forbedret synkronisering</string>
     <string name="pref_browse_summary">Kilder, utvidelser, globalt søk</string>
     <string name="pref_backup_summary">Manuelle &amp; automatiske sikkerhetskopier</string>
-    <string name="theme_lavender">Lavendel</string>
     <string name="network_not_metered">Bare på nettverk uten datamåling</string>
     <string name="ext_info_language">Språk</string>
     <string name="pref_reset_viewer_flags_success">Alle leserinnstillinger tilbakestilt</string>
@@ -590,7 +582,6 @@
     <string name="skipped_reason_not_always_update">Hoppet over fordi seriene ikke krever oppdateringer</string>
     <string name="download_notifier_split_page_not_found">Side %d ble ikke funnet under deling</string>
     <string name="pref_reset_viewer_flags">Tilbakestill leserinnstillinger per serie</string>
-    <string name="theme_tidalwave">Tidevannsbølge</string>
     <string name="ext_info_age_rating">Aldersvurdering</string>
     <string name="error_user_agent_string_blank">Strengen for brukeragent kan ikke være tom</string>
     <string name="complete_list">Komplett liste</string>
@@ -775,7 +766,6 @@
     <string name="label_extension_repos">Utvidelsepakkebrønner</string>
     <string name="onboarding_storage_help_info">Oppdaterer du fra en eldre versjon og er usikker på hva du skal velge? Sjekk lagringsguiden for mer informasjon.</string>
     <string name="onboarding_storage_help_action">Lagringsguiden</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_soon">Snart</string>
     <string name="ext_revoke_trust">Fjern tilliten til ukjente utvidelser</string>
     <string name="action_open_repo">Åpne pakkebrønnen</string>

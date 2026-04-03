@@ -496,12 +496,6 @@
     <string name="enhanced_tracking_info">Services qui fournissent des fonctionnalités améliorées pour des sources spécifiques. Les séries sont automatiquement suivies lorsqu\'elles sont ajoutées à votre bibliothèque.</string>
     <string name="enhanced_services">Services avancés</string>
     <string name="pref_dark_theme_pure_black">Mode noir pur</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri aux fraises</string>
-    <string name="theme_midnightdusk">Crépuscule de minuit</string>
-    <string name="theme_greenapple">Pomme verte</string>
     <string name="theme_monet">Dynamique</string>
     <string name="pref_app_theme">Thème de l\'appli</string>
     <string name="about_dont_kill_my_app">Certains fabricants ont mis en place des restrictions supplémentaires sur les applications qui tuent les services d\'arrière-plan. Ce site Web contient plus d\'informations sur la manière de résoudre ce problème.</string>
@@ -513,7 +507,6 @@
     <string name="pref_hide_threshold">Sensibilité pour masquer le menu lors du défilement</string>
     <string name="pref_inverted_colors">Inversé</string>
     <string name="relative_time_today">Aujourd\'hui</string>
-    <string name="theme_tealturquoise">Bleu canard et turquoise</string>
     <string name="confirm_lock_change">Authentifiez-vous pour confirmer les changements</string>
     <string name="pref_category_appearance">Apparence</string>
     <string name="label_default">Par défaut</string>
@@ -595,7 +588,6 @@
     <string name="not_installed">Non installé</string>
     <string name="pref_app_language">Langue de l\'application</string>
     <string name="description_placeholder">Aucune description</string>
-    <string name="theme_lavender">Lavande</string>
     <string name="delete_category">Effacer catégorie</string>
     <string name="delete_category_confirmation">Souhaitez-vous supprimer la catégorie « %s » ?</string>
     <string name="internal_error">ErreurInterne : Consultez vos rapports de plantage pour plus d\'informations</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_unavailable_locked">Le Widget n\'est pas disponible lorsque l\'application est verrouillée</string>
     <string name="error_user_agent_string_blank">La liste d\'agents utilisateurs ne peut être vide</string>
     <string name="update_already_running">Une mise à jour est déjà en cours</string>
-    <string name="theme_tidalwave">Raz-de-marée</string>
     <string name="download_ahead">Téléchargement anticipé</string>
     <string name="auto_download_while_reading">Téléchargement anticipé pendant la lecture</string>
     <string name="download_ahead_info">Fonctionne seulement si le chapitre actuel et le suivant sont déjà téléchargés.</string>
@@ -770,7 +761,6 @@
     <string name="information_empty_repos">Vous n\'avez aucun répertoire.</string>
     <string name="action_add_repo">Ajouter un répertoire</string>
     <string name="action_open_repo">Répertoire open source</string>
-    <string name="theme_nord">Nord</string>
     <string name="action_create">Créer</string>
     <string name="track_delete_text">Cela arrêtera le suivi pour cette série.</string>
     <string name="file_null_uri_error">Aucun fichier sélectionné</string>
@@ -843,9 +833,7 @@
     <string name="pref_always_decode_long_strip_with_ssiv_2">Utiliser l\'ancien décodeur pour le lecteur de bandes longues</string>
     <string name="clear_database_text">Vous êtes sur le point de supprimer des séries de la base de données</string>
     <string name="clear_database_history_warning">Les chapitres lus et la progression des séries hors bibliothèque seront perdus</string>
-    <string name="theme_monochrome">Monochrome</string>
     <string name="clear_db_exclude_read">Conserver les séries avec des chapitres lus</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="pref_hide_missing_chapter_indicators">Masquer les indicateurs de chapitre manquants</string>
     <string name="storage_failed_to_create_download_directory">Impossible de créer le répertoire de téléchargement</string>
     <string name="storage_failed_to_create_directory">Impossible de créer le répertoire : %s</string>

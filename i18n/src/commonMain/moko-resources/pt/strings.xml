@@ -475,11 +475,6 @@
     <string name="automatic_background">Automático</string>
     <string name="off">Desligado</string>
     <string name="on">Ligado</string>
-    <string name="theme_yinyang">Yin e Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri de Morango</string>
-    <string name="theme_midnightdusk">Crepúsculo da Meia-Noite</string>
-    <string name="theme_greenapple">Maçã Verde</string>
     <string name="pref_app_theme">Tema da aplicação</string>
     <string name="action_start_downloading_now">Começar a transferir agora</string>
     <string name="cancel_all_for_series">Cancelar tudo para esta série</string>
@@ -495,7 +490,6 @@
     <string name="categorized_display_settings">Configurações por categoria para ordenação e exibição</string>
     <string name="restrictions">Restrições: %s</string>
     <string name="pref_dark_theme_pure_black">Modo escuro preto puro</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="action_display_local_badge">Fonte local</string>
     <string name="information_empty_category_dialog">Ainda não tens nenhuma categoria.</string>
     <string name="error_no_match">Nenhuma correspondência encontrada</string>
@@ -503,7 +497,6 @@
     <string name="enhanced_tracking_info">Serviços que oferecem recursos aprimorados para fontes específicas. Os itens são automaticamente monitorados quando adicionados na sua biblioteca.</string>
     <string name="enhanced_services">Serviços melhorados</string>
     <string name="getting_started_guide">Guia de introdução</string>
-    <string name="theme_tealturquoise">Azul-petróleo e Turquesa</string>
     <string name="relative_time_today">Hoje</string>
     <string name="theme_monet">Dinâmico</string>
     <string name="label_warning">Aviso</string>
@@ -590,7 +583,6 @@
     <string name="appwidget_updates_description">Veja os seus itens da biblioteca atualizados recentemente</string>
     <string name="remove_manga">Está prestes a remover \"%s\" da sua biblioteca</string>
     <string name="download_ahead_info">Funciona apenas se o capítulo atual, mais o próximo, já estiverem transferidos.</string>
-    <string name="theme_tidalwave">Maremoto</string>
     <string name="pref_app_language">Idioma da aplicação</string>
     <string name="ext_info_version">Versão</string>
     <string name="ext_info_language">Idioma</string>
@@ -611,7 +603,6 @@
     <string name="custom_cover">Capa personalizada</string>
     <string name="reading_list">Lista dos Em Leitura</string>
     <string name="action_remove_everything">Remover tudo</string>
-    <string name="theme_lavender">Lavanda</string>
     <string name="popular">Famoso</string>
     <string name="skipped_reason_not_always_update">Ignorado porque a série não requer atualizações</string>
     <string name="action_search_hint">Pesquisar…</string>
@@ -742,7 +733,6 @@
     <string name="onboarding_permission_ignore_battery_opts_description">Evite interrupções para tarefas longas como atualizações da biblioteca, descargas e restauração de backups.</string>
     <string name="onboarding_permission_action_grant">Conceder</string>
     <string name="onboarding_guides_new_user">Novo no %s? Recomendamos dar uma olhada no guia de introdução.</string>
-    <string name="theme_nord">Nord</string>
     <string name="pref_relative_format_summary">\"%1$s\" ao invés de \"%2$s\"</string>
     <string name="action_add_repo_message">Adiciona repositórios adicionais ao %s. Deve ser uma URL que termine com \"index.min.json\".</string>
     <string name="invalid_repo_name">URL do repositório inválido</string>

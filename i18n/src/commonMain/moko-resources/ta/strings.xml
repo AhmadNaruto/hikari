@@ -243,20 +243,10 @@
     <string name="pref_category_downloads">பதிவிறக்கங்கள்</string>
     <string name="pref_category_tracking">கண்காணிப்பு</string>
     <string name="pref_category_about">பற்றி</string>
-    <string name="theme_tako">என</string>
-    <string name="theme_tealturquoise">டீல் &amp; டர்க்கைச்</string>
-    <string name="theme_yinyang">யின் &amp; யாங்</string>
-    <string name="theme_yotsuba">நான்கு இலைகள்</string>
-    <string name="theme_tidalwave">அலைகடல் அலை</string>
     <string name="pref_dark_theme_pure_black">தூய கருப்பு இருண்ட பயன்முறை</string>
     <string name="pref_relative_format">உறவினர் நேர முத்திரைகள்</string>
     <string name="theme_monet">மாறும்</string>
-    <string name="theme_greenapple">பச்சை ஆப்பிள்</string>
     <string name="pref_relative_format_summary">\"%2$s\" க்கு பதிலாக \"%1$s\"</string>
-    <string name="theme_lavender">சுகந்தி</string>
-    <string name="theme_midnightdusk">நள்ளிரவு அந்தி</string>
-    <string name="theme_nord">nord</string>
-    <string name="theme_strawberrydaiquiri">ச்ட்ராபெரி டாய்கிரி</string>
     <string name="pref_date_format">தேதி வடிவம்</string>
     <string name="pref_manage_notifications">அறிவிப்புகளை நிர்வகிக்கவும்</string>
     <string name="pref_app_language">பயன்பாட்டு மொழி</string>
@@ -824,7 +814,6 @@
     <string name="migrationConfigScreen.hideWithoutUpdatesSubtitle">போட்டியில் கூடுதல் அத்தியாயங்கள் இருந்தால் மட்டுமே நுழைவைக் காட்டு</string>
     <string name="migrationConfigScreen.enhancedOptionsWarning">இந்த விருப்பங்கள் மெதுவான மற்றும் ஆபத்தானவை மற்றும் மூலங்களிலிருந்து கட்டுப்பாடுகளுக்கு வழிவகுக்கும்</string>
     <string name="migrationConfigScreen.deepSearchModeTitle">மேம்பட்ட தேடல் முறை</string>
-    <string name="theme_catppuccin">கேட்ப்புச்சின்</string>
     <string name="pref_mark_duplicate_read_chapter_read">மார்க் டூப்ளிகேட் வாசிப்பு அத்தியாயத்தைப் படிக்க</string>
     <string name="pref_behavior">நடத்தை</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">ஒரு அத்தியாயத்தைப் படித்த பிறகு</string>
@@ -839,7 +828,6 @@
     <string name="migrationConfigScreen.continueButtonText">தொடரவும்</string>
     <string name="action_notes">குறிப்புகள்</string>
     <string name="action_edit_notes">குறிப்புகளைத் திருத்து</string>
-    <string name="theme_monochrome">ஒரே வண்ணமுடைய</string>
     <string name="pref_hide_missing_chapter_indicators">காணாமல் போன அத்தியாயம் குறிகாட்டிகளை மறைக்கவும்</string>
     <string name="library_exported">நூலகம் ஏற்றுமதி செய்யப்பட்டது</string>
     <string name="clear_db_exclude_read">வாசிப்பு அத்தியாயங்களுடன் உள்ளீடுகளை வைத்திருங்கள்</string>

@@ -495,12 +495,6 @@
     <string name="tracking_guide">歷程平臺指南</string>
     <string name="categorized_display_settings">獨立各類別的排序方式</string>
     <string name="pref_dark_theme_pure_black">純黑深色模式</string>
-    <string name="theme_yotsuba">四葉</string>
-    <string name="theme_yinyang">陰陽</string>
-    <string name="theme_tako">章魚</string>
-    <string name="theme_strawberrydaiquiri">草莓黛綺莉</string>
-    <string name="theme_midnightdusk">黃昏</string>
-    <string name="theme_greenapple">青蘋果</string>
     <string name="theme_monet">動態</string>
     <string name="pref_app_theme">應用程式主題</string>
     <string name="pref_lowest">最低</string>
@@ -509,7 +503,6 @@
     <string name="pref_highest">最高</string>
     <string name="pref_hide_threshold">捲動時隱藏選單的靈敏度</string>
     <string name="pref_inverted_colors">反轉</string>
-    <string name="theme_tealturquoise">綠松色</string>
     <string name="confirm_lock_change">驗證以確認變更</string>
     <string name="pref_category_appearance">外觀</string>
     <string name="relative_time_today">今天</string>
@@ -591,7 +584,6 @@
     <string name="custom_cover">自訂封面</string>
     <string name="not_installed">未安裝</string>
     <string name="pref_app_language">應用程式語言</string>
-    <string name="theme_lavender">薰衣草</string>
     <string name="description_placeholder">沒有簡介</string>
     <string name="delete_category_confirmation">確定要刪除「%s」類別嗎？</string>
     <string name="internal_error">InternalError：請檢視當機記錄以瞭解詳情</string>
@@ -603,7 +595,6 @@
     <string name="appwidget_updates_description">查看書櫃中近期更新的作品</string>
     <string name="update_already_running">已在進行更新</string>
     <string name="error_user_agent_string_blank">使用者代理字串不得為空</string>
-    <string name="theme_tidalwave">潮浪</string>
     <string name="download_ahead">預先下載</string>
     <string name="auto_download_while_reading">閱讀時自動下載</string>
     <string name="download_ahead_info">僅於目前章節及下一章節皆已下載時生效</string>
@@ -767,7 +758,6 @@
     <string name="label_extension_repos">擴充套件儲存庫</string>
     <string name="onboarding_storage_help_action">儲存空間指南</string>
     <string name="onboarding_storage_help_info">從舊版升級而不確定該如何選擇嗎？請參閱儲存空間指南以取得更多資訊</string>
-    <string name="theme_nord">北風</string>
     <string name="ext_revoke_trust">復原對不明擴充套件的信任</string>
     <string name="manga_interval_expected_update_soon">即將</string>
     <string name="action_open_repo">開啟來源儲存庫</string>
@@ -818,7 +808,6 @@
     <string name="pref_always_decode_long_strip_with_ssiv_summary">影響效能。 僅當降低點陣圖閾值無法解決空白影象問題時才啟用</string>
     <string name="pref_incognito_mode_extension_summary">停止紀錄擴充的閱讀歷史</string>
     <string name="label_auto">自動</string>
-    <string name="theme_monochrome">單色</string>
     <string name="tracked_privately">私下紀錄</string>
     <string name="action_toggle_private_on">私下紀錄</string>
     <string name="action_toggle_private_off">公開紀錄</string>
@@ -848,7 +837,6 @@
     <string name="pref_update_library_manga_titles_summary">警告：如果漫畫被重新命名，將會從下載佇列中移除（如果有的話）</string>
     <string name="migrationConfigScreen.availableHeader">可選</string>
     <string name="migrationConfigScreen.selectAllLabel">全選</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="migrationConfigScreen.selectedHeader">已選</string>
     <string name="migrationConfigScreen.selectNoneLabel">全不選</string>
     <string name="migrationConfigScreen.selectEnabledLabel">選擇已啟用的來源</string>

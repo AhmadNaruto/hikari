@@ -453,15 +453,9 @@
     <string name="cancel_all_for_series">इस श्रृंखला के लिए सभी रद्द करें</string>
     <string name="action_display_local_badge">स्थानीय स्रोत</string>
     <string name="pref_dark_theme_pure_black">पूरा काला मोड़</string>
-    <string name="theme_tako">टाको</string>
-    <string name="theme_strawberrydaiquiri">स्ट्रॉबेरी</string>
-    <string name="theme_greenapple">हरा सेब</string>
     <string name="theme_monet">डायनेमिक</string>
     <string name="pref_app_theme">एप थीम</string>
     <string name="pref_category_auto_download">ऑटोमैटिक डाउनलोड</string>
-    <string name="theme_yotsuba">योटसूबा</string>
-    <string name="theme_yinyang">यीन और यैंन्ग</string>
-    <string name="theme_tealturquoise">टील</string>
     <string name="pref_category_appearance">रूप</string>
     <string name="none">कोई नहीं</string>
     <string name="exclude">बहिष्कृत करें: %s</string>
@@ -492,7 +486,6 @@
     <string name="rotation_portrait">सीधा</string>
     <string name="rotation_landscape">परिदृश्य</string>
     <string name="action_sort_count">कुल आइटम</string>
-    <string name="theme_midnightdusk">मिडनाइट डस्क</string>
     <string name="relative_time_today">आज</string>
     <string name="include">शामिल करें: %s</string>
     <string name="ext_app_info">ऐप की जानकारी</string>
@@ -583,7 +576,6 @@
     <string name="ext_info_age_rating">आयु रेटिंग</string>
     <string name="reading_list">पठन सूची</string>
     <string name="wish_list">विश-लिस्ट</string>
-    <string name="theme_lavender">लैवेंडर</string>
     <string name="pref_app_language">ऐप की भाषा</string>
     <string name="delete_category">श्रेणी हटाएँ</string>
     <string name="description_placeholder">कोई विवरण नहीं</string>
@@ -607,7 +599,6 @@
     <string name="auto_download_while_reading">पढ़ते समय ऑटो डाउनलोड करे</string>
     <string name="action_remove_everything">सब कुछ हटा दें</string>
     <string name="popular">लोकप्रिय</string>
-    <string name="theme_tidalwave">टाइडल वेव्ह</string>
     <string name="error_user_agent_string_blank">यूजर एजेंट स्ट्रिंग (User Agent String) खाली नहीं रखा जा सकता</string>
     <string name="multi_lang">मल्टी</string>
     <string name="are_you_sure">क्या आपको यकीन है ?</string>
@@ -710,9 +701,6 @@
     <string name="onboarding_guides_returning_user">%s को फिर से इंस्टॉल कर रहे हैं?</string>
     <string name="pref_reader_summary">पढ़ने का मोड, प्रदर्शन, मार्गदर्शन</string>
     <string name="pref_tracking_summary">एक-तरफ़ा प्रगति सिंक, बेहतर सिंक</string>
-    <string name="theme_catppuccin">कैटपुचिन</string>
-    <string name="theme_monochrome">एकवर्णी</string>
-    <string name="theme_nord">नॉर्ड</string>
     <string name="pref_relative_format">सापेक्ष समय-चिह्न</string>
     <string name="pref_relative_format_summary">\"%2$s\" के बजाय \"%1$s\"</string>
     <string name="pref_display_images_description">मंगा विवरण में चित्र दिखाएँ</string>

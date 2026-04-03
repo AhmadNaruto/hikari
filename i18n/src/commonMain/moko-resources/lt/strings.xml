@@ -56,13 +56,6 @@
     <string name="pref_manage_notifications">Tvarkyti pranešimus</string>
     <string name="pref_date_format">Datos formatas</string>
     <string name="pref_dark_theme_pure_black">Visiškai juodas tamsus režimas</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Jin ir Jang</string>
-    <string name="theme_tealturquoise">Teal ir Turquoise</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Braškinis Daikiri</string>
-    <string name="theme_midnightdusk">Vidurnakčio saulėlydis</string>
-    <string name="theme_greenapple">Obuolių žalia</string>
     <string name="theme_monet">Dinamiška</string>
     <string name="pref_app_theme">Programos tema</string>
     <string name="theme_dark">Įjungta</string>
@@ -402,7 +395,6 @@
     <string name="action_sort_unread_count">Neskaitytų skaičius</string>
     <string name="action_sort_last_manga_update">Paskutinis atnaujinimo patikrinimas</string>
     <string name="delete_category_confirmation">Ar tikrai norite ištrinti kategoriją \"%s\"?</string>
-    <string name="theme_lavender">Levandos</string>
     <string name="action_close">Uždaryti</string>
     <string name="pref_app_language">Programos kalba</string>
     <string name="action_remove_everything">Ištrinti viską</string>
@@ -608,7 +600,6 @@
     <string name="chapter_progress">Puslapis: %1$d</string>
     <string name="transition_next">Kitas:</string>
     <string name="source_filter_empty_screen">Įdiegtų šaltinių nerasta</string>
-    <string name="theme_tidalwave">Potvynio banga</string>
     <string name="action_search_hint">Ieškoti…</string>
     <string name="error_user_agent_string_blank">Vartotojo agento eilutė negali būti tuščia</string>
     <string name="update_already_running">Atnaujinimas jau vykdomas</string>

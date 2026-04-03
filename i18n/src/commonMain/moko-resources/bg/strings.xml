@@ -465,13 +465,6 @@
     <string name="action_show_errors">Вижте пълните подробности за грешката</string>
     <string name="pref_app_theme">Тема</string>
     <string name="theme_monet">Динамично</string>
-    <string name="theme_greenapple">Зелена ябълка</string>
-    <string name="theme_midnightdusk">Нощен здрач</string>
-    <string name="theme_strawberrydaiquiri">Дайкири ягода</string>
-    <string name="theme_tako">Тако</string>
-    <string name="theme_tealturquoise">Циан и тюркоаз</string>
-    <string name="theme_yinyang">Ин и Янг</string>
-    <string name="theme_yotsuba">Йоцуба</string>
     <string name="restrictions">Ограничения: %s</string>
     <string name="categorized_display_settings">Различно сортиране и показване за всяка категоря</string>
     <string name="pref_library_update_categories_details">Манга в изключените категории няма да бъде обновявана дори ако се намира във включените категории.</string>
@@ -595,11 +588,9 @@
     <string name="empty_screen">Това е неудобно</string>
     <string name="cancelled">Отменена</string>
     <string name="library_errors_help">За помощ при оправянето на грешки с обновленията, виж %1$s</string>
-    <string name="theme_tidalwave">Приливна вълна</string>
     <string name="action_sort_unread_count">Брой непрочетени</string>
     <string name="network_not_metered">Само през неограничена мрежа</string>
     <string name="action_move_to_top_all_for_series">Премести поредицата най-горе</string>
-    <string name="theme_lavender">Лавандула</string>
     <string name="pref_app_language">Език на приложението</string>
     <string name="delete_category">Изтрий категория</string>
     <string name="ext_info_age_rating">Възрастово ограничение</string>
@@ -642,8 +633,6 @@
     <string name="action_sort_next_updated">Следващо очаквано обновление</string>
     <string name="onboarding_storage_action_select">Избери папка</string>
     <string name="onboarding_storage_help_info">Обновяваш от по-стара версия и не си сигурен какво да избереш? Объръни се към ръководството за съхранение за повече информация.</string>
-    <string name="theme_nord">Норд</string>
-    <string name="theme_monochrome">Монохром</string>
     <string name="pref_relative_format_summary">\"%1$s\" вместо \"%2$s\"</string>
     <string name="pref_flash_style_white">Бяло</string>
     <string name="pref_flash_style_white_black">Бяло и черно</string>

@@ -490,16 +490,10 @@
     <string name="categorized_display_settings">Impostatziones de ordinamentu pro categoria</string>
     <string name="information_empty_category_dialog">Non tenes galu peruna categoria.</string>
     <string name="action_start_downloading_now">Incumintza a iscarrigare como</string>
-    <string name="theme_tako">Tako</string>
     <string name="restore_miui_warning">Sa còpia de seguresa e su riprìstinu diant pòdere non funtzionare comente si tocat si s\'otimizatzione MIUI est disabilitada.</string>
     <string name="enhanced_tracking_info">Frunit funtzionalidades avantzadas pro fontes ispetzìficas. Sos elementos benint arrastados in manera automàtica cando los annanghes a sa biblioteca tua.</string>
     <string name="enhanced_services">Arrastadores avantzados</string>
     <string name="pref_dark_theme_pure_black">Modalidade iscura niedda pura</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin e Yang</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri a sa Fràgola</string>
-    <string name="theme_midnightdusk">Intrinada de mesanote</string>
-    <string name="theme_greenapple">Mela birde</string>
     <string name="theme_monet">Dinàmicu</string>
     <string name="pref_app_theme">Tema de s\'aplicatzione</string>
     <string name="about_dont_kill_my_app">Unos cantos produtores tenent restritziones de s\'aplicatzione chi istudant sos servìtzios in s\'isfundu. Custu situ web tenet informatziones in prus in subra de comente acontzare su problema.</string>
@@ -511,7 +505,6 @@
     <string name="label_background_activity">Atividade in s\'isfundu</string>
     <string name="pref_inverted_colors">Furriada</string>
     <string name="relative_time_today">Oe</string>
-    <string name="theme_tealturquoise">Birde abba e turchesu</string>
     <string name="confirm_lock_change">Autèntica·ti pro cunfirmare sa modìfica</string>
     <string name="label_default">Predefinida</string>
     <string name="pref_category_appearance">Aparèntzia</string>
@@ -593,7 +586,6 @@
     <string name="not_installed">No installada</string>
     <string name="pref_app_language">Limba de s\'aplicatzione</string>
     <string name="description_placeholder">Peruna descritzione</string>
-    <string name="theme_lavender">Archemissa</string>
     <string name="delete_category_confirmation">Boles iscantzellare sa categoria \"%s\"?</string>
     <string name="internal_error">Errore internu: verìfica sos registros de sas serradas improvisas pro àteras informatziones</string>
     <string name="delete_category">Iscantzella sa categoria</string>
@@ -603,7 +595,6 @@
     <string name="appwidget_unavailable_locked">Su widget no est a disponimentu cando su blocu de s\'aplicatzione est abilitadu</string>
     <string name="appwidget_updates_description">Pòmpia sos elementos de biblioteca tuos agiornados dae pagu</string>
     <string name="update_already_running">B\'est giai un\'agiornamentu in cursu</string>
-    <string name="theme_tidalwave">Maremotu</string>
     <string name="error_user_agent_string_blank">S\'istringa de s\'agente de s\'utente non podet èssere bòida</string>
     <string name="download_ahead">Iscàrriga sos imbenientes</string>
     <string name="auto_download_while_reading">Iscàrriga in automàticu durante sa letura</string>
@@ -765,7 +756,6 @@
     <string name="onboarding_permission_ignore_battery_opts_description">Èvita interrutziones a agiornamentos longos de sa biblioteca, iscarrigamentos, e riprìstinos de còpias de seguresa.</string>
     <string name="onboarding_permission_action_grant">Fruni</string>
     <string name="onboarding_guides_new_user">Nou in %s? Ti cussigiamus de t\'abbistare sa ghia de introdutzione.</string>
-    <string name="theme_nord">Nord</string>
     <string name="pref_library_update_smart_update">Agiornamentu inteligente</string>
     <string name="action_add_repo">Annanghe unu depòsitu</string>
     <string name="label_add_repo_input">URL de su depòsitu</string>
@@ -828,7 +818,6 @@
     <string name="library_list">Lista de sa biblioteca</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">Imprea su codificadore betzu pro su leghidore de immàgines longas</string>
     <string name="export">Esporta</string>
-    <string name="theme_monochrome">Monocromo</string>
     <string name="action_display_unread_badge">Capìtulos non lèghidos</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">A pustis de àere lèghidu unu capìtulu</string>
     <string name="pref_mark_duplicate_read_chapter_read">Marca sos capìtulos lèghidos duplicados comente lèghidos</string>
@@ -855,7 +844,6 @@
     <string name="clear_database_history_warning">Sos capìtulos lèghidos e su progressu de sos elementos chi non sunt in sa biblioteca s\'ant a pèrdere</string>
     <string name="migrationConfigScreen.selectNoneLabel">Non seletziones nudda</string>
     <string name="migrationConfigScreen.selectPinnedLabel">Seletziona fontes apicadas</string>
-    <string name="theme_catppuccin">Gatuputzinu</string>
     <string name="migrationConfigScreen.selectedHeader">Seletzionadu</string>
     <string name="migrationConfigScreen.availableHeader">A disponimentu</string>
     <string name="migrationConfigScreen.selectAllLabel">Seletziona totu</string>

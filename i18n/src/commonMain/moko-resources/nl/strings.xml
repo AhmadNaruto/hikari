@@ -493,12 +493,6 @@
     <string name="about_dont_kill_my_app">Sommige fabrikanten hebben extra beperkingen op apps die achtergronddiensten uitschakelen. Informatie over hoe je dit kan oplossen kan je vinden op de deze website.</string>
     <string name="restore_miui_warning">Backup/herstellen werkt waarschijnlijk niet goed als de MIUI Optimalisatie is uitgeschakeld.</string>
     <string name="pref_dark_theme_pure_black">Puur-zwarte donkere modus</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Aardbeien Daiquiri</string>
-    <string name="theme_midnightdusk">Nachtschemering</string>
-    <string name="theme_greenapple">Groene Appel</string>
     <string name="pref_app_theme">Appthema</string>
     <string name="enhanced_tracking_info">Bieden uitgebreidere functionaliteit voor bepaalde bronnen. Het tracken van items gebeurt automatisch wanneer je deze toevoegt aan je bibliotheek.</string>
     <string name="enhanced_services">Verbeterde trackers</string>
@@ -516,7 +510,6 @@
     <string name="pref_hide_threshold">Sensitiviteit voor het verbergen van het menu tijdens scrollen</string>
     <string name="pref_inverted_colors">Omgekeerd</string>
     <string name="relative_time_today">Vandaag</string>
-    <string name="theme_tealturquoise">Blauwgroen &amp; Turkoois</string>
     <string name="pref_category_appearance">Uiterlijk</string>
     <string name="confirm_lock_change">Authenticeer om de wijziging te bevestigen</string>
     <string name="label_default">Standaard</string>
@@ -568,13 +561,11 @@
     <string name="pref_clear_webview_data">WebView-gegevens wissen</string>
     <string name="download_notifier_split_page_not_found">Pagina %d niet gevonden tijdens het splitsen</string>
     <string name="internal_error">InternalError: Bekijk de crash logs voor meer informatie</string>
-    <string name="theme_lavender">Lavendel</string>
     <string name="action_sort_last_manga_update">Laatst gecontroleerd op updates</string>
     <string name="action_remove_everything">Alles verwijderen</string>
     <string name="delete_category_confirmation">Wenst u categorie \"%s\" te verwijderen?</string>
     <string name="delete_category">Categorie verwijderen</string>
     <string name="action_close">Sluiten</string>
-    <string name="theme_tidalwave">Vloedgolf</string>
     <string name="disabled_nav">Uitgeschakeld</string>
     <string name="network_not_metered">Alleen op ongelimiteerd netwerk</string>
     <string name="auto_download_while_reading">Automatisch downloaden tijdens het lezen</string>
@@ -781,7 +772,6 @@
     <string name="pref_webtoon_disable_zoom_out">Uitzoomen uitschakelen</string>
     <string name="extensionRepo_settings">Extensierepo\'s</string>
     <string name="non_library_settings">Alle gelezen items</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_null">Deze manga is voltooid of er is geen voorspelde uitkomstdatum.</string>
     <string name="pref_auto_update_manga_on_mark_read">Voortgang bijwerken wanneer gemarkeerd als gelezen</string>
     <string name="trackers_updated_summary">Trackers bijgewerkt naar hoofdstuk %d</string>
@@ -811,7 +801,6 @@
     <string name="action_edit_notes">Notities bewerken</string>
     <string name="pref_mark_duplicate_read_chapter_read">Duplicaat gelezen hoofdstuk als gelezen markeren</string>
     <string name="action_display_unread_badge">Ongelezen hoofdstukken</string>
-    <string name="theme_monochrome">Monochroom</string>
     <string name="label_donate">Doneer</string>
     <string name="pref_display_images_description">Geef afbeeldingen weer in mangabeschrijvingen</string>
     <string name="pref_hide_missing_chapter_indicators">Verberg ontbrekende hoofdstukindicatoren</string>
@@ -886,7 +875,6 @@
     <string name="pref_download_concurrent_pages_summary">Gelijktijdig gedownloade pagina\'s per bron</string>
     <string name="download_bookmarked">Met bladwijzer</string>
     <string name="action_filter_excluded_scanlators">Filter uitgesloten scanlators</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="onboarding_storage_info">Selecteer een map waarin %1$s hoofdstukdownloads, back-ups en meer zal opslaan.\n\nEen specifiek hiervoor bestemde map is aangeraden.\n\nGeselecteerde map: %2$s</string>
     <string name="onboarding_permission_install_apps">App-installatierecht</string>
     <string name="onboarding_permission_notifications">Meldingsrecht</string>

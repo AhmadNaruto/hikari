@@ -238,7 +238,6 @@
     <string name="pref_tracking_summary">Sincronización unidireccional do progreso de lectura; sincronización mellorada</string>
     <string name="pref_browse_summary">Fontes, extensións, procura global</string>
     <string name="pref_advanced_summary">Envorcar os rexistros de erros, optimizacións de batería</string>
-    <string name="theme_tidalwave">Maremoto</string>
     <string name="relative_time_today">Hoxe</string>
     <string name="pref_update_only_completely_read">Con capítulos sin ler</string>
     <string name="pref_library_update_categories_details">Os elementos das categorías excluídas non se actualizarán aínda se están tamén nas categorías incluídas.</string>
@@ -398,20 +397,12 @@
     <string name="confirm_lock_change">Identifícate para confirmar o cambio</string>
     <string name="action_display_local_badge">Fonte local</string>
     <string name="action_remove_everything">Quitar todo</string>
-    <string name="theme_lavender">Lavanda</string>
     <string name="pref_read_with_tapping_inverted">Inverter as zonas de toque</string>
     <string name="nav_zone_right">Dereita</string>
     <string name="tracking_guide">Guía de seguimento</string>
     <string name="on_hiatus">En pausa</string>
     <string name="action_order_by_chapter_number">Por número de capítulo</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="theme_monet">Dinámico</string>
-    <string name="theme_greenapple">Mazá verde</string>
-    <string name="theme_midnightdusk">Crepúsculo de medianoite</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri de amorodo</string>
-    <string name="theme_tealturquoise">Azul mariño e turquesa</string>
-    <string name="theme_yinyang">Yin e Yang</string>
     <string name="pref_dark_theme_pure_black">Modo negro puro</string>
     <string name="include">Incluír: %s</string>
     <string name="extension_api_error">Non se puido obter as extensións dispoñibles</string>
@@ -694,7 +685,6 @@
     <string name="onboarding_storage_selection_required">Debes elexir un cartafol</string>
     <string name="onboarding_storage_help_action">Guía de almacenamento</string>
     <string name="onboarding_storage_help_info">Actualizaches dende unha versión máis antiga e non sabes que elixir? Bótalle unha ollada á guía de almacenamento.</string>
-    <string name="theme_nord">Nórdico</string>
     <string name="pref_relative_format">Marcas de tempo relativas</string>
     <string name="pref_library_update_smart_update">Actualizacións intelixentes</string>
     <string name="action_add_repo">Engadir un repositorio</string>
@@ -827,7 +817,6 @@
     <string name="ext_remove">Eliminar</string>
     <string name="pref_flash_duration">Duración do flash</string>
     <string name="label_auto">Automático</string>
-    <string name="theme_monochrome">Monocromo</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">Ao rematar de ler un capítulo</string>
     <string name="possible_duplicates_title">Posibles duplicados</string>
     <string name="pref_update_library_manga_titles">Actualizar os títulos para que coincidan cos da fonte</string>

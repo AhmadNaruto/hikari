@@ -310,9 +310,7 @@
     <string name="secure_screen">Zabezpečená obrazovka</string>
     <string name="action_show_errors">Ťuknutím zobrazíte podrobnosti</string>
     <string name="theme_system">Podľa systému</string>
-    <string name="theme_tako">Tako</string>
     <string name="action_show_manga">Zobraziť záznam</string>
-    <string name="theme_yinyang">Yin a Yang</string>
     <string name="pref_category_appearance">Vzhľad</string>
     <string name="action_migrate">Migrovať</string>
     <string name="action_display_comfortable_grid">Komfortná mriežka</string>
@@ -340,12 +338,7 @@
     <string name="theme_dark">Zap.</string>
     <string name="pref_app_theme">Téma aplikácie</string>
     <string name="theme_monet">Dynamické</string>
-    <string name="theme_greenapple">Zelené jablko</string>
-    <string name="theme_yotsuba">Jotsuba</string>
-    <string name="theme_midnightdusk">Polnočný súmrak</string>
     <string name="pref_dark_theme_pure_black">Čisto čierny tmavý režim</string>
-    <string name="theme_strawberrydaiquiri">Jahodové Daiquiri</string>
-    <string name="theme_tealturquoise">Modrozelená a tyrkysová</string>
     <string name="pref_date_format">Formát dátumu</string>
     <string name="pref_manage_notifications">Spravovať oznámenia</string>
     <string name="pref_category_security">Bezpečnosť</string>
@@ -394,7 +387,6 @@
     <string name="complete_list">Kompletný zoznam</string>
     <string name="file_picker_error">Nenašla sa žiadna aplikácia na výber súborov</string>
     <string name="channel_complete">Kompletný</string>
-    <string name="theme_tidalwave">Prílivová vlna</string>
     <string name="pref_category_delete_chapters">Odstrániť kapitoly</string>
     <string name="save_chapter_as_cbz">Uložiť ako archív CBZ</string>
     <string name="split_tall_images_summary">Zlepšuje výkon čítačky</string>
@@ -589,7 +581,6 @@
     <string name="on">Zap.</string>
     <string name="chapter_settings_updated">Aktualizované predvolené nastavenia kapitol</string>
     <string name="pref_inverted_colors">Inverzný</string>
-    <string name="theme_lavender">Levanduľa</string>
     <string name="pref_download_new_categories_details">Mangy vo vylúčených kategóriách nebudú stiahnuté, aj keď sú tiež v zahrnutých kategóriách.</string>
     <string name="database_clean">Čistenie databázy</string>
     <string name="pref_clear_webview_data">Vymazanie údajov WebView</string>
@@ -701,7 +692,6 @@
     <string name="pref_backup_summary">Manuálne &amp; automatické zálohy, miesto v úložisku</string>
     <string name="pref_security_summary">Zamknutie aplikácie, bezpečná obrazovka</string>
     <string name="pref_advanced_summary">Uložiť záznamy o zlyhaní aplikácie, optimalizácie batérie</string>
-    <string name="theme_monochrome">Monochromatická</string>
     <string name="pref_relative_format">Relatívne časové značky</string>
     <string name="pref_relative_format_summary">\"%1$s\" namiesto \"%2$s\"</string>
     <string name="pref_display_images_description">Zobraziť obrázky v popisoch mangy</string>

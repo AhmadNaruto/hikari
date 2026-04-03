@@ -138,13 +138,6 @@
     <string name="pref_manage_notifications">सूचनाहरू व्यवस्थापन गर्नुहोस्</string>
     <string name="pref_date_format">मिति ढाँचा</string>
     <string name="pref_dark_theme_pure_black">शुद्ध कालो डार्क मोड</string>
-    <string name="theme_yotsuba">योत्सुबा</string>
-    <string name="theme_yinyang">यिन र यांग</string>
-    <string name="theme_tealturquoise">टील र फिरोजा</string>
-    <string name="theme_tako">टाको</string>
-    <string name="theme_strawberrydaiquiri">स्ट्रबेरी दाइक्वरी</string>
-    <string name="theme_midnightdusk">मिडनाइट डस्क</string>
-    <string name="theme_greenapple">हरियो स्याउ</string>
     <string name="theme_monet">गतिशील</string>
     <string name="pref_app_theme">एपको थीम</string>
     <string name="theme_system">सिस्टम पालना गर्नुहोस्</string>
@@ -572,7 +565,6 @@
     <string name="pref_reader_summary">पढ्ने मोड, प्रदर्शन, नेभिगेसन</string>
     <string name="pref_downloads_summary">स्वचालित डाउनलोड, अगाडि डाउनलोड गर्ने</string>
     <string name="pref_browse_summary">स्रोतहरू, एक्सटेन्शनहरू, ग्लोबल खोज</string>
-    <string name="theme_lavender">ल्याभेन्डर</string>
     <string name="pref_app_language">एप को भाषा</string>
     <string name="auto_download_while_reading">पढ्दा स्वत: डाउनलोड गर्नुहोस्</string>
     <string name="pref_backup_summary">म्यानुअल र स्वचालित ब्याकअप, भण्डारण स्पेस</string>
@@ -589,7 +581,6 @@
     <string name="download_ahead">अगाडि डाउनलोड गर्नुहोस्</string>
     <string name="pref_appearance_summary">थीम, मिति र समय ढाँचा</string>
     <string name="download_ahead_info">हालको अध्याय + अर्को पहिले नै डाउनलोड गरिएमा मात्र काम गर्दछ।</string>
-    <string name="theme_tidalwave">समुन्द्री लहर</string>
     <string name="ext_info_version">संस्करण</string>
     <string name="ext_info_language">भाषा</string>
     <string name="ext_info_age_rating">उमेर मूल्याङ्कन</string>
@@ -732,7 +723,6 @@
     <string name="onboarding_permission_notifications">सूचना अनुमति</string>
     <string name="onboarding_permission_action_grant">प्रदान गर्नुहोस्</string>
     <string name="onboarding_guides_new_user">%s मा नयाँ हुनुहुन्छ? हामी स्टार्टिङ गाइड जाँच गर्न सिफारिस गर्छौं।</string>
-    <string name="theme_nord">नोर्ड</string>
     <string name="pref_library_update_smart_update">स्मार्ट अपडेट</string>
     <string name="error_repo_exists">यो रिपो पहिले नै अवस्थित छ!</string>
     <string name="action_delete_repo">रिपो हटाउनुहोस्</string>
@@ -827,7 +817,6 @@
     <string name="label_auto">अटो</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">लामो स्ट्रिप रिडरको लागि लिगेसी डिकोडर प्रयोग गर्नुहोस्</string>
     <string name="pref_mark_duplicate_read_chapter_read">पढिएको अध्यायको डुप्लिकेटलाई पढिएको रूपमा चिन्ह लगाउनुहोस्</string>
-    <string name="theme_monochrome">मोनोक्रोम</string>
     <string name="action_toggle_private_on">निजी रूपमा ट्र्याक गर्नुहोस्</string>
     <string name="action_toggle_private_off">सार्वजनिक रूपमा ट्र्याक गरिएको</string>
     <string name="export">निर्यात</string>
@@ -854,7 +843,6 @@
     <string name="clear_database_text">तपाईं डाटाबेसबाट इन्ट्रीहरू हटाउन लाग्दै हुनुहुन्छ</string>
     <string name="storage_failed_to_create_download_directory">डाउनलोड directory सिर्जना गर्न असफल भयो</string>
     <string name="label_donate">दान</string>
-    <string name="theme_catppuccin">कात्पुचिन</string>
     <string name="pref_display_images_description">mangaको विवरणहरूमा तस्वीर देखाउनुहोस</string>
     <string name="pref_hide_missing_chapter_indicators">नभएको अध्यायहरु लुकौनुहोस</string>
     <string name="migrationConfigScreen.selectedHeader">टिपेको</string>

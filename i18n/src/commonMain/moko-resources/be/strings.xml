@@ -133,12 +133,6 @@
     <string name="pref_manage_notifications">Кіраванне апавяшчэннямі</string>
     <string name="pref_date_format">Фармат даты</string>
     <string name="pref_dark_theme_pure_black">Чорная</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Інь і Ян</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Клубнічны дайкiры</string>
-    <string name="theme_midnightdusk">Паўночнае змярканне</string>
-    <string name="theme_greenapple">Зялёны яблык</string>
     <string name="theme_monet">Дынамічная</string>
     <string name="pref_app_theme">Тэма праграмы</string>
     <string name="theme_dark">Цёмная</string>
@@ -251,7 +245,6 @@
     <string name="pref_image_scale_type">Маштабаванне</string>
     <string name="pref_inverted_colors">Інвертаваныя</string>
     <string name="relative_time_today">Сёння</string>
-    <string name="theme_tealturquoise">Бірузовая</string>
     <string name="pref_category_appearance">Выгляд</string>
     <string name="confirm_lock_change">Аўтэнтыфікуйцеся, каб падтвердзіць змену</string>
     <string name="label_default">Па змаўчанні</string>
@@ -316,7 +309,6 @@
     <string name="action_display_language_badge">Мова</string>
     <string name="network_not_metered">Толькі ў безлімітнай сетцы</string>
     <string name="ext_info_language">Мова</string>
-    <string name="theme_lavender">Лаванда</string>
     <string name="pref_app_language">Мова праграмы</string>
     <string name="pref_update_only_completely_read">Прапускаць з непрачытаным(і) раздзелам(і)</string>
     <string name="ext_installer_shizuku_stopped">Shizuku не запушчаны</string>
@@ -396,10 +388,6 @@
     <string name="pref_backup_summary">Ручныя і аўтаматычныя рэзервоўкі, сховішча</string>
     <string name="pref_security_summary">Блакіроўка праграмы, абарона экрана</string>
     <string name="pref_advanced_summary">Выгрузка журнала збояў, аптымізацыя батарэі</string>
-    <string name="theme_catppuccin">Catppuccin</string>
-    <string name="theme_monochrome">Манахром</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_tidalwave">Tidal Wave</string>
     <string name="pref_relative_format">Адносныя пазнакі часу</string>
     <string name="pref_relative_format_summary">«%1$s» замест « %2$s»</string>
     <string name="pref_display_images_description">Адлюстроўваць выявы ў апісаннях твораў</string>

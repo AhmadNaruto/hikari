@@ -490,8 +490,6 @@
     <string name="pref_reader_summary">Вулав тытӑмӗ, кӑтартӑнни, куҫӑм</string>
     <string name="label_default">Йаланхилле</string>
     <string name="action_open_random_manga">Ӑнсӑрт хайлав уҫ</string>
-    <string name="theme_strawberrydaiquiri">Ҫӗр ҫырли тайккирийӗ</string>
-    <string name="theme_midnightdusk">Ҫур ҫӗр ӗнтрӗкӗ</string>
     <string name="pref_tracking_summary">Пӗр йенлӗ ӳсӗм килӗштерӗвӗ, анлӑлатнӑ килӗштерӳ</string>
     <string name="connected_to_wifi">Wi-Fi урлӑ ҫеҫ</string>
     <string name="action_display_show_continue_reading_button">«Малалла вула» пускӑч</string>
@@ -501,21 +499,14 @@
     <string name="label_started">Пуҫланӑ</string>
     <string name="label_local">Вырӑнти</string>
     <string name="label_downloaded">Тийесе илнӗ</string>
-    <string name="theme_tidalwave">Шыв хӑпарнин хумӗ</string>
     <string name="pref_app_theme">Ап темми</string>
     <string name="relative_time_today">Пайан</string>
-    <string name="theme_lavender">Лавантӑ</string>
-    <string name="theme_yinyang">Ин тата Йан</string>
     <string name="pref_browse_summary">Ҫӑл куҫсем, хушмасем, пӗтӗмӗшле шырав</string>
-    <string name="theme_greenapple">Симӗс пан улми</string>
-    <string name="theme_yotsuba">Йутсупа</string>
     <string name="network_not_metered">Чараксӑр тетел урлӑ ҫеҫ</string>
     <string name="pref_update_only_started">Пуҫнанисене сиктермелле</string>
-    <string name="theme_tako">Такку</string>
     <string name="pref_dark_theme_pure_black">Хуп-хура темӗ</string>
     <string name="pref_app_language">Ап чӗлхи</string>
     <string name="action_not_now">Халь мар</string>
-    <string name="theme_tealturquoise">Симӗс кӑвак</string>
     <string name="theme_monet">Куҫӑмлӑ</string>
     <string name="label_stats">Шутлавсем</string>
     <string name="action_copy_to_clipboard">Пайлашу асне ӑт</string>
@@ -580,7 +571,6 @@
     <string name="onboarding_permission_ignore_battery_opts_description">Тӑсӑлакан вулавӑш ҫӗнелни, тийени тата йантӑ ӑтава тавӑрни чарӑнасран хӑтӑлтарӗ.</string>
     <string name="onboarding_permission_action_grant">Ирӗк пар</string>
     <string name="onboarding_guides_new_user">%s апра ҫӗнни? Епӗр пуҫлав пӗлкӗчӗпе паллашма сӗнетпӗр.</string>
-    <string name="theme_nord">Ҫур ҫӗр</string>
     <string name="onboarding_storage_help_info">Кивӗ верҫҫирен ҫӗнӗлетӗн те мӗн суламаллине пӗлместӗн? Нумайрах пӗлме усрав пӗлкӗчне кӗрсе пӑх.</string>
     <string name="onboarding_guides_returning_user">%s ҫӗнӗрен лартатӑн?</string>
     <string name="pref_relative_format_summary">«%2$s» вырӑнне «%1$s»</string>
@@ -598,8 +588,6 @@
     <string name="action_display_unread_badge">Вуламан сыпӑк</string>
     <string name="action_notes">Ҫырчӑк</string>
     <string name="action_edit_notes">Ҫырчӑк улӑштар</string>
-    <string name="theme_catppuccin">Кушак пуҫҫин</string>
-    <string name="theme_monochrome">Пӗр тӗс</string>
     <string name="pref_relative_format">Вӑхӑт иртни палли</string>
     <string name="pref_security">Сыхлав</string>
     <string name="pref_firebase">Тишкерӳ тата йӑнӑшсен кӗнеки</string>

@@ -46,8 +46,6 @@
     <string name="secure_screen">Қолданба экранын қорғау</string>
     <string name="pref_app_theme">Қолданба кейпі</string>
     <string name="theme_monet">Динамикалық</string>
-    <string name="theme_greenapple">Жасыл Алма</string>
-    <string name="theme_midnightdusk">Ымырт</string>
     <string name="pref_category_tracking">Аңду</string>
     <string name="pref_category_about">Ақпарат</string>
     <string name="action_close">Жабу</string>
@@ -60,12 +58,7 @@
     <string name="theme_system">Жүйе бойынша</string>
     <string name="theme_light">Өшірулі</string>
     <string name="theme_dark">Қосулы</string>
-    <string name="theme_strawberrydaiquiri">Құлпынай Дайкири</string>
-    <string name="theme_tako">Тако</string>
-    <string name="theme_yotsuba">Йотсуба</string>
-    <string name="theme_tealturquoise">Қызғылт пен жасыл</string>
     <string name="pref_dark_theme_pure_black">Қап-қараңғы режим</string>
-    <string name="theme_yinyang">Инь мен Йянь</string>
     <string name="relative_time_today">Бүгін</string>
     <string name="pref_library_update_restriction">Автоматты жаңартуларға құрылғы шектеулері</string>
     <string name="connected_to_wifi">Тек Wi-Fi болғанда</string>
@@ -251,7 +244,6 @@
     <string name="delete_category_confirmation">«%s» деген санатты жойғыңыз келеді ме?</string>
     <string name="delete_category">Санатты жою</string>
     <string name="internal_error">Ішкі қателік: Қосымша ақпарат алу үшін қателіктер тіркеуін тексеріңіз</string>
-    <string name="theme_lavender">Лаванда</string>
     <string name="pref_skip_filtered_chapters">Сүзілген тарауларлы өткізіп жіберу</string>
     <string name="action_remove_everything">Барлығын жою</string>
     <string name="filter_mode_overlay">Қабаттасу</string>
@@ -333,7 +325,6 @@
     <string name="tapping_inverted_horizontal">Көлденең</string>
     <string name="auto_download_while_reading">Оқығанда дағдылы жүктеу</string>
     <string name="download_ahead">Алдын ала жүктеу</string>
-    <string name="theme_tidalwave">Көтерілу Толқыны</string>
     <string name="filter_mode_lighten">Жарық қылу</string>
     <string name="filter_mode_darken">Қараңғы қылу</string>
     <string name="pref_read_with_tapping_inverted">Басу аймағын терістету</string>

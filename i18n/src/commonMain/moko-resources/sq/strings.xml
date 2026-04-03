@@ -27,11 +27,6 @@
     <string name="app_not_available">Aplikacioni i padisponueshem</string>
     <string name="pref_downloads_summary">Shkarkim automatik, shkarko përpara</string>
     <string name="theme_dark">Errët</string>
-    <string name="theme_greenapple">Molle jeshile</string>
-    <string name="theme_lavender">Livando</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_tidalwave">Valët e Baticës</string>
     <string name="pref_dark_theme_pure_black">E zezë e pastër modaliteti i errët</string>
     <string name="pref_manage_notifications">Menaxho njoftimet</string>
     <string name="pref_app_language">Gjuha e aplikacionit</string>
@@ -136,7 +131,6 @@
     <string name="action_start_downloading_now">Fillo shkarkimin tani</string>
     <string name="internal_error">Gabim i brendshëm: Kontrolloni regjistrat e përplasjeve për informacione të mëtejshme</string>
     <string name="pref_security_summary">Kyçja e aplikacionit, ekran i sigurt</string>
-    <string name="theme_tealturquoise">Blu në Jeshile</string>
     <string name="pref_category_general">të përgjithshme</string>
     <string name="pref_category_appearance">Paraqitja</string>
     <string name="pref_library_summary">Kategoritë, përditësimi global</string>
@@ -155,10 +149,8 @@
     <string name="pref_category_theme">Tema</string>
     <string name="theme_system">Ndiq Sistemin</string>
     <string name="theme_light">Ndrçim</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri luleshtrydhe</string>
     <string name="pref_app_theme">Tema e aplikacionit</string>
     <string name="theme_monet">Dinamik</string>
-    <string name="theme_tako">Tako</string>
     <string name="pref_date_format">Formati i datës</string>
     <string name="landscape">Peizazhi</string>
     <string name="secure_screen_summary">Ekrani i sigurt fsheh përmbajtjen e aplikacionit kur ndërron aplikacionet dhe bllokon screenshots</string>
@@ -618,7 +610,6 @@
     <string name="update_check_notification_download_in_progress">Po shkarkohet…</string>
     <string name="update_check_notification_update_available">Versioni i ri në dispozicion!</string>
     <string name="chapter_settings_updated">Cilësimet e kapitullit të parazgjedhur të përditësuara</string>
-    <string name="theme_midnightdusk">Perëndim Mesnate</string>
     <string name="pref_restore_backup_summ">Rivendosni bibliotekën nga skedari rezervë</string>
     <string name="backup_restore_content_full">Të dhënat nga skedari rezervë do të rikthehen.
 \n

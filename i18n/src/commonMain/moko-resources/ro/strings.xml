@@ -472,21 +472,14 @@
     <string name="information_empty_category_dialog">Nu aveți încă nicio categorie.</string>
     <string name="theme_monet">Dinamic</string>
     <string name="label_default">Implicit</string>
-    <string name="theme_midnightdusk">Amurg de Miazănoapte</string>
     <string name="channel_app_updates">Actualizări de aplicație</string>
-    <string name="theme_tealturquoise">Teal și turcoaz</string>
     <string name="action_display_local_badge">Sursă locală</string>
     <string name="pref_category_appearance">Aspect</string>
     <string name="pref_app_theme">Tematică Aplicație</string>
-    <string name="theme_greenapple">Măr Verde</string>
     <string name="cancel_all_for_series">Anulează totul pentru această serie</string>
     <string name="action_display_language_badge">Limbă</string>
     <string name="confirm_lock_change">Autentifică-te pentru a confirma schimbările</string>
     <string name="label_warning">Avertizare</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri de căpșuni</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_yinyang">Yin și Yang</string>
-    <string name="theme_yotsuba">Yoțuba</string>
     <string name="publishing_finished">Editare finalizată</string>
     <string name="cancelled">Anulat</string>
     <string name="on_hiatus">În hiatus</string>
@@ -515,7 +508,6 @@
     <string name="download_notifier_split_page_not_found">Pagina %d nu a fost găsită în timpul divizării</string>
     <string name="delete_category_confirmation">Doriți să ștergeți categoria \"%s\"?</string>
     <string name="internal_error">InternalError: Verificați jurnalele de accident pentru informații suplimentare</string>
-    <string name="theme_lavender">Lavandă</string>
     <string name="pref_dark_theme_pure_black">Mod întunecat negru pur</string>
     <string name="enhanced_tracking_info">Servicii care oferă caracteristici îmbunătățite pentru anumite surse. Înregistrările sunt urmărite automat atunci când sunt adăugate la biblioteca dumneavoastră.</string>
     <string name="backup_info">Ar trebui să păstrați copii ale backupurilor și în alte locuri.</string>
@@ -593,7 +585,6 @@
     <string name="not_installed">Nu este instalat</string>
     <string name="action_sort_count">Total intrări</string>
     <string name="action_search_hint">Caută…</string>
-    <string name="theme_tidalwave">Tsunami</string>
     <string name="ext_info_age_rating">Vârsta minimă</string>
     <string name="ext_installer_legacy">Versiune veche</string>
     <string name="tracking_guide">Ghid de urmărire</string>
@@ -777,7 +768,6 @@
     <string name="action_delete_repo">Șterge repozitoriu</string>
     <string name="invalid_repo_name">URL repozitoriu invalid</string>
     <string name="label_upcoming">Viitoare</string>
-    <string name="theme_nord">Nord</string>
     <string name="action_replace_repo_message">Repozitoriul %1$s are acceeași amprenta digitală a cheii de semnare ca și %2$s
 \nÎn cazul în care asta este la ce vă așteptați, %2$s va fi înlocuit, altfel contatati întreținătorul repozitoriului.</string>
     <string name="pref_display_profile">Profil de afișare personalizat</string>
@@ -831,8 +821,6 @@
     <string name="action_display_unread_badge">Capitole necitite</string>
     <string name="action_notes">Notițe</string>
     <string name="action_edit_notes">Editează notițe</string>
-    <string name="theme_catppuccin">Catppuccino</string>
-    <string name="theme_monochrome">Monocromatic</string>
     <string name="pref_display_images_description">Afișați imagini în descrierile benzilor desenate</string>
     <string name="pref_behavior">Comportament</string>
     <string name="pref_mark_duplicate_read_chapter_read">Marcați capitolele duplicate ca citite</string>

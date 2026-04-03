@@ -470,12 +470,6 @@
     <string name="action_close">بستن</string>
     <string name="pref_app_theme">تم برنامه</string>
     <string name="theme_monet">پویا</string>
-    <string name="theme_greenapple">سیب سبز</string>
-    <string name="theme_midnightdusk">غروب نیمه‌شب</string>
-    <string name="theme_strawberrydaiquiri">داکری توت‌فرنگی</string>
-    <string name="theme_tealturquoise">آبی و فیروزه‌ای</string>
-    <string name="theme_yinyang">یین و یانگ</string>
-    <string name="theme_yotsuba">یوتسوبا</string>
     <string name="action_move_to_top_all_for_series">انتقال سری به بالا</string>
     <string name="action_start_downloading_now">همین الان شروع به دانلود کن</string>
     <string name="action_show_errors">برای دیدن جزئیات لمس کنید</string>
@@ -515,7 +509,6 @@
     <string name="pref_lowest">پایین‌ترین</string>
     <string name="pref_viewer_nav">مناطق قابل لمس</string>
     <string name="on">روشن</string>
-    <string name="theme_tako">تاکو</string>
     <string name="off">خاموش</string>
     <string name="pref_show_navigation_mode">مناطق قابل لمس را نشان بده</string>
     <string name="ext_installer_shizuku_unavailable_dialog">برای استفاده از Shizuku به عنوان یک نصب‌کننده‌ی افزونه، آن را نصب و اجرا کنید.</string>
@@ -534,8 +527,6 @@
     <string name="cancelled">لغو شد</string>
     <string name="pref_security_summary">قفل برنامه، صفحه امن</string>
     <string name="pref_advanced_summary">گزارش‌های خرابی، بهینه‌سازی باتری</string>
-    <string name="theme_lavender">ارغوانی</string>
-    <string name="theme_tidalwave">تم جزر و مدی</string>
     <string name="pref_app_language">زبان برنامه</string>
     <string name="invalid_location">مکان نامعتبر: %s</string>
     <string name="pref_download_new_categories_details">ورودی ها در دسته بندی های حذف شده حتی اگر در دسته بندی های در نظر گرفته شده نیز باشند، دانلود نخواهند شد.</string>

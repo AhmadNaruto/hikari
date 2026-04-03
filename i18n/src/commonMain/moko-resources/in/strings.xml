@@ -495,12 +495,6 @@
     <string name="enhanced_tracking_info">Menyediakan fitur yang disempurnakan untuk sumber tertentu. Entri secara otomatis dilacak ketika ditambahkan ke perpustakaan Anda.</string>
     <string name="enhanced_services">Pelacak yang ditingkatkan</string>
     <string name="pref_dark_theme_pure_black">Mode gelap hitam pekat</string>
-    <string name="theme_yotsuba">Empat Daun</string>
-    <string name="theme_yinyang">Yin dan Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Stroberi Daiquiri</string>
-    <string name="theme_midnightdusk">Senja Tengah Malam</string>
-    <string name="theme_greenapple">Hijau Apel</string>
     <string name="theme_monet">Dinamis</string>
     <string name="pref_app_theme">Tema aplikasi</string>
     <string name="label_background_activity">Aktivitas latar belakang</string>
@@ -513,7 +507,6 @@
     <string name="relative_time_today">Hari Ini</string>
     <string name="getting_started_guide">Panduan awal mulai</string>
     <string name="action_track">Lacak</string>
-    <string name="theme_tealturquoise">Teal &amp; Pirus</string>
     <string name="pref_category_appearance">Tampilan</string>
     <string name="confirm_lock_change">Autentikasi untuk mengonfirmasi perubahan</string>
     <string name="label_default">Bawaan</string>
@@ -594,7 +587,6 @@
     <string name="custom_cover">Sampul kustom</string>
     <string name="not_installed">Tidak terinstall</string>
     <string name="pref_app_language">Bahasa aplikasi</string>
-    <string name="theme_lavender">Bunga Lavender</string>
     <string name="description_placeholder">Tidak ada deskripsi</string>
     <string name="delete_category_confirmation">Apakah anda ingin menghapus kategori \"%s\"?</string>
     <string name="internal_error">InternalError: Periksa log kerusakan untuk informasi lebih lanjut</string>
@@ -606,7 +598,6 @@
     <string name="appwidget_unavailable_locked">Widget tidak tersedia saat kunci aplikasi diaktifkan</string>
     <string name="update_already_running">Pembaruan sudah berjalan</string>
     <string name="error_user_agent_string_blank">String agen pengguna wajib diisi</string>
-    <string name="theme_tidalwave">Gelombang Pasang</string>
     <string name="download_ahead">Unduh di depan</string>
     <string name="auto_download_while_reading">Unduh otomatis ketika sedang membaca</string>
     <string name="download_ahead_info">Hanya berfungsi jika bab saat ini + bab berikutnya sudah diunduh.</string>
@@ -775,7 +766,6 @@
     <string name="manga_interval_expected_update">Bab baru diperkirakan akan dirils sekitar %1$s, diperiksa setiap sekitar %2$s.</string>
     <string name="available_disk_space_info">Tersedia:%1$s/Total:%2$s</string>
     <string name="manga_interval_custom_amount">Frekuensi pembaruan khusus:</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_soon">Segera</string>
     <string name="ext_revoke_trust">Cabut izin ekstensi tidak dikenal yang tepercaya</string>
     <string name="action_open_repo">Repo sumber terbuka</string>
@@ -829,7 +819,6 @@
     <string name="label_auto">Otomatis</string>
     <string name="pref_always_decode_long_strip_with_ssiv_2">Gunakan dekoder lama untuk bacaan strip panjang</string>
     <string name="pref_mark_duplicate_read_chapter_read">Tandai bab duplikat sebagai sudah dibaca</string>
-    <string name="theme_monochrome">Monokrom</string>
     <string name="export">Ekspor</string>
     <string name="library_list">Daftar pustaka</string>
     <string name="library_exported">Pustaka diekspor</string>
@@ -841,7 +830,6 @@
     <string name="action_edit_notes">Ubah catatan</string>
     <string name="action_notes">Catatan</string>
     <string name="action_display_unread_badge">Chapter belum dibaca</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="pref_behavior">Perilaku</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">Setelah membaca satu bab</string>
     <string name="pref_mark_duplicate_read_chapter_read_new">Setelah mengambil bab baru</string>

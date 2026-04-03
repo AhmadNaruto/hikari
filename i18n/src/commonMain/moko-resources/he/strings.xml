@@ -341,16 +341,9 @@
     <string name="action_migrate">העברה</string>
     <string name="action_display_comfortable_grid">רשת נוחה</string>
     <string name="action_display_local_badge">מקור מקומי</string>
-    <string name="theme_tealturquoise">טורקיז צהבהב</string>
     <string name="pref_dark_theme_pure_black">מצב שחור כהה טהור</string>
-    <string name="theme_greenapple">ירוק תפוח</string>
-    <string name="theme_strawberrydaiquiri">תות דאיקירי</string>
-    <string name="theme_yinyang">יין ויאנג</string>
-    <string name="theme_yotsuba">ארבעה עלים</string>
     <string name="action_show_errors">לחץ כדי לראות פרטים</string>
     <string name="pref_category_appearance">מראה</string>
-    <string name="theme_midnightdusk">דמדומי חצות</string>
-    <string name="theme_tako">טאקו</string>
     <string name="pref_library_update_refresh_metadata">רענן נתונים באופן אוטומטי</string>
     <string name="action_filter_tracked">במעקב</string>
     <string name="action_sort_date_added">תאריך הוספה</string>
@@ -566,7 +559,6 @@
     <string name="remove_manga">אתה עומד למחוק את \"%s\" מהספריה שלך</string>
     <string name="label_started">הותחלו</string>
     <string name="label_downloaded">הורדו</string>
-    <string name="theme_tidalwave">גלים</string>
     <string name="action_set_interval">קבע מרווח זמן</string>
     <string name="action_filter_interval_custom">קבע מרווח זמן מותאם מראש לטעינה</string>
     <string name="unknown_title">כותרת לא מוכרת</string>
@@ -585,7 +577,6 @@
     <string name="delete_downloaded">מחק הורדות</string>
     <string name="action_sort_next_updated">העדכון הצפוי הבא</string>
     <string name="pref_advanced_summary">הורד קבצי קריסה, אופטימיזציה לסוללה</string>
-    <string name="theme_lavender">לבנדר</string>
     <string name="information_cloudflare_help">לחץ כאן לעזרה עם Cloudflare</string>
     <string name="download_notifier_split_page_not_found">עמוד %d לא נמצא בעת פיצול</string>
     <string name="appwidget_updates_description">צפה בפריטי הספריה העדכניים ביותר</string>
@@ -720,7 +711,6 @@
     <string name="onboarding_description">נגדיר כמה דברים תחילה. ניתן לשנות אותם בכל עת בהגדרות מאוחר יותר.</string>
     <string name="onboarding_storage_help_action">מדריך אחסון</string>
     <string name="onboarding_permission_install_apps">הרשאה להתקנת אפליקציות</string>
-    <string name="theme_monochrome">מונוכרום</string>
     <string name="pref_security">אבטחה</string>
     <string name="pref_firebase">ניתוח נתונים ודוחות קריסה</string>
     <string name="pref_behavior">התנהגות</string>
@@ -730,7 +720,6 @@
     <string name="pref_onboarding_guide">מדריך התחלה</string>
     <string name="action_edit_notes">ערוך הערות</string>
     <string name="action_notes">הערות</string>
-    <string name="theme_nord">נורד</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">לאחר קריאת פרק</string>
     <string name="ext_remove">הסר</string>
     <string name="selected">נבחר</string>
