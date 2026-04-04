@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.0.2] - 2026-04-04
+
+### Added
+- Fixed-hour schedule for library updates and backups
+
+### Changed
+- Refactored migration strategy and fixed migration crashes
+
+
 ## [0.0.1] - 2026-04-03
 
 ### Added
