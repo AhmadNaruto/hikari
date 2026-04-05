@@ -488,7 +488,6 @@
     <string name="has_results">Havantaj rezultoj</string>
     <string name="unknown_title">Nekonata titolo</string>
     <string name="description_placeholder">Sen priskribo</string>
-    <string name="manga_interval_expected_update_soon">Baldaŭ</string>
     <string name="are_you_sure">Ĉu vi certas?</string>
     <string name="updates_last_update_info_just_now">Ĵus</string>
     <string name="relative_time_span_never">Neniam</string>
@@ -521,7 +520,6 @@
     <string name="pref_downloads_summary">Aŭtomata elŝuto, elŝuti antaŭe</string>
     <string name="pref_tracking_summary">Unuvoja sinkroniga progreso, plibonigita sinkronigo</string>
     <string name="onboarding_description">Komence ni agordu kelkajn aferojn. Vi ĉiam povas ŝanĝi ilin en la agordoj poste.</string>
-    <string name="label_upcoming">Baldaŭa</string>
     <string name="onboarding_permission_install_apps_description">Por instali etendaĵojn de fontoj.</string>
     <string name="pref_library_summary">Kategorioj, ĉiea ĝisdatigo, ĉapitra ŝovumo</string>
     <string name="pref_onboarding_guide">Komencanta gvidilo</string>
@@ -530,7 +528,6 @@
     <string name="action_bar_up_description">Rulumi supren</string>
     <string name="action_sort_count">Elementoj entute</string>
     <string name="action_sort_last_manga_update">Lasta kontrolo de ĝisdatigoj</string>
-    <string name="action_sort_next_updated">Sekva atendata ĝisdatigo</string>
     <string name="action_sort_tracker_score">Sekvila takso</string>
     <string name="action_display_cover_only_grid">Nur-kovrila krado</string>
     <string name="internal_error">InternalError: Kontrolu prikolapsajn protokolojn por pliaj informoj</string>
@@ -549,7 +546,6 @@
     <string name="ext_confirm_remove">Ĉu forigi etendaĵon?</string>
     <string name="remove_private_extension_message">Ĉu vi vere volas forigi etendaĵon \"%s\"?</string>
     <string name="label_completed_titles">Finitaj elementoj</string>
-    <string name="pref_update_only_in_release_period">Prognozi daton de sekva eldono</string>
     <string name="connected_to_wifi">Nur per vifio</string>
     <string name="ext_installer_shizuku_stopped">Shizuku ne ruliĝas</string>
     <string name="categorized_display_settings">Agordoj de ordigo laŭ kategorio</string>
@@ -740,7 +736,6 @@
     <string name="copied_to_clipboard_plain">Kopiita al tondujo</string>
     <string name="manga_display_interval_title">Estimi ĉiu</string>
     <string name="manga_display_modified_interval_title">Agordi por ĝisdatigi ĉiu</string>
-    <string name="manga_interval_expected_update">Novaj ĉapitroj prognozataj eldoni post ĉirkaŭ %1$s, kontrolas ĉirkaŭ ĉiu %2$s.</string>
     <string name="manga_interval_expected_update_null">Ĉi tiu mangao estas aŭ finita, aŭ ne havas prognozatan eldonotan daton.</string>
     <string name="manga_interval_custom_amount">Propra ĝisdatiga ofteco:</string>
     <string name="custom_cover">Propra kovrilo</string>
@@ -769,10 +764,6 @@
     <string name="update_already_running">Ĝisdatigado jam funkcias</string>
     <string name="cant_open_last_read_chapter">Ne eblas malfermi laste legitan ĉapitron</string>
     <string name="updates_last_update_info">Biblioteko laste ĝisdatigita: %s</string>
-    <string name="action_view_upcoming">Vidi venontajn ĝisdatigojn</string>
-    <string name="upcoming_guide">Gvidilo pri venontaj ĝisdatigoj</string>
-    <string name="upcoming_calendar_next">Sekva monato</string>
-    <string name="upcoming_calendar_prev">Antaŭa monato</string>
     <string name="source_filter_empty_screen">Neniu instalita fonto trovita</string>
     <string name="migration_help_guide">Gvidilo pri fonta migrado</string>
     <string name="migration_selection_prompt">Elektu fonton el kiu migri</string>

@@ -40,10 +40,6 @@
         <item quantity="one">გუშინ</item>
         <item quantity="other">%1$d დღის წინ</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">ხვალ</item>
-        <item quantity="other">%1$d დღეში</item>
-    </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="one">შემდეგი წაუკითხავი თავი</item>
         <item quantity="other">შემდეგი %d წაუკითხავი თავი</item>

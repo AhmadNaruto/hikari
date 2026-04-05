@@ -31,7 +31,6 @@
     <string name="delete_downloaded">ဒေါင်းလုဒ်များ ဖျက်မည်။</string>
     <string name="history">မှတ်တမ်း</string>
     <string name="label_settings">ဆက်တင်များ</string>
-    <string name="label_upcoming">နောက်ဆက်တွဲ</string>
     <string name="label_extensions">ချိတ်ဆက်မှုများ</string>
     <string name="label_backup">အရံသိမ်းဆည်းခြင်းနှင့် ပြန်လည်ရယူခြင်း</string>
     <string name="unlock_app_title">%s ကို လော့ခ်ဖွင့်ပါ။</string>
@@ -72,7 +71,6 @@
     <string name="action_filter_interval_custom">စိတ်ကြိုက် အပ်ဒိတ် အကြိမ်ရေ</string>
     <string name="action_sort_alpha">အက္ခရာစဉ်အားဖြင့် စီပါ</string>
     <string name="action_sort_count">စာအုပ်စင်တွင်ရှိသော အရေအတွက်စုစုပေါင်း</string>
-    <string name="action_sort_next_updated">နောက်တစ်ခု အပ်ဒိတ်မည်အားဖြင့် စီပါ</string>
     <string name="action_sort_latest_chapter">နောက်ဆုံး အပိုင်းအားဖြင့် စီပါ</string>
     <string name="action_sort_total">အပိုင်းစုစုပေါင်း</string>
     <string name="action_sort_unread_count">မဖတ်ရသေးသော အရေအတွက်အားဖြင့် စီပါ</string>
@@ -211,7 +209,6 @@
     <string name="ext_pending">စောင့်ဆိုင်းဆဲ</string>
     <string name="ext_installed">ထည့်သွင်းပြီး</string>
     <string name="obsolete_extension_message">ယခုအခါ ရရှိနိုင်ပါတော့မည်မဟုတ်ပါ။ ၎င်းသည် စနစ်တကျ မလုပ်ဆောင်နိုင်တော့ဘဲ အက်ပ်လီကေးရှင်းတွင် ပြဿနာများ ဖြစ်ပေါ်စေနိုင်ပါသည်။ ဖယ်ရှားပစ်ရန် အကြံပြုအပ်ပါသည်။</string>
-    <string name="pref_update_only_in_release_period">နောက်မည့် အချိန်ကို ခန့်မှန်းခြင်း</string>
     <string name="lock_with_biometrics">လော့ခ်ဖြည်ရန် လိုအပ်သည်</string>
     <string name="lock_when_idle">အသုံးမပြုသည့်အခါ သော့ခတ်ရန်</string>
     <string name="lock_always">ဘာဖြစ်ဖြစ်</string>

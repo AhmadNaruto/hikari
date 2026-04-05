@@ -36,7 +36,6 @@ import hikari.domain.extensionrepo.interactor.UpdateExtensionRepo
 import hikari.domain.extensionrepo.repository.ExtensionRepoRepository
 import hikari.domain.extensionrepo.service.ExtensionRepoService
 import hikari.domain.migration.usecases.MigrateMangaUseCase
-import hikari.domain.upcoming.interactor.GetUpcomingManga
 import tachiyomi.data.category.CategoryRepositoryImpl
 import tachiyomi.data.chapter.ChapterRepositoryImpl
 import tachiyomi.data.history.HistoryRepositoryImpl
@@ -126,7 +125,7 @@ class DomainModule : InjektModule {
         addFactory { GetManga(get()) }
         addFactory { GetHiddenManga(get()) }
         addFactory { GetNextChapters(get(), get(), get()) }
-        addFactory { GetUpcomingManga(get()) }
+
         addFactory { ResetViewerFlags(get()) }
         addFactory { SetMangaChapterFlags(get()) }
         addFactory { FetchInterval(get()) }

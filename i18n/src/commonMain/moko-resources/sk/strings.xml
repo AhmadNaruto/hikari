@@ -618,7 +618,6 @@
     <string name="action_open_random_manga">Otvoriť náhodný záznam</string>
     <string name="action_copy_link">Skopírovať link</string>
     <string name="action_apply">Použiť</string>
-    <string name="pref_update_only_in_release_period">Predpokladať čas následujúceho vydania</string>
     <string name="action_sort_random">Náhodné</string>
     <string name="action_update_category">Aktualizovať kategóriu</string>
     <string name="action_copy_to_clipboard">Kopírovať do schránky</string>
@@ -643,9 +642,7 @@
     <string name="label_data_storage">Dáta a úložisko</string>
     <string name="unlock_app_title">Odomknúť %s</string>
     <string name="action_set_interval">Nastaviť interval</string>
-    <string name="action_sort_next_updated">Ďalšia očakávaná aktualizácia</string>
     <string name="onboarding_heading">Vitajte!</string>
-    <string name="label_upcoming">Nadchádzajúce</string>
     <string name="action_replace_repo">Nahradiť</string>
     <string name="action_bar_up_description">Navigovať hore</string>
     <string name="label_donate">Prispieť finančne</string>
@@ -678,7 +675,6 @@
     <string name="onboarding_guides_new_user">Prvý krát používate %s? Odporúčame prečítať si príručku pre začiatočníkov.</string>
     <string name="onboarding_guides_returning_user">Inštalujete %s znovu?</string>
     <string name="pref_appearance_summary">Téma, dátum a formát času</string>
-    <string name="upcoming_guide">Príručka pre nadchádzajúce</string>
     <string name="track_activity_name">Prihlásenie do sledovača</string>
     <string name="private_settings">Zahrnúť citlivé nastavenia (napr. prihlasovacie údaje do sledovačov)</string>
     <string name="confirm_tracker_update">Aktualizovať postup na sledovačoch po kapitolu %d?</string>

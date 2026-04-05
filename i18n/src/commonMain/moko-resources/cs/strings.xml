@@ -676,11 +676,9 @@
     <string name="pref_chapter_swipe_start">Kapitola po přejetí doleva</string>
     <string name="pref_double_tap_zoom">Přiblížení dvojitým klepnutím</string>
     <string name="action_filter_interval_custom">Přizpůsobený interval aktualizace</string>
-    <string name="action_sort_next_updated">Další očekávaná aktualizace</string>
     <string name="manga_display_interval_title">Odhadovat každý</string>
     <string name="manga_display_modified_interval_title">Nastavit aktualizaci každých</string>
     <string name="action_set_interval">Nastavit interval</string>
-    <string name="pref_update_only_in_release_period">Předpovědět čas příštího vydání</string>
     <string name="intervals_header">Intervaly</string>
     <string name="skipped_reason_not_in_release_period">Přeskočeno, protože dnes nebylo očekáváno žádné vydání</string>
     <string name="track_delete_text">Tím se lokálně odstraní sledování.</string>
@@ -758,7 +756,6 @@
     <string name="action_delete_repo">Odstranit repozitář</string>
     <string name="invalid_repo_name">Neplatná URL repozitáře</string>
     <string name="delete_repo_confirmation">Přejete si odstranit repozitář \"%s\"?</string>
-    <string name="manga_interval_expected_update">Předpoklad vydání nových kapitol za zhruba %1$s, kontrola co %2$s.</string>
     <string name="manga_interval_custom_amount">Vlastní frekvence aktualizace:</string>
     <string name="label_extension_repos">Repozitáře rozšíření</string>
     <string name="label_add_repo_input">URL repozitáře</string>
@@ -767,7 +764,6 @@
     <string name="action_add_repo">Přidat repozitář</string>
     <string name="ext_revoke_trust">Zrušit důvěryhodná neznámá rozšíření</string>
     <string name="action_open_repo">Open source repozitář</string>
-    <string name="manga_interval_expected_update_soon">Brzy</string>
     <string name="onboarding_storage_help_info">Aktualizujete ze starší verze a nevíte, co vybrat? Další informace naleznete v průvodci úložištěm.</string>
     <string name="action_add_anyway">Přesto přidat</string>
     <string name="pref_webtoon_disable_zoom_out">Zakázat oddálení</string>
@@ -778,14 +774,12 @@
     <string name="pref_flash_duration_summary">%1$s ms</string>
     <string name="pref_flash_style_white">Bílou</string>
     <string name="manga_interval_expected_update_null">Tato manga je buďto dokončená, nebo nemá přibližné datum vydání.</string>
-    <string name="label_upcoming">Nadcházející</string>
     <string name="pref_flash_duration">Délka bliknutí</string>
     <string name="pref_flash_page_interval">Bliknout každých</string>
     <string name="pref_flash_with">Bliknout</string>
     <string name="pref_flash_style_black">Černou</string>
     <string name="pref_flash_style_white_black">Bílou a Černou</string>
     <string name="pref_display_profile">Vlastní profil zobrazení</string>
-    <string name="action_view_upcoming">Zobrazit nadcházející aktualizace</string>
     <string name="file_picker_uri_permission_unsupported">Nepodařilo se získat trvalý přístup ke složce. Aplikace se může chovat zvláštně.</string>
     <string name="pref_auto_update_manga_on_mark_read">Aktualizovat postup po přečtení</string>
     <string name="action_copy_link">Zkopírovat odkaz</string>
@@ -813,9 +807,6 @@
     <string name="trackers_updated_summary">Sledovače aktualizovány do kapitoly %d</string>
     <string name="non_library_settings">Všechny přečtené záznamy</string>
     <string name="confirm_tracker_update">Aktualizovat sledovače do kapitoly %d?</string>
-    <string name="upcoming_calendar_prev">Předchozí měsíc</string>
-    <string name="upcoming_calendar_next">Následující měsíc</string>
-    <string name="upcoming_guide">Návod k nadcházejícím kapitolám</string>
     <string name="label_auto">Automaticky</string>
     <string name="pref_mark_duplicate_read_chapter_read">Označit duplicitní přečtenou kapitolu jako přečtenou</string>
     <string name="author">Autor</string>

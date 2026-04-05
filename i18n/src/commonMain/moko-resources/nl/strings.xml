@@ -642,10 +642,8 @@
     <string name="crash_screen_description">%s is een onverwachte fout tegengekomen. We raden u aan de crashlogboeken te delen in ons ondersteuningskanaal op Discord.</string>
     <string name="pref_debug_info">Foutopsporingsinformatie</string>
     <string name="label_completed_titles">Voltooide titels</string>
-    <string name="pref_update_only_in_release_period">Buiten verwachte vrijgave periode</string>
     <string name="action_set_interval">Interval instellen</string>
     <string name="action_filter_interval_custom">Aangepast ophaalinterval</string>
-    <string name="action_sort_next_updated">Volgende verwachte update</string>
     <string name="split_tall_images">Splits hoge afbeeldingen</string>
     <string name="pref_page_rotate_invert">Draairichting van geroteerde brede pagina\'s omdraaien</string>
     <string name="pref_double_tap_zoom">Dubbeltik om te zoomen</string>
@@ -775,23 +773,17 @@
     <string name="manga_interval_expected_update_null">Deze manga is voltooid of er is geen voorspelde uitkomstdatum.</string>
     <string name="pref_auto_update_manga_on_mark_read">Voortgang bijwerken wanneer gemarkeerd als gelezen</string>
     <string name="trackers_updated_summary">Trackers bijgewerkt naar hoofdstuk %d</string>
-    <string name="upcoming_calendar_next">Volgende Maand</string>
     <string name="action_create">Aanmaken</string>
-    <string name="label_upcoming">Toekomstige Updates</string>
     <string name="available_disk_space_info">Beschikbaar: %1$s / Totaal: %2$s</string>
     <string name="pref_storage_location_info">Gebruikt voor automatische back-ups, hoofdstukdownloads en als lokale bron.</string>
     <string name="pref_storage_location">Opslaglocatie</string>
     <string name="invalid_backup_file_error">Volledige fout:</string>
-    <string name="manga_interval_expected_update_soon">Binnenkort</string>
     <string name="manga_interval_custom_amount">Aangepaste updatefrequentie:</string>
     <string name="exclude_scanlators">Scanlators uitsluiten</string>
     <string name="no_scanlators_found">Geen scanlators gevonden</string>
     <string name="confirm_tracker_update">Trackers bijwerken naar hoofdstuk %d?</string>
-    <string name="action_view_upcoming">Toekomstige Updates Bekijken</string>
-    <string name="upcoming_calendar_prev">Vorige Maand</string>
     <string name="invalid_backup_file_json">JSON back-up niet ondersteund</string>
     <string name="invalid_backup_file_unknown">Back-up bestand is corrupt</string>
-    <string name="manga_interval_expected_update">Nieuwe hoofdstukken zijn geschat om uit te komen in ongeveer %1$s. Word ongeveer elke %2$s gecontroleerd.</string>
     <string name="pref_incognito_mode_extension_summary">Pauseer leesgeschiedenis voor extensie</string>
     <string name="label_auto">Automatisch</string>
     <string name="pref_mark_duplicate_read_chapter_read_existing">Na het lezen van een hoofdstuk</string>
@@ -882,7 +874,6 @@
     <string name="firebase_summary">Het verzenden van crashlogs en analytics zal ons toestaan om problemen te identificeren en op te lossen, performance te verbeteren en om toekomstige updates relevanter te maken voor jouw noden</string>
     <string name="action_replace_repo_title">Ondertekeningssleutelvingerafdruk bestaat al</string>
     <string name="action_replace_repo_message">Repo %1$s heeft dezelfde ondertekeningssleutelvingerafdruk als %2$s.\nAls dit verwacht is zal %2$s vervangen worden. Zo niet, neem dan contact op met de beheerder van uw repo.</string>
-    <string name="upcoming_guide">Toekomstige Updatesgids</string>
     <string name="file_picker_uri_permission_unsupported">Kon geen permanente toegang tot map vergijken. De app kan zich onverwacht gedragen.</string>
     <string name="onboarding_action_finish">Beginnen</string>
 </resources>

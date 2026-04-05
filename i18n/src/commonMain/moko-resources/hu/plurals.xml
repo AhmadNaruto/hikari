@@ -64,10 +64,6 @@
         <item quantity="one">1 nap</item>
         <item quantity="other">%d nap</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Holnap</item>
-        <item quantity="other">%1$d nap múlva</item>
-    </plurals>
     <plurals name="num_repos">
         <item quantity="one">%d repo</item>
         <item quantity="other">%d repok</item>

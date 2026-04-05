@@ -582,7 +582,6 @@
     <string name="action_sort_tracker_score">امتیاز رهگیز</string>
     <string name="label_data_storage">داده های و ذخیره سازی</string>
     <string name="action_ok">باشه</string>
-    <string name="action_sort_next_updated">به روز رسانی مورد انتظار بعدی</string>
     <string name="download_queue_size_warning">هشدار: حجم زیاد بارگیری ممکن است باعث اهسته تر شدن سرعت ویا مسدود کردن %s از منبع شود. برای اطلاعات بیشتر لمس کنید.</string>
     <string name="skipped_reason_not_always_update">به دلیل این که این مجموعه نیازی به به روز رسانی نداشت رد شد</string>
     <string name="skipped_reason_not_caught_up">به دلیل وجود چپتر های خوانده نشده رد شد</string>
@@ -595,7 +594,6 @@
     <string name="pref_flash_page">در هنگام عوض شدن صفحه فلاش سفید بزن</string>
     <string name="pref_chapter_swipe_start">حرکت کشیدن به چپ</string>
     <string name="updates_last_update_info">آخرین به روز رسانی کتابخانه: %s</string>
-    <string name="pref_update_only_in_release_period">خارج از دوره انتشار موزد انتظار</string>
     <string name="pref_double_tap_zoom">برای بزرگ نمایی دوبار ضربه بزنید</string>
     <string name="action_filter_interval_custom">تناوب به روز رسانی شخسی سازی شده</string>
     <string name="onboarding_heading">خوش آمدید!</string>

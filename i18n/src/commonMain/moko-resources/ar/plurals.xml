@@ -144,14 +144,6 @@
         <item quantity="many">%1$s صفحات</item>
         <item quantity="other">%1$s صفحات</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="zero">اليوم</item>
-        <item quantity="one">غداً</item>
-        <item quantity="two">بعد غد</item>
-        <item quantity="few">بعد %1$d أيام</item>
-        <item quantity="many">بعد %1$d أيام</item>
-        <item quantity="other">بعد %1$d أيام</item>
-    </plurals>
     <plurals name="migrationListScreen.migrateDialog.migrateTitle">
         <item quantity="zero">نقل %1$d مدخل؟</item>
         <item quantity="one">نقل مدخل؟</item>

@@ -678,8 +678,6 @@
     <string name="intervals_header">Intervalle</string>
     <string name="action_filter_interval_custom">Benutzerdefiniertes Aktualisierungsintervall</string>
     <string name="action_set_interval">Intervall einstellen</string>
-    <string name="action_sort_next_updated">Nächste erwartete Aktualisierung</string>
-    <string name="pref_update_only_in_release_period">Nächsten Veröffentlichungszeitpunkt vorhersagen</string>
     <string name="skipped_reason_not_in_release_period">Übersprungen, da heute keine Veröffentlichung erwartet wurde</string>
     <string name="manga_display_interval_title">Schätzt alle</string>
     <string name="manga_display_modified_interval_title">Aktualisiert alle</string>
@@ -765,9 +763,7 @@
     <string name="label_add_repo_input">Repository-URL</string>
     <string name="action_add_repo_message">Füge zusätzliche Repositorys zu %s hinzu. Deren URLs sollten mit „index.min.json“ enden.</string>
     <string name="invalid_repo_name">Ungültige Repository-URL</string>
-    <string name="manga_interval_expected_update">Ca. %1$s bis zur Veröffentlichung neuer Kapitel, wird ca. alle %2$s überprüft.</string>
     <string name="action_open_repo">Open-Source-Repository</string>
-    <string name="manga_interval_expected_update_soon">Bald</string>
     <string name="ext_revoke_trust">Zertifikatsbestätigungen zurücknehmen</string>
     <string name="pref_webtoon_disable_zoom_out">Rauszoomen deaktivieren</string>
     <string name="pref_display_profile">Benutzerdefiniertes Anzeigeprofil</string>
@@ -776,11 +772,6 @@
     <string name="action_replace_repo_title">Signaturschlüssel-Fingerprint existiert bereits</string>
     <string name="action_replace_repo_message">Repository %1$s hat den gleichen Signaturschlüssel-Fingerprint wie %2$s.
 \nFalls das erwünscht ist, wird %2$s nun ersetzt. Falls nicht, kontaktiere den Repository-Maintainer.</string>
-    <string name="upcoming_calendar_next">Nächster Monat</string>
-    <string name="upcoming_calendar_prev">Vorheriger Monat</string>
-    <string name="label_upcoming">Bevorstehend</string>
-    <string name="action_view_upcoming">Bevorstehende Aktualisierungen ansehen</string>
-    <string name="upcoming_guide">Leitfaden für Bevorstehendes</string>
     <string name="file_picker_uri_permission_unsupported">Dauerhafter Ordnerzugriff konnte nicht erlangt werden. Die App kann sich unerwartet verhalten.</string>
     <string name="manga_interval_expected_update_null">Dieser Manga ist entweder abgeschlossen, oder es existiert kein geschätztes Veröffentlichungsdatum.</string>
     <string name="pref_flash_page_interval">Leuchte jede</string>

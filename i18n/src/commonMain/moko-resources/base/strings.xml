@@ -26,7 +26,6 @@
     <string name="label_download_queue">Download queue</string>
     <string name="label_library">Library</string>
     <string name="label_recent_updates">Updates</string>
-    <string name="label_upcoming">Upcoming</string>
     <string name="label_recent_manga">History</string>
     <string name="label_sources">Sources</string>
     <string name="label_backup">Backup and restore</string>
@@ -66,7 +65,6 @@
     <string name="action_sort_last_read">Last read</string>
     <string name="action_sort_last_manga_update">Last update check</string>
     <string name="action_sort_unread_count">Unread count</string>
-    <string name="action_sort_next_updated">Next expected update</string>
     <string name="action_sort_latest_chapter">Latest chapter</string>
     <string name="action_sort_chapter_fetch_date">Chapter fetch date</string>
     <string name="action_sort_date_added">Date added</string>
@@ -278,7 +276,6 @@
     <string name="pref_update_only_completely_read">Skip entries with unread chapter(s)</string>
     <string name="pref_update_only_non_completed">Skip entries with \"Completed\" status</string>
     <string name="pref_update_only_started">Skip unstarted entries</string>
-    <string name="pref_update_only_in_release_period">Predict next release time</string>
     <string name="pref_library_update_show_tab_badge">Show unread count on Updates icon</string>
 
     <string name="pref_library_update_refresh_metadata">Automatically refresh metadata</string>
@@ -729,9 +726,7 @@
     <string name="manga_display_interval_title">Estimate every</string>
     <string name="manga_display_modified_interval_title">Set to update every</string>
     <!-- "... around 2 days" -->
-    <string name="manga_interval_expected_update">New chapters predicted to be released in around %1$s, checking around every %2$s.</string>
     <string name="manga_interval_expected_update_null">This manga is either completed, or there is no predicted release date.</string>
-    <string name="manga_interval_expected_update_soon">Soon</string>
     <string name="manga_interval_custom_amount">Custom update frequency:</string>
     <string name="chapter_downloading_progress">Downloading (%1$d/%2$d)</string>
     <string name="chapter_error">Error</string>
@@ -841,13 +836,9 @@
     <string name="updates_last_update_info">Library last updated: %s</string>
     <string name="updates_last_update_info_just_now">Just now</string>
     <string name="relative_time_span_never">Never</string>
-    <string name="action_view_upcoming">View Upcoming Updates</string>
     <string name="action_filter_excluded_scanlators">Filter excluded scanlators</string>
 
     <!-- Upcoming -->
-    <string name="upcoming_guide">Upcoming Guide</string>
-    <string name="upcoming_calendar_next">Next Month</string>
-    <string name="upcoming_calendar_prev">Previous Month</string>
 
     <!-- History -->
     <string name="recent_manga_time">Ch. %1$s - %2$s</string>

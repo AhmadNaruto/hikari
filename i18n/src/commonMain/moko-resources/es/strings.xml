@@ -673,8 +673,6 @@
     <string name="pref_chapter_swipe_start">Al deslizar a la izquierda en un capítulo</string>
     <string name="pref_chapter_swipe_end">Al deslizar a la derecha en un capítulo</string>
     <string name="pref_double_tap_zoom">Ampliar tocando dos veces la pantalla</string>
-    <string name="action_sort_next_updated">Próxima actualización prevista</string>
-    <string name="pref_update_only_in_release_period">Intentar predecir cuándo sale el siguiente número</string>
     <string name="intervals_header">Intervalos</string>
     <string name="manga_display_interval_title">Estimar cada</string>
     <string name="manga_display_modified_interval_title">Forzar actualización cada</string>
@@ -746,7 +744,6 @@
     <string name="ext_permission_install_apps_warning">Toca aquí para conceder los permisos necesarios para instalar extensiones.</string>
     <string name="private_settings">Incluir datos privados, como las claves de inicio de sesión en plataformas de seguimiento</string>
     <string name="invalid_backup_file_error">Descripción completa del problema:</string>
-    <string name="manga_interval_expected_update">Se espera que el siguiente número salga en aproximadamente %1$s, la aplicación busca actualizaciones cada %2$s.</string>
     <string name="manga_interval_custom_amount">Frecuencia de actualización personalizada:</string>
     <string name="error_repo_exists">¡Este repositorio ya existe!</string>
     <string name="pref_library_update_smart_update">Actualizaciones inteligentes</string>
@@ -760,7 +757,6 @@
     <string name="label_add_repo_input">Dirección URL del repositorio</string>
     <string name="onboarding_storage_help_info">¿Acabas de actualizar desde una versión más antigua y no sabes qué hacer? Échale un vistazo a la guía de almacenamiento.</string>
     <string name="onboarding_storage_help_action">Guía de almacenamiento</string>
-    <string name="manga_interval_expected_update_soon">Pronto</string>
     <string name="ext_revoke_trust">Dejar de marcar todas la extensiones desconocidas como de confianza</string>
     <string name="action_open_repo">Abrir repositorio</string>
     <string name="pref_webtoon_disable_zoom_out">Desactivar alejar</string>
@@ -769,11 +765,6 @@
     <string name="action_replace_repo">Reemplazar</string>
     <string name="action_replace_repo_title">Ya hay una huella digital de la clave de firma</string>
     <string name="action_replace_repo_message">El repositorio %1$s tiene la misma huella digital de la clave de firma que %2$s.\nSi ya contabas con ello y te parece bien se reemplazará %2$s. De lo contrario habla con la persona a cargo de este repositorio.</string>
-    <string name="label_upcoming">Próximamente</string>
-    <string name="action_view_upcoming">Ver las próximas actualizaciones</string>
-    <string name="upcoming_guide">Próxima guía</string>
-    <string name="upcoming_calendar_next">Próximo mes</string>
-    <string name="upcoming_calendar_prev">Mes anterior</string>
     <string name="file_picker_uri_permission_unsupported">No se ha podido obtener un acceso continuo a la carpeta, por lo que la aplicación puede fallar de vez en cuando.</string>
     <string name="pref_flash_page_interval">Parpadear cada</string>
     <string name="pref_flash_with">Parpadear a</string>

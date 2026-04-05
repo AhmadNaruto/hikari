@@ -680,7 +680,6 @@
     <string name="pref_chapter_swipe_end">Przesuń palcem w prawo</string>
     <string name="pref_chapter_swipe_start">Przesuń palcem w lewo</string>
     <string name="action_set_interval">Ustaw interwał</string>
-    <string name="action_sort_next_updated">Następna spodziewana aktualizacja</string>
     <string name="manga_display_modified_interval_title">Aktualizuj co</string>
     <string name="syncing_library">Synchronizowanie biblioteki</string>
     <string name="create_backup_file_error">Nie można wykonać kopi zapasowej</string>
@@ -703,7 +702,6 @@
     <string name="action_move_to_bottom_all_for_series">Przenieś serię na dół</string>
     <string name="relative_time_span_never">Nigdy</string>
     <string name="onboarding_storage_action_select">Wybierz folder</string>
-    <string name="manga_interval_expected_update">Następna aktualizacja spodziewana za około %1$s, sprawdzanie co %2$s.</string>
     <string name="onboarding_storage_selection_required">Folder musi być wybrany</string>
     <string name="onboarding_permission_notifications">Uprawnienia powiadomień</string>
     <string name="onboarding_heading">Witaj!</string>
@@ -744,7 +742,6 @@
     <string name="pref_library_update_smart_update">Inteligentna aktualizacja</string>
     <string name="onboarding_description">Na początek ustawmy kilka rzeczy. Zawsze możesz je później zmienić w ustawieniach.</string>
     <string name="onboarding_storage_help_info">Aktualizujesz ze starszej wersji i nie jesteś pewien co wybrać? Zobacz na przewodnik po pamięci.</string>
-    <string name="pref_update_only_in_release_period">Przewiduj następną aktualizację</string>
     <string name="ext_permission_install_apps_warning">Uprawnienia są wymagane aby zainstalować rozszerzenia. Kliknij tutaj aby je przyznać.</string>
     <string name="onboarding_storage_info">Wybierz folder gdzie %1$s będzie zapisywał pobrane rozdziały, kopie zapasowe i inne.
 \n
@@ -770,16 +767,11 @@
     <string name="has_results">Ma wyniki</string>
     <string name="manga_display_interval_title">Oszacuj co</string>
     <string name="available_disk_space_info">Wolne: %1$s / Ogółem: %2$s</string>
-    <string name="manga_interval_expected_update_soon">Wkrótce</string>
     <string name="skipped_reason_not_in_release_period">Pominięto, ponieważ nie spodziewano się dzisiaj żadnej publikacji</string>
     <string name="exclude_scanlators">Wyklucz skanlatorów</string>
     <string name="pref_webtoon_disable_zoom_out">Wyłącz oddalenie</string>
     <string name="action_add_anyway">Dodaj mimo to</string>
     <string name="action_replace_repo">Zamień</string>
-    <string name="action_view_upcoming">Pokaż nadchodzące aktualizacje</string>
-    <string name="upcoming_calendar_next">Następny miesiąc</string>
-    <string name="upcoming_calendar_prev">Poprzedni miesiąc</string>
-    <string name="label_upcoming">Nadchodzący</string>
     <string name="file_picker_uri_permission_unsupported">Nie udało się uzyskać dostępu do folderu. Aplikacja może się zachowywać nieprzewidywalnie.</string>
     <string name="pref_flash_duration_summary">%1$s ms</string>
     <string name="pref_flash_duration">Długość migania</string>
@@ -812,7 +804,6 @@
     <string name="pref_hardware_bitmap_threshold_summary">Jeżeli czytnik załaduje pusty obraz, stopniowo zmniejszaj zakres graniczny.\nWybrany: %s</string>
     <string name="confirm_tracker_update">Zaktualizować śledzenie do rozdziału %d?</string>
     <string name="action_replace_repo_title">Identyfikator Klucza Certyfikatu już istnieje</string>
-    <string name="upcoming_guide">Przewodnik nadchodzących aktualizacji</string>
     <string name="action_replace_repo_message">Repozytorium %1$s posiada taki sam identyfikator certyfikatu jak %2$s.\nJeżeli było to przewidziane, %2$s zostanie zastąpione, w przeciwnym wypadku skontaktuj się z z osobą utrzymującą repozytorium.</string>
     <string name="pref_download_new_unread_chapters_only">Pomiń pobieranie duplikatów przeczytanych już rozdziałów</string>
     <string name="invalid_backup_file_json">Kopia zapasowa JSON nie jest wspierana</string>

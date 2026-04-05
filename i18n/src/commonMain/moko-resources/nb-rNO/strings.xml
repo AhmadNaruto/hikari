@@ -676,12 +676,10 @@
     <string name="skipped_reason_not_in_release_period">Hoppet over fordi ingen utgivelse var forventet i dag</string>
     <string name="action_set_interval">Sett intervall</string>
     <string name="action_filter_interval_custom">Egendefinert oppdateringsintervall</string>
-    <string name="action_sort_next_updated">Neste forventede oppdatering</string>
     <string name="pref_chapter_swipe_end">Sveip til høyre handling</string>
     <string name="intervals_header">Intervaller</string>
     <string name="manga_display_interval_title">Anslå hver</string>
     <string name="delete_downloaded">Slett nedlastede</string>
-    <string name="pref_update_only_in_release_period">Forutsi neste utgivelsestidspunkt</string>
     <string name="pref_double_tap_zoom">Dobbelttrykk for å zoome</string>
     <string name="pref_chapter_swipe_start">Sveip til venstre handling</string>
     <string name="track_delete_title">Vil du fjerne sporing for %s?</string>
@@ -741,7 +739,6 @@
 \nEn dedikert mappe anbefales.
 \n
 \nValgt mappe: %2$s</string>
-    <string name="manga_interval_expected_update">Nye kapitler forventes om omtrent %1$s, sjekker omtrent hver %2$s.</string>
     <string name="onboarding_permission_notifications">Tillat varslinger</string>
     <string name="onboarding_permission_install_apps">Tillat å installere apper</string>
     <string name="available_disk_space_info">Tilgjengelig: %1$s / Totalt: %2$s</string>
@@ -766,10 +763,8 @@
     <string name="label_extension_repos">Utvidelsepakkebrønner</string>
     <string name="onboarding_storage_help_info">Oppdaterer du fra en eldre versjon og er usikker på hva du skal velge? Sjekk lagringsguiden for mer informasjon.</string>
     <string name="onboarding_storage_help_action">Lagringsguiden</string>
-    <string name="manga_interval_expected_update_soon">Snart</string>
     <string name="ext_revoke_trust">Fjern tilliten til ukjente utvidelser</string>
     <string name="action_open_repo">Åpne pakkebrønnen</string>
-    <string name="label_upcoming">Kommende</string>
     <string name="action_add_anyway">Legg til likevel</string>
     <string name="action_replace_repo">Erstatt</string>
 </resources>

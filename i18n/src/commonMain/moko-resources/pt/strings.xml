@@ -672,13 +672,11 @@
     <string name="pref_chapter_swipe_start">Capítulo ao deslizar para a esquerda</string>
     <string name="pref_double_tap_zoom">Toque duplo para aproximar</string>
     <string name="action_set_interval">Definir intervalo</string>
-    <string name="pref_update_only_in_release_period">Fora do período esperado de lançamento</string>
     <string name="pref_debug_info">Informações de depuração</string>
     <string name="pref_chapter_swipe_end">Capítulo ao deslizar para a direita</string>
     <string name="intervals_header">intervalos</string>
     <string name="manga_display_interval_title">Estimado a cada</string>
     <string name="action_filter_interval_custom">Frequência da atualização personalizada</string>
-    <string name="action_sort_next_updated">Próxima atualização esperada</string>
     <string name="manga_display_modified_interval_title">Definido para atualizar a cada</string>
     <string name="skipped_reason_not_in_release_period">Pulado, pois nenhum lançamento é esperado para hoje</string>
     <string name="delete_downloaded">Eliminar transferido</string>
@@ -746,11 +744,7 @@
     <string name="private_settings">Incluir configurações sensíveis (tokens de login dos monitoradores, por exemplo)</string>
     <string name="create_backup_file_error">Não foi possível criar o ficheiro do backup</string>
     <string name="has_results">Há resultados</string>
-    <string name="manga_interval_expected_update_soon">Em breve</string>
     <string name="relative_time_span_never">Nunca</string>
-    <string name="upcoming_guide">Guia de próximos lançamentos</string>
-    <string name="upcoming_calendar_next">Próximo mês</string>
-    <string name="upcoming_calendar_prev">Mês anterior</string>
     <string name="track_delete_remote_text">Também remover do %s</string>
     <string name="onboarding_description">Vamos definir algumas coisas primeiro. Sempre pode fazer alterações nas configurações depois também.</string>
     <string name="onboarding_action_next">Próximo</string>
@@ -773,11 +767,8 @@
     <string name="pref_storage_location_info">Usado para backups automáticos, descargas de capítulos e na fonte local.</string>
     <string name="last_auto_backup_info">Último backup automático feito em: %s</string>
     <string name="library_sync_complete">Sincronização da biblioteca finalizada</string>
-    <string name="manga_interval_expected_update">Novos capítulos com previsão de serem lançados em torno de %1$s, verificando em torno de cada %2$s.</string>
     <string name="track_delete_text">Isto irá remover o monitoramento localmente.</string>
     <string name="pref_webtoon_disable_zoom_out">Desativar redução de zoom</string>
-    <string name="action_view_upcoming">Exibir as próximas atualizações</string>
-    <string name="label_upcoming">A seguir</string>
     <string name="non_library_settings">Todas as entradas lidas</string>
     <string name="action_copy_link">Copiar hiperligação</string>
     <string name="pref_flash_style_black">Preto</string>

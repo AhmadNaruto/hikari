@@ -634,10 +634,8 @@
     <string name="action_filter_interval_custom">अनुकूलित लाने का अंतराल</string>
     <string name="intervals_header">अंतराल</string>
     <string name="pref_chapter_swipe_end">अध्यााय: दाएँ स्वाइप करें</string>
-    <string name="action_sort_next_updated">अगला अपेक्षित अपडेट</string>
     <string name="pref_debug_info">डीबग जानकारी</string>
     <string name="pref_advanced_summary">डंप क्रैश लॉग, बैटरी अनुकूलन</string>
-    <string name="pref_update_only_in_release_period">अपेक्षित रिलीज़ अवधि से बाहर</string>
     <string name="pref_chapter_swipe_start">अध्यााय: बाएँ स्वाइप करें</string>
     <string name="library_sync_complete">लाइब्रेरी सिंक पूरा</string>
     <string name="download_cache_invalidated">डाउनलोड अनुक्रमणिका अमान्य</string>
@@ -662,7 +660,6 @@
     <string name="action_move_to_bottom_all_for_series">सीरीज को नीचे ले जाएं</string>
     <string name="pref_onboarding_guide">ऑनबोर्डिंग मार्गदर्शक</string>
     <string name="onboarding_heading">नमस्ते!आपका स्वागत है!</string>
-    <string name="label_upcoming">आगामी</string>
     <string name="action_revert_to_default">डिफ़ॉल्ट पर वापस लौटें</string>
     <string name="onboarding_description">पहले कुछ चीजें सेट करते हैं। आप इन्हें बाद में सेटिंग्स में बदल भी सकते हैं।</string>
     <string name="onboarding_storage_selection_required">एक फ़ोल्डर चुनना अनिवार्य है</string>
@@ -787,9 +784,7 @@
     <string name="possible_duplicates_title">संभावित डुप्लिकेट्स</string>
     <string name="manga_display_interval_title">हर बार अनुमान लगाएं</string>
     <string name="manga_display_modified_interval_title">हर बार अपडेट करने के लिए सेट करें</string>
-    <string name="manga_interval_expected_update">नए अध्याय लगभग %1$s में रिलीज़ होने की संभावना है, लगभग हर %2$s में जांच की जा रही है।</string>
     <string name="manga_interval_expected_update_null">यह मंगा या तो पूरा हो चुका है, या कोई अनुमानित रिलीज़ तारीख उपलब्ध नहीं है।</string>
-    <string name="manga_interval_expected_update_soon">जल्द ही</string>
     <string name="manga_interval_custom_amount">कस्टम अपडेट आवृत्ति:</string>
     <string name="exclude_scanlators">स्कैनलेटर को बाहर करें</string>
     <string name="no_scanlators_found">कोई स्कैनलेटर नहीं मिला</string>
@@ -806,10 +801,6 @@
     <string name="track_delete_text">यह ट्रैकिंग को स्थानीय रूप से हटा देगा।</string>
     <string name="updates_last_update_info_just_now">अभी अभी</string>
     <string name="relative_time_span_never">कभी नहीं</string>
-    <string name="action_view_upcoming">आगामी अपडेट देखें</string>
-    <string name="upcoming_guide">आगामी मार्गदर्शिका</string>
-    <string name="upcoming_calendar_next">अगला महीना</string>
-    <string name="upcoming_calendar_prev">पिछला महीना</string>
     <string name="crash_screen_title">अरे!</string>
     <string name="crash_screen_description">%s को एक अप्रत्याशित त्रुटि का सामना करना पड़ा। हम सुझाव देते हैं कि आप क्रैश लॉग्स हमारे Discord सपोर्ट चैनल में साझा करें।</string>
     <string name="crash_screen_restart_application">एप्लिकेशन पुनः प्रारंभ करें</string>

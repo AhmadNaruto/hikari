@@ -675,8 +675,6 @@
     <string name="pref_chapter_swipe_start">Action de glisser à gauche</string>
     <string name="pref_chapter_swipe_end">Action de glisser à droite</string>
     <string name="pref_double_tap_zoom">Appuyez deux fois pour zoomer</string>
-    <string name="action_sort_next_updated">Prochaine mise à jour prévue</string>
-    <string name="pref_update_only_in_release_period">Prédiction de la prochaine date sortie</string>
     <string name="action_set_interval">Définir l\'intervalle</string>
     <string name="action_ok">Valider</string>
     <string name="action_filter_interval_custom">Fréquence de mise à jour personnalisée</string>
@@ -742,7 +740,6 @@
     <string name="onboarding_guides_returning_user">De retour sur %s ?</string>
     <string name="track_delete_title">Annuler le suivi avec %s ?</string>
     <string name="private_settings">Inclure des informations sensible (ex : jetons de connexion)</string>
-    <string name="manga_interval_expected_update">De nouveaux chapitres sont prédits dans environ %1$s, mise à jour prévu tous les %2$s.</string>
     <string name="exclude_scanlators">Exclure la team de scantrad</string>
     <string name="no_scanlators_found">Aucune team de scantrad trouvé</string>
     <string name="relative_time_span_never">Jamais</string>
@@ -757,7 +754,6 @@
     <string name="action_add_repo_message">Ajouter un répertoire additionnel à %s. L\'URL devrait se terminer par « index.min.json ».</string>
     <string name="error_repo_exists">Ce répertoire existe déjà !</string>
     <string name="invalid_repo_name">L\'URL du répertoire est invalide</string>
-    <string name="manga_interval_expected_update_soon">Bientôt</string>
     <string name="information_empty_repos">Vous n\'avez aucun répertoire.</string>
     <string name="action_add_repo">Ajouter un répertoire</string>
     <string name="action_open_repo">Répertoire open source</string>
@@ -770,14 +766,9 @@
     <string name="last_auto_backup_info">Dernière sauvegarde automatique : %s</string>
     <string name="source_settings">Paramètres sources</string>
     <string name="action_add_anyway">Ajouter tout de même</string>
-    <string name="label_upcoming">À venir</string>
     <string name="action_replace_repo">Remplacer</string>
     <string name="pref_display_profile">Profil d\'affichage personnalisé</string>
     <string name="pref_webtoon_disable_zoom_out">Désactiver le zoom arrière</string>
-    <string name="action_view_upcoming">Afficher les mises à jour à venir</string>
-    <string name="upcoming_guide">Guide à venir</string>
-    <string name="upcoming_calendar_next">Le mois prochain</string>
-    <string name="upcoming_calendar_prev">Le mois précédent</string>
     <string name="action_copy_link">Copier le lien</string>
     <string name="action_replace_repo_title">L\'empreinte digitale de la clé de signature existe déjà</string>
     <string name="add_repo_confirmation">Souhaitez-vous ajouter le répertoire \"%s\" ?</string>

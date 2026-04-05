@@ -331,12 +331,10 @@
     <string name="label_local">Лакальна</string>
     <string name="action_set_interval">Задаць інтэрвал</string>
     <string name="action_filter_interval_custom">Наладжваемая частата абнаўлення</string>
-    <string name="label_upcoming">Наступнае</string>
     <string name="scanlator">Сканлейтар</string>
     <string name="label_downloaded">Спампована</string>
     <string name="label_donate">Падтрымаць</string>
     <string name="label_auto">Аўта</string>
-    <string name="action_sort_next_updated">Наступнае чаканае абнаўленне</string>
     <string name="action_sort_tracker_score">Ацэнка трэкера</string>
     <string name="action_sort_random">Выпадкова</string>
     <string name="action_search_hint">Шукаць…</string>
@@ -395,7 +393,6 @@
     <string name="pref_firebase">Аналітыка і журналы збояў</string>
     <string name="firebase_summary">Адпраўка журналаў збояў і аналітыкі дазволіць нам выяўляць і выпраўляць памылкі, паляпшаць прадукцыйнасць і развіваць праграму з улікам вашых патрэб</string>
     <string name="pref_library_update_smart_update">Разумнае абнаўленне</string>
-    <string name="pref_update_only_in_release_period">Прадказваць выхад новых раздзелаў</string>
     <string name="pref_library_update_show_tab_badge">Паказваць колькасць непрачытаных на значку «Абнаўленні»</string>
     <string name="pref_behavior">Паводзіны</string>
     <string name="pref_chapter_swipe_end">Раздзел пры змахванні ўправа</string>
@@ -644,9 +641,7 @@
     <string name="display_mode_chapter">Раздзел %1$s</string>
     <string name="manga_display_interval_title">Ацэньваць кожныя</string>
     <string name="manga_display_modified_interval_title">Абнаўляць кожныя</string>
-    <string name="manga_interval_expected_update">Выхад новых раздзелаў прагназуецца прыкладна праз %1$s, праверка кожныя %2$s.</string>
     <string name="manga_interval_expected_update_null">Гэты твор альбо завершаны, альбо дата яго выхаду невядомая.</string>
-    <string name="manga_interval_expected_update_soon">Хутка</string>
     <string name="manga_interval_custom_amount">Наладжаная частата абнаўлення:</string>
     <string name="chapter_downloading_progress">Спампоўваецца (%1$d/%2$d)</string>
     <string name="chapter_error">Памылка</string>
@@ -742,11 +737,7 @@
     <string name="updates_last_update_info">Апошняе абноўленне: %s</string>
     <string name="updates_last_update_info_just_now">Толькі што</string>
     <string name="relative_time_span_never">Ніколі</string>
-    <string name="action_view_upcoming">Прагляд будучых абнаўленняў</string>
     <string name="action_filter_excluded_scanlators">Фільтраваць выключаных сканлэйтараў</string>
-    <string name="upcoming_guide">Будучы дапаможнік</string>
-    <string name="upcoming_calendar_next">Наступны месяц</string>
-    <string name="upcoming_calendar_prev">Папярэдні месяц</string>
     <string name="recent_manga_time">Раздз. %1$s ‐ %2$s</string>
     <string name="pref_clear_history">Ачысціць гісторыю</string>
     <string name="clear_history_completed">Гісторыя выдалена</string>

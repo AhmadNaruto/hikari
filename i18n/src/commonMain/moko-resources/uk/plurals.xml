@@ -108,10 +108,4 @@
         <item quantity="many">%1$s сторінок</item>
         <item quantity="other">%1$s сторінок</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Завтра</item>
-        <item quantity="few">Через %1$d дні</item>
-        <item quantity="many">Через %1$d днів</item>
-        <item quantity="other">Через %1$d днів</item>
-    </plurals>
 </resources>

@@ -598,7 +598,6 @@
     <string name="label_data_storage">Data ja tallennustila</string>
     <string name="label_stats">Tilastotiedot</string>
     <string name="label_downloaded">Ladattu</string>
-    <string name="action_sort_next_updated">Seuraava odotettu päivitys</string>
     <string name="action_sort_tracker_score">Seurannan pisteytys</string>
     <string name="action_update_category">Päivitä kategoria</string>
     <string name="action_display_show_continue_reading_button">Jatka lukemista painike</string>

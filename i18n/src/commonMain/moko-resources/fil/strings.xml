@@ -677,10 +677,8 @@
     <string name="pref_chapter_swipe_end">Kabanata sa pag-swipe pakanan</string>
     <string name="action_set_interval">Itakda ang pagitan</string>
     <string name="action_filter_interval_custom">Ma-customize na dalas ng pag-update</string>
-    <string name="action_sort_next_updated">Susunod na inaasahang update</string>
     <string name="manga_display_interval_title">Tantyahin bawat</string>
     <string name="manga_display_modified_interval_title">Itakdang i-update bawat</string>
-    <string name="pref_update_only_in_release_period">Hulaan ang susunod na oras ng release</string>
     <string name="intervals_header">Mga pagitan</string>
     <string name="skipped_reason_not_in_release_period">Nilaktawan dahil walang inaasahang release ngayong araw</string>
     <string name="has_results">May mga resulta</string>
@@ -749,7 +747,6 @@
     <string name="onboarding_permission_notifications_description">Maabisuhan para sa mga update sa aklatan at higit pa.</string>
     <string name="onboarding_permission_action_grant">Payagan</string>
     <string name="available_disk_space_info">Na magagamit: %1$s / Kabuuan: %2$s</string>
-    <string name="manga_interval_expected_update">Mga bagong kabanata na nahulaang ilalabas sa loob ng %1$s, na tumitingin bawat %2$s.</string>
     <string name="invalid_backup_file_error">Buong error:</string>
     <string name="ext_permission_install_apps_warning">Kinakailangan ng permiso para mag-install ng mga extension. I-tap upang mapayagan ito.</string>
     <string name="private_settings">Kasali ang mga sensitibong setting (hal., mga tracker login token)</string>
@@ -766,7 +763,6 @@
     <string name="invalid_repo_name">Di-wastong URL ng repo</string>
     <string name="delete_repo_confirmation">Gusto mo bang tanggalin ang repo na \"%s\"?</string>
     <string name="manga_interval_custom_amount">Custom na frequency sa pag-update:</string>
-    <string name="manga_interval_expected_update_soon">Malapit na</string>
     <string name="ext_revoke_trust">Bawiin ang mga pinagkakatiwalaang hindi kilalang extension</string>
     <string name="action_open_repo">Open source na repo</string>
     <string name="pref_webtoon_disable_zoom_out">Patayin ang pag-zoom out</string>
@@ -776,11 +772,6 @@
     <string name="action_replace_repo_message">Ang repository na %1$s ay may magkaparehong Signing Key Fingerprint sa %2$s.
 \nKung ito ay inaasahan, %2$s ang papalitan, kung hindi naman ay makipag-ugnayan sa tagapamahala ng iyong repo.</string>
     <string name="pref_display_profile">Custom na profile sa display</string>
-    <string name="label_upcoming">Paparating</string>
-    <string name="upcoming_guide">Gabay sa Paparating</string>
-    <string name="upcoming_calendar_next">Susunod na Buwan</string>
-    <string name="upcoming_calendar_prev">Nakaraang Buwan</string>
-    <string name="action_view_upcoming">Tingnan ang mga Paparating na Update</string>
     <string name="file_picker_uri_permission_unsupported">Nabigong makakuha ng patuloy na pag-access ng folder. Ang app ay magkaroon ng di-inaasahang pagkilos.</string>
     <string name="pref_flash_page_interval">Mag-flash kada</string>
     <string name="pref_flash_style_white_black">Puti at Itim</string>

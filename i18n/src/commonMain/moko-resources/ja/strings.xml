@@ -677,8 +677,6 @@
     <string name="pref_double_tap_zoom">ダブルタップでズーム</string>
     <string name="action_set_interval">間隔を設定</string>
     <string name="action_filter_interval_custom">カスタマイズした更新頻度</string>
-    <string name="action_sort_next_updated">次の更新予定</string>
-    <string name="pref_update_only_in_release_period">次の更新時点を予測</string>
     <string name="intervals_header">間隔</string>
     <string name="skipped_reason_not_in_release_period">今日、連載更新が予想されていないためスキップしました</string>
     <string name="has_results">結果あり</string>
@@ -749,7 +747,6 @@
     <string name="onboarding_permission_notifications_description">ライブラリ更新などの通知を送信します。</string>
     <string name="onboarding_permission_action_grant">許可</string>
     <string name="available_disk_space_info">空き領域：%1$s/総計：%2$s</string>
-    <string name="manga_interval_expected_update">新章は%1$sぐらいでリリースされると予測しており、%2$sごとに確認する予定です。</string>
     <string name="invalid_backup_file_error">詳細なエラー情報：</string>
     <string name="ext_permission_install_apps_warning">拡張機能をインストールするためには権限が必要です。タップで許可してください。</string>
     <string name="error_repo_exists">このリポジトリは既に存在しています！</string>
@@ -758,7 +755,6 @@
     <string name="delete_repo_confirmation">リポジトリ「%s」を削除してもよろしいですか？</string>
     <string name="onboarding_storage_help_action">ストレージ ガイド</string>
     <string name="private_settings">トラッカーログイン情報などの機密性の高い情報を含む</string>
-    <string name="manga_interval_expected_update_soon">間もなく</string>
     <string name="ext_revoke_trust">不明な拡張機能の信頼を取り消す</string>
     <string name="label_extension_repos">拡張機能リポジトリ</string>
     <string name="invalid_repo_name">リポジトリURLが無効です</string>
@@ -773,12 +769,7 @@
     <string name="action_add_anyway">追加</string>
     <string name="action_replace_repo">交換</string>
     <string name="pref_display_profile">カスタムディスプレイプロファイル</string>
-    <string name="upcoming_calendar_prev">前月</string>
-    <string name="upcoming_calendar_next">翌月</string>
-    <string name="label_upcoming">近々公開</string>
-    <string name="action_view_upcoming">今後のアップデート</string>
     <string name="action_replace_repo_title">署名キーのフィンガープリントはすでに存在します</string>
-    <string name="upcoming_guide">今後のご案内</string>
     <string name="action_replace_repo_message">リポジトリ %1$s は %2$s と同じ署名キー指紋を持っています。
 \nこれが予想される場合は %2$s が置換されますが、そうでない場合はリポジトリのメンテナーに連絡してください。</string>
     <string name="pref_flash_duration">閃光時間</string>

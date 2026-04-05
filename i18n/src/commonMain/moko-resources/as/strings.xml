@@ -4,7 +4,6 @@
     <string name="off">বন্ধ</string>
     <string name="label_library">পুথিভঁৰাল</string>
     <string name="label_recent_updates">আপডেটসমূহ</string>
-    <string name="label_upcoming">আসন্ন</string>
     <string name="label_started">আৰম্ভ হৈছে</string>
     <string name="label_local">স্থানীয়</string>
     <string name="label_downloaded">ডাউনলোড কৰা</string>
@@ -112,7 +111,6 @@
     <string name="action_sort_last_read">শেষ পঢ়া</string>
     <string name="action_sort_last_manga_update">শেষ আপডেট পৰীক্ষা</string>
     <string name="action_sort_unread_count">অপঢ়া সংখ্যাৰ ভিত্তিত</string>
-    <string name="action_sort_next_updated">পৰৱৰ্তী আপডেট আশা কৰা হৈছে</string>
     <string name="action_sort_latest_chapter">শেষ অধ্যায়</string>
     <string name="action_sort_chapter_fetch_date">অধ্যায় আহৰণ তাৰিখ</string>
     <string name="action_sort_date_added">যোগ কৰা তাৰিখ</string>
@@ -268,7 +266,6 @@
     <string name="pref_library_columns">শাৰীপ্ৰতি বস্তুসমূহ</string>
     <string name="restrictions">সীমাবদ্ধতা: %s</string>
     <string name="pref_update_only_started">অ আৰম্ভিত প্ৰৱিষ্টিসমূহ আঁতৰাওক</string>
-    <string name="pref_update_only_in_release_period">পৰৱৰ্তী মুক্তিৰ সময় অনুমান কৰক</string>
     <string name="pref_library_update_show_tab_badge">আপডেট আইকনৰ ওপৰত অপঠিত গণনা দেখুৱাওক</string>
     <string name="pref_library_update_refresh_metadata">স্বয়ংক্ৰিয়ভাৱে মেটাডাটা ৰিফ্ৰেশ কৰক</string>
     <string name="pref_library_update_refresh_metadata_summary">লাইব্ৰেৰী আপডেট কৰাৰ সময়ত নতুন কাভাৰ আৰু বিৱৰণৰ সন্ধান কৰক</string>
@@ -604,8 +601,6 @@
     <string name="display_mode_chapter">অধ্যায় %1$s</string>
     <string name="manga_display_interval_title">প্ৰতি কিমান সময়ত</string>
     <string name="manga_display_modified_interval_title">প্ৰতি কিমান সময়ত আপডেট কৰিব</string>
-    <string name="manga_interval_expected_update">%1$sৰ ভিতৰত নতুন অধ্যায়ৰ মুক্তি আশা কৰা হৈছে, প্ৰতি %2$sত পৰীক্ষা কৰা হৈছে।</string>
-    <string name="manga_interval_expected_update_soon">সোনকালে</string>
     <string name="manga_interval_custom_amount">নিজস্ব আপডেটৰ সঘনতা:</string>
     <string name="chapter_downloading_progress">ডাউনলোড কৰা হৈছে (%1$d/%2$d)</string>
     <string name="manga_interval_expected_update_null">এই মাঙ্গা সম্পূৰ্ণ হৈছে, বা কিবা মুক্তিৰ তাৰিখ নাই।</string>
@@ -694,10 +689,6 @@
     <string name="updates_last_update_info">লাইব্রেৰী শেষ আপডেট: %s</string>
     <string name="updates_last_update_info_just_now">এতিয়া</string>
     <string name="relative_time_span_never">কদাচিৎ</string>
-    <string name="action_view_upcoming">পৰৱৰ্তী আপডেট চাওক</string>
-    <string name="upcoming_guide">পৰৱৰ্তী গাইড</string>
-    <string name="upcoming_calendar_next">পৰৱৰ্তী মাহ</string>
-    <string name="upcoming_calendar_prev">পূৰ্বৰ মাহ</string>
     <string name="recent_manga_time">চ. %1$s - %2$s</string>
     <string name="pref_clear_history">ইতিহাস সাফ কৰক</string>
     <string name="clear_history_completed">ইতিহাস মচি পেলোৱা হৈছে</string>

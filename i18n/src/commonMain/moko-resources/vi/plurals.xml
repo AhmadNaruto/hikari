@@ -51,9 +51,6 @@
     <plurals name="num_repos">
         <item quantity="other">%d kho</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="other">Trong %1$d ngày</item>
-    </plurals>
     <plurals name="pref_pages">
         <item quantity="other">%1$s trang</item>
     </plurals>

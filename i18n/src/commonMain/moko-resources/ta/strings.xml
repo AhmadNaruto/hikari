@@ -32,7 +32,6 @@
     <string name="track">கண்காணிப்பு</string>
     <string name="delete_downloaded">பதிவிறக்கம் செய்யப்பட்டதை நீக்கு</string>
     <string name="history">வரலாறு</string>
-    <string name="label_upcoming">வரவிருக்கும்</string>
     <string name="label_recent_manga">வரலாறு</string>
     <string name="label_sources">மூலங்கள்</string>
     <string name="label_backup">காப்புப்பிரதி மற்றும் மீட்டமை</string>
@@ -50,7 +49,6 @@
     <string name="action_sort_last_read">கடைசியாக படித்தார்</string>
     <string name="action_sort_last_manga_update">கடைசி புதுப்பிப்பு சோதனை</string>
     <string name="action_sort_unread_count">படிக்காத எண்ணிக்கை</string>
-    <string name="action_sort_next_updated">அடுத்து எதிர்பார்க்கப்படும் புதுப்பிப்பு</string>
     <string name="action_sort_latest_chapter">அண்மைக் கால அத்தியாயம்</string>
     <string name="action_sort_random">சீரற்ற</string>
     <string name="action_search">தேடல்</string>
@@ -103,10 +101,6 @@
     <string name="updates_last_update_info">கடைசியாக புதுப்பிக்கப்பட்டது: %s</string>
     <string name="updates_last_update_info_just_now">இப்போது</string>
     <string name="relative_time_span_never">ஒருபோதும்</string>
-    <string name="action_view_upcoming">வரவிருக்கும் புதுப்பிப்புகளைக் காண்க</string>
-    <string name="upcoming_guide">வரவிருக்கும் வழிகாட்டி</string>
-    <string name="upcoming_calendar_next">அடுத்த மாதம்</string>
-    <string name="upcoming_calendar_prev">முந்தைய மாதம்</string>
     <string name="recent_manga_time">Ch. %1$s - %2$s</string>
     <string name="pref_clear_history">வரலாற்றை அழிக்கவும்</string>
     <string name="appwidget_unavailable_locked">பயன்பாட்டு பூட்டு இயக்கப்பட்டால் விட்செட் கிடைக்கவில்லை</string>
@@ -281,7 +275,6 @@
     <string name="pref_update_only_completely_read">படிக்காத அத்தியாயம் (கள்) உடன் உள்ளீடுகளைத் தவிர்க்கவும்</string>
     <string name="pref_update_only_non_completed">\"நிறைவு செய்யப்பட்ட\" நிலையுடன் உள்ளீடுகளைத் தவிர்க்கவும்</string>
     <string name="pref_update_only_started">சிக்கலற்ற உள்ளீடுகளைத் தவிர்க்கவும்</string>
-    <string name="pref_update_only_in_release_period">அடுத்த வெளியீட்டு நேரத்தை கணிக்கவும்</string>
     <string name="pref_library_update_show_tab_badge">புதுப்பிப்புகள் ஐகானில் படிக்காத எண்ணிக்கையைக் காட்டுங்கள்</string>
     <string name="pref_library_update_refresh_metadata">மெட்டாடேட்டாவை தானாக புதுப்பிக்கவும்</string>
     <string name="pref_library_update_refresh_metadata_summary">நூலகத்தைப் புதுப்பிக்கும்போது புதிய கவர் மற்றும் விவரங்களைச் சரிபார்க்கவும்</string>
@@ -620,9 +613,7 @@
     <string name="display_mode_chapter">அத்தியாயம் %1$s</string>
     <string name="manga_display_interval_title">ஒவ்வொன்றையும் மதிப்பிடுங்கள்</string>
     <string name="manga_display_modified_interval_title">ஒவ்வொன்றையும் புதுப்பிக்க அமைக்கவும்</string>
-    <string name="manga_interval_expected_update">புதிய அத்தியாயங்கள் சுமார் %1$s இல் வெளியிடப்படும் என்று கணிக்கப்பட்டுள்ளது, ஒவ்வொரு %2$s ஐச் சுற்றி உள்ளது.</string>
     <string name="manga_interval_expected_update_null">இந்த மங்கா முடிந்தது, அல்லது கணிக்கப்பட்ட வெளியீட்டு தேதி இல்லை.</string>
-    <string name="manga_interval_expected_update_soon">விரைவில்</string>
     <string name="manga_interval_custom_amount">தனிப்பயன் புதுப்பிப்பு அதிர்வெண்:</string>
     <string name="chapter_downloading_progress">பதிவிறக்குதல் (%1$d/%2$d)</string>
     <string name="chapter_error">பிழை</string>

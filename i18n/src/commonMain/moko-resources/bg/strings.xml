@@ -625,12 +625,10 @@
     <string name="missing_storage_permission">Не е дадено разрешение за съхранение</string>
     <string name="publishing_finished">Приключено издаване</string>
     <string name="download_notifier_split_page_not_found">Страница %d не беше намерена при разделяне</string>
-    <string name="manga_interval_expected_update_soon">Скоро</string>
     <string name="pref_chapter_swipe_start">Глава на ляво плъзгане</string>
     <string name="selected">Избрано</string>
     <string name="action_display_show_continue_reading_button">Продължи да четеш</string>
     <string name="action_copy_link">Копирай връзка</string>
-    <string name="action_sort_next_updated">Следващо очаквано обновление</string>
     <string name="onboarding_storage_action_select">Избери папка</string>
     <string name="onboarding_storage_help_info">Обновяваш от по-стара версия и не си сигурен какво да избереш? Объръни се към ръководството за съхранение за повече информация.</string>
     <string name="pref_relative_format_summary">\"%1$s\" вместо \"%2$s\"</string>
@@ -683,8 +681,6 @@
     <string name="onboarding_guides_returning_user">Преинсталираш %s?</string>
     <string name="pref_hide_in_library_items">Скрий манги, които са вече в библиотеката</string>
     <string name="source_settings">Настройки на източници</string>
-    <string name="manga_interval_expected_update">Нови глави предвидени да бъдат качени след около %1$s, проверяване около всеки %2$s.</string>
-    <string name="upcoming_calendar_prev">Предишен месец</string>
     <string name="ext_remove">Премахни</string>
     <string name="ext_confirm_remove">Премахни разширение?</string>
     <string name="action_menu_overflow_description">Още настройки</string>
@@ -694,12 +690,10 @@
     <string name="label_downloaded">Изтеглени</string>
     <string name="unlock_app_title">Отключи %s</string>
     <string name="action_delete_repo">Изтрий хранилище</string>
-    <string name="label_upcoming">Предстоящи</string>
     <string name="track_remove_date_conf_title">Премахни дата?</string>
     <string name="syncing_library">Синхронизиране на библиотеката</string>
     <string name="action_ok">ОК</string>
     <string name="action_add_repo">Добави хрнилише</string>
-    <string name="upcoming_calendar_next">Следващ месец</string>
     <string name="label_completed_titles">Завършени манги</string>
     <string name="seconds_short">%dсек</string>
     <string name="exception_offline">Няма връзка с интернет</string>
@@ -707,7 +701,6 @@
     <string name="pref_skip_dupe_chapters">Пропусни дублиращи се глави</string>
     <string name="invalid_backup_file_unknown">Резервното копие е повредено</string>
     <string name="label_total_chapters">Общо</string>
-    <string name="action_view_upcoming">Преглед на предстоящите обновления</string>
     <string name="label_titles_section">Манги</string>
     <string name="action_move_to_bottom_all_for_series">Премести най-долу</string>
     <string name="label_started">Започнати</string>

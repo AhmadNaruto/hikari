@@ -668,7 +668,6 @@
     <string name="action_set_interval">Setează intervalul</string>
     <string name="scanlator">Scanlator</string>
     <string name="label_data_storage">Date și stocare</string>
-    <string name="action_sort_next_updated">Următoarea actualizare așteptată</string>
     <string name="action_filter_interval_custom">Frecvență de actualizare personalizată</string>
     <string name="pref_storage_location">Locație de stocare</string>
     <string name="information_cloudflare_help">Atinge aici pentru ajutor cu Cloudflare</string>
@@ -710,7 +709,6 @@
     <string name="split_tall_images">Împărțiți imaginile înalte</string>
     <string name="has_results">Au fost găsite rezultate</string>
     <string name="track_delete_text">Această acțiune va elimina local monitorizarea.</string>
-    <string name="pref_update_only_in_release_period">În afara perioadei de lansare estimată</string>
     <string name="action_ok">Ok</string>
     <string name="pref_double_tap_zoom">Atingeți de două ori pentru a mări</string>
     <string name="track_activity_name">Autentificare serviciu de urmărire</string>
@@ -748,8 +746,6 @@
     <string name="available_disk_space_info">Disponibil: %1$s / Total: %2$s</string>
     <string name="manga_display_interval_title">Estimează la fiecare</string>
     <string name="manga_display_modified_interval_title">Configurează actualizări la fiecare</string>
-    <string name="manga_interval_expected_update">Se preconizează că vor fi lansate noi capitole în aproximativ %1$s, verifică la fiecare %2$s.</string>
-    <string name="manga_interval_expected_update_soon">În curând</string>
     <string name="manga_interval_custom_amount">Frecvența personalizată de actualizare:</string>
     <string name="onboarding_description">Să configurăm câteva lucruri mai întâi. Le puteți schimba oricând în setări și mai târziu.</string>
     <string name="onboarding_action_finish">Începe</string>
@@ -767,7 +763,6 @@
     <string name="error_repo_exists">Acest repozitoriu există deja!</string>
     <string name="action_delete_repo">Șterge repozitoriu</string>
     <string name="invalid_repo_name">URL repozitoriu invalid</string>
-    <string name="label_upcoming">Viitoare</string>
     <string name="action_replace_repo_message">Repozitoriul %1$s are acceeași amprenta digitală a cheii de semnare ca și %2$s
 \nÎn cazul în care asta este la ce vă așteptați, %2$s va fi înlocuit, altfel contatati întreținătorul repozitoriului.</string>
     <string name="pref_display_profile">Profil de afișare personalizat</string>
@@ -775,10 +770,6 @@
     <string name="action_replace_repo">Înlocuiți</string>
     <string name="action_replace_repo_title">Amprenta digitală a cheii de semnare există deja</string>
     <string name="pref_webtoon_disable_zoom_out">Dezactivați funcția de zoom-out</string>
-    <string name="action_view_upcoming">Vizualizați actualizările viitoare</string>
-    <string name="upcoming_guide">Ghidul viitor</string>
-    <string name="upcoming_calendar_next">Luna următoare</string>
-    <string name="upcoming_calendar_prev">Luna anterioară</string>
     <string name="extensionRepo_settings">Repo-uri extensii</string>
     <string name="manga_interval_expected_update_null">Această manga este fie finalizată, fie nu există preconizare pentru data lansării.</string>
     <string name="pref_flash_style_black">Negru</string>

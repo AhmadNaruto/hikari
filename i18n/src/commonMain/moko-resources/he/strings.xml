@@ -575,7 +575,6 @@
     <string name="action_not_now">לא עכשיו</string>
     <string name="download_notifier_cache_renewal">בודק הורדות</string>
     <string name="delete_downloaded">מחק הורדות</string>
-    <string name="action_sort_next_updated">העדכון הצפוי הבא</string>
     <string name="pref_advanced_summary">הורד קבצי קריסה, אופטימיזציה לסוללה</string>
     <string name="information_cloudflare_help">לחץ כאן לעזרה עם Cloudflare</string>
     <string name="download_notifier_split_page_not_found">עמוד %d לא נמצא בעת פיצול</string>
@@ -625,7 +624,6 @@
     <string name="not_applicable">N/A</string>
     <string name="library_errors_help">לזערה לגבי איך לתקן בעיות בעדכוני ספריה, ראה %1$s</string>
     <string name="exception_unknown_host">לא יכל להשיג את %s</string>
-    <string name="pref_update_only_in_release_period">מחוץ לתקופת הפרסום הצפויה</string>
     <string name="pref_page_rotate">סובב עמודים רחבים להתאמה</string>
     <string name="updates_last_update_info_just_now">ממש עכשיו</string>
     <string name="auto_download_while_reading">הורד אוטומטית בזמן קריאה</string>

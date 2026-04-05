@@ -677,11 +677,9 @@
     <string name="pref_chapter_swipe_start">Bab mengenai leret ke kiri</string>
     <string name="action_set_interval">Tetapkan jarak masa</string>
     <string name="action_filter_interval_custom">Kekerapan kemaskini tersuai</string>
-    <string name="action_sort_next_updated">Kemas kini seterusnya dijangka</string>
     <string name="manga_display_modified_interval_title">Tetapkan untuk kemas kini setiap</string>
     <string name="skipped_reason_not_in_release_period">Dilangkau kerana tiada keluaran yang dijangkakan hari ini</string>
     <string name="intervals_header">Jarak masa</string>
-    <string name="pref_update_only_in_release_period">Jangka masa keluaran seterusnya</string>
     <string name="manga_display_interval_title">Anggaran setiap</string>
     <string name="track_delete_title">Buang penjejakan %s?</string>
     <string name="track_delete_text">Ini akan membuang penjejakan secara lokal.</string>
@@ -725,7 +723,6 @@
     <string name="invalid_backup_file_error">Ralat penuh:</string>
     <string name="private_settings">Termasuk tetapan sulit (cth., token log masuk penjejak)</string>
     <string name="available_disk_space_info">Tersedia:%1$s/Jumlah:%2$s</string>
-    <string name="manga_interval_expected_update">Bab baharu dijangkakan akan keluar sekitar %1$s, semakan setiap %2$s.</string>
     <string name="file_null_uri_error">Tiada fail dipilih</string>
     <string name="onboarding_permission_install_apps">Pasang kebenaran aplikasi</string>
     <string name="onboarding_permission_ignore_battery_opts">Penggunaan bateri latar belakang</string>
@@ -756,7 +753,6 @@
     <string name="information_empty_repos">Anda tidak menetapkan repositori.</string>
     <string name="action_add_repo_message">Tambah repositori tambahan pada Mihon %s. Ini mestilah URL yang berakhir dengan \"index.min.json\".</string>
     <string name="action_open_repo">Buka sumber repositori</string>
-    <string name="manga_interval_expected_update_soon">Tidak lama lagi</string>
     <string name="scanlator">Pemindai</string>
     <string name="exclude_scanlators">Kecualikan scanlators</string>
     <string name="action_bar_up_description">Navigasi ke atas</string>
@@ -770,12 +766,7 @@
     <string name="last_auto_backup_info">Sandaran automatik terakhir:%s</string>
     <string name="notification_updating_progress">Mengemaskini pustaka… (%s)</string>
     <string name="action_replace_repo">Ganti</string>
-    <string name="label_upcoming">Akan datang</string>
     <string name="pref_webtoon_disable_zoom_out">Lumpuhkan zum keluar</string>
-    <string name="action_view_upcoming">Lihat kemas kini yang akan datang</string>
-    <string name="upcoming_guide">Panduan yang akan datang</string>
-    <string name="upcoming_calendar_next">Bulan depan</string>
-    <string name="upcoming_calendar_prev">Bulan sebelumnya</string>
     <string name="label_donate">Menderma</string>
     <string name="label_auto">Otomatis</string>
     <string name="action_sort_random">Rawak</string>

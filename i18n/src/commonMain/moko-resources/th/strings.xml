@@ -677,8 +677,6 @@
     <string name="pref_double_tap_zoom">แตะสองครั้งเพื่อซูม</string>
     <string name="action_set_interval">กำหนดช่วงเวลา</string>
     <string name="action_filter_interval_custom">กำหนดความถี่ในการอัปเดต</string>
-    <string name="action_sort_next_updated">การอัปเดตที่คาดไว้ต่อไป</string>
-    <string name="pref_update_only_in_release_period">คาดการณ์เวลาออกครั้งต่อไป</string>
     <string name="skipped_reason_not_in_release_period">ข้ามไปเนื่องจากคาดว่าจะไม่มีการออกในวันนี้</string>
     <string name="manga_display_interval_title">ประมาณทุกๆ</string>
     <string name="manga_display_modified_interval_title">ตั้งค่าให้อัพเดตทุกๆ</string>
@@ -729,7 +727,6 @@
     <string name="pref_onboarding_guide">คู่มือการเริ่มต้นใช้งาน</string>
     <string name="onboarding_guides_new_user">เพิ่งรู้จัก %s? เราขอแนะนำให้ดูคู่มือการเริ่มต้นใช้งาน</string>
     <string name="onboarding_action_finish">เริ่มต้น</string>
-    <string name="manga_interval_expected_update">ตอนใหม่คาดว่าจะออกในอีกประมาณ %1$s จะตรวจสอบทุก ๆ %2$s</string>
     <string name="onboarding_storage_selection_required">จำเป็นต้องเลือกโฟลเดอร์</string>
     <string name="onboarding_permission_notifications">สิทธิ์ในการแจ้งเตือน</string>
     <string name="onboarding_permission_install_apps">สิทธิ์ในการติดตั้งแอป</string>
@@ -764,7 +761,6 @@
     <string name="action_add_repo">เพิ่มรีโพ</string>
     <string name="action_delete_repo">ลบรีโพ</string>
     <string name="invalid_repo_name">URL ของรีโพไม่ถูกต้อง</string>
-    <string name="manga_interval_expected_update_soon">เร็ว ๆ นี้</string>
     <string name="onboarding_storage_help_info">กำลังอัปเดตจากเวอร์ชันเก่าและไม่แน่ใจว่าจะเลือกอะไรใช่ไหม? โปรดดูคู่มือการจัดเก็บข้อมูลสำหรับข้อมูลเพิ่มเติม</string>
     <string name="label_add_repo_input">URL รีโพ</string>
     <string name="delete_repo_confirmation">ต้องการจะลบรีโพ \"%s\" หรือไม่?</string>
@@ -781,20 +777,16 @@
     <string name="ext_remove">นำออก</string>
     <string name="ext_confirm_remove">ต้องการนำส่วนขยายออกหรือไม่?</string>
     <string name="remove_private_extension_message">ต้องการนำส่วนขยาย \"%s\" ออกหรือไม่?</string>
-    <string name="label_upcoming">ที่กำลังจะมีขึ้น</string>
     <string name="action_add_anyway">เพิ่มอยู่ดี</string>
     <string name="pref_auto_update_manga_on_mark_read">อัปเดตความคืบหน้าเมื่อทำเครื่องหมายว่าอ่านแล้ว</string>
     <string name="invalid_backup_file_unknown">ไฟล์สำรองข้อมูลเสียหาย</string>
     <string name="non_library_settings">รายการที่อ่านทั้งหมด</string>
     <string name="trackers_updated_summary">ตัวติดตามของบท %d ได้รับการอัปเดตแล้ว</string>
-    <string name="upcoming_guide">ไกด์ที่กำลังจะมีขึ้น</string>
-    <string name="upcoming_calendar_next">เดือนถัดไป</string>
     <string name="pref_flash_style_white">สีขาว</string>
     <string name="pref_flash_duration">ระยะเวลากระพริบ</string>
     <string name="pref_flash_page_interval">กระพริบทุก</string>
     <string name="pref_flash_with">กระพิบเป็น</string>
     <string name="pref_flash_style_black">สีดำ</string>
-    <string name="upcoming_calendar_prev">เดือนก่อนหน้า</string>
     <string name="invalid_backup_file_json">ไม่รองรับการสำรองข้อมูลเป็น JSON</string>
     <string name="extensionRepo_settings">รีโพส่วนขยาย</string>
     <string name="manga_interval_expected_update_null">มังงะเรื่องนี้เสร็จแล้ว หรือไม่มีกำหนดวางจำหน่ายที่แน่ชัด</string>
@@ -806,7 +798,6 @@
     <string name="pref_display_profile">โปรไฟล์การแสดงผลแบบกำหนดเอง</string>
     <string name="action_replace_repo">แทนที่</string>
     <string name="pref_webtoon_disable_zoom_out">ปิดการใช้งานการซูมออก</string>
-    <string name="action_view_upcoming">ดูการอัปเดตที่กำลังจะมีขึ้น</string>
     <string name="action_replace_repo_message">รีโพสิทอรี %1$s มีกุญแจลายเซ็นระบุตัวตนเดียวกันกับ %2$s\nหากต้องการ %2$s จะถูกแทนที่ มิฉะนั้น โปรดติดต่อผู้ดูแลรีโพนี้</string>
     <string name="add_repo_confirmation">คุณต้องการเพิ่มรีโพ \"%s\" หรือไม่?</string>
     <string name="confirm_tracker_update">อัปเดตตัวติดตามของบท %d หรือไม่?</string>

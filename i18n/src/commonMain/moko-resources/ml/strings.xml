@@ -32,7 +32,6 @@
     <string name="label_download_queue">ഡൗൺലോഡ് ക്യൂ</string>
     <string name="label_library">ലൈബ്രറി</string>
     <string name="label_recent_updates">അപ്ഡേറ്റുകൾ</string>
-    <string name="label_upcoming">അടുത്തതായി</string>
     <string name="label_recent_manga">ചരിത്രം</string>
     <string name="label_sources">ഉൽഭവം</string>
     <string name="label_backup">ബാക്കപ്പും റിസ്റ്റോറും</string>
@@ -64,7 +63,6 @@
     <string name="action_sort_last_read">അവസാനം വായിച്ചത്</string>
     <string name="action_sort_last_manga_update">അവസാന അപ്ഡേറ്റ് പരിശോധന</string>
     <string name="action_sort_unread_count">വായിക്കാത്ത എണ്ണം</string>
-    <string name="action_sort_next_updated">അടുത്തതായി പ്രതീക്ഷിക്കുന്ന അപ്ഡേറ്റ്</string>
     <string name="action_sort_chapter_fetch_date">അധ്യായം ലഭിച്ച തീയതി</string>
     <string name="action_sort_date_added">തീയതി ചേർത്തു</string>
     <string name="action_sort_tracker_score">ട്രാക്കർ സ്കോർ</string>

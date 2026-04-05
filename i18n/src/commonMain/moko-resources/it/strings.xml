@@ -676,11 +676,9 @@
     <string name="pref_chapter_swipe_end">Capitoli allo scorrimento a destra</string>
     <string name="pref_chapter_swipe_start">Capitoli allo scorrimento a sinistra</string>
     <string name="action_set_interval">Imposta intervallo</string>
-    <string name="pref_update_only_in_release_period">Fuori dal periodo di rilascio previsto</string>
     <string name="intervals_header">Intervalli</string>
     <string name="manga_display_interval_title">Stima ogni</string>
     <string name="action_filter_interval_custom">Intervallo di aggiornamento personalizzato</string>
-    <string name="action_sort_next_updated">Prossimo aggiornamento previsto</string>
     <string name="manga_display_modified_interval_title">Imposta l\'aggiornamento ogni</string>
     <string name="skipped_reason_not_in_release_period">Saltato perché oggi non era previsto alcun rilascio</string>
     <string name="track_delete_title">Rimuovere il tracking di %s?</string>
@@ -759,7 +757,6 @@
     <string name="action_delete_repo">Elimina repository</string>
     <string name="invalid_repo_name">URL repository non valida</string>
     <string name="action_open_repo">Repository open source</string>
-    <string name="manga_interval_expected_update_soon">Presto</string>
     <string name="manga_interval_custom_amount">Frequenza di aggiornamento personalizzata:</string>
     <string name="onboarding_storage_help_info">Sti aggiornando da una vecchia versione e non sai cosa selezionare? Consulta la guida all\'archiviazione per info.</string>
     <string name="pref_library_update_smart_update">Aggiornamento intelligente</string>
@@ -768,7 +765,6 @@
     <string name="action_add_repo_message">Aggiungi altri repository a %s. Questo dovrebbe essere un URL che termina con \"index.min.json\".</string>
     <string name="delete_repo_confirmation">Vuoi eleminare la repository \"%s\"?</string>
     <string name="invalid_backup_file_error">Errore completo:</string>
-    <string name="manga_interval_expected_update">Si prevede che i nuovi capitoli saranno rilasciati tra circa %1$s, con controlli ogni %2$s.</string>
     <string name="action_add_anyway">Aggiungere comunque</string>
     <string name="action_replace_repo_title">La Firma dell\'Impronta Digitale della Chiave Esiste Già</string>
     <string name="pref_display_profile">Profilo di visualizzazione personalizzato</string>
@@ -776,11 +772,6 @@
 \nSe è quello che si desidera, %2$s verrà sostituita, altrimenti contatta il manutentore della repository.</string>
     <string name="action_replace_repo">Sostituisci</string>
     <string name="pref_webtoon_disable_zoom_out">Disattiva zoom indietro</string>
-    <string name="label_upcoming">Prossimamente</string>
-    <string name="action_view_upcoming">Controlla i Prossimi Aggiornamenti</string>
-    <string name="upcoming_guide">Guida in arrivo</string>
-    <string name="upcoming_calendar_next">Mese prossimo</string>
-    <string name="upcoming_calendar_prev">Mese scorso</string>
     <string name="pref_flash_duration">Durata del flash</string>
     <string name="pref_flash_duration_summary">%1$s ms</string>
     <string name="pref_flash_with">Flash con</string>

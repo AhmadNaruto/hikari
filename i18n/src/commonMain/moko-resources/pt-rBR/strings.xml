@@ -675,8 +675,6 @@
     <string name="pref_chapter_swipe_end">Capitulo ao deslizar para a direita</string>
     <string name="pref_chapter_swipe_start">Ação de deslizar para a esquerda</string>
     <string name="pref_double_tap_zoom">Toque duplo para dar zoom</string>
-    <string name="action_sort_next_updated">Próxima atualização esperada</string>
-    <string name="pref_update_only_in_release_period">Prever a data do próximo lançamento</string>
     <string name="action_set_interval">Definir intervalo</string>
     <string name="action_filter_interval_custom">Personalizar a frequência de atualizações</string>
     <string name="skipped_reason_not_in_release_period">Pulado porque nenhum lançamento era esperado hoje</string>
@@ -751,7 +749,6 @@
     <string name="available_disk_space_info">Disponível: %1$s / Total: %2$s</string>
     <string name="ext_permission_install_apps_warning">Permissões são necessárias para instalar extensões. Toque aqui para conceder.</string>
     <string name="private_settings">Incluir configurações sensíveis (tokens de login dos monitoradores, por exemplo)</string>
-    <string name="manga_interval_expected_update">Novos capítulos com previsão de serem lançados em torno de %1$s, verificando em torno de cada %2$s.</string>
     <string name="manga_interval_custom_amount">Frequência de atualização personalizada:</string>
     <string name="invalid_backup_file_error">Erro completo:</string>
     <string name="error_repo_exists">Este repositório já existe!</string>
@@ -766,21 +763,15 @@
     <string name="label_add_repo_input">URL do repositório</string>
     <string name="onboarding_storage_help_action">Guia de armazenamento</string>
     <string name="onboarding_storage_help_info">Atualizando de uma versão anterior e não tem certeza do que selecionar? Consulte o guia de armazenamento para mais informações.</string>
-    <string name="manga_interval_expected_update_soon">Em breve</string>
     <string name="ext_revoke_trust">Revogar a confiabilidade de extensões desconhecidas</string>
     <string name="action_open_repo">Abrir repositório da fonte</string>
     <string name="pref_webtoon_disable_zoom_out">Desativar redução de zoom</string>
     <string name="action_add_anyway">Adicionar de qualquer maneira</string>
     <string name="action_replace_repo">Substituir</string>
-    <string name="label_upcoming">Próximo</string>
     <string name="action_replace_repo_title">A impressão digital da chave de assinatura já existe</string>
     <string name="action_replace_repo_message">O repositório %1$s tem a mesma impressão digital da chave de assinatura que %2$s.
 \nSe isso for esperado, %2$s será substituído, caso contrário, entre em contato com o mantenedor do repositório.</string>
     <string name="pref_display_profile">Perfil de exibição personalizado</string>
-    <string name="action_view_upcoming">Exibir as próximas atualizações</string>
-    <string name="upcoming_guide">Guia de próximos lançamentos</string>
-    <string name="upcoming_calendar_next">Próximo mês</string>
-    <string name="upcoming_calendar_prev">Mês anterior</string>
     <string name="pref_flash_style_black">Preto</string>
     <string name="pref_flash_style_white">Branco</string>
     <string name="pref_flash_style_white_black">Branco e Preto</string>

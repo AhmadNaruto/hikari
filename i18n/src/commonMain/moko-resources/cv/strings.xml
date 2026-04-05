@@ -530,13 +530,11 @@
     <string name="ext_info_version">Верҫҫи</string>
     <string name="ext_update_all">Пурне те ҫӗнет</string>
     <string name="delete_downloaded">Тийесе илнисене катерт</string>
-    <string name="pref_update_only_in_release_period">Ҫӗнӗ сыпӑк хӑҫан тухассине шутламалла</string>
     <string name="pref_chapter_swipe_end">Сылтӑмалла туртсан сыпӑк</string>
     <string name="pref_chapter_swipe_start">Сулахайалла туртсан сыпӑк</string>
     <string name="ext_installer_pref">Ларткӑч</string>
     <string name="ext_installer_shizuku_stopped">Shizuku ӗҫлемест</string>
     <string name="ext_info_age_rating">Ҫул-ӳсӗм чаравӗ</string>
-    <string name="action_sort_next_updated">Тепӗр кӗтӗнекен ҫӗнетӳпе</string>
     <string name="ext_install_service_notif">Хушма лартни…</string>
     <string name="action_set_interval">Тӑтӑшлӑх палӑрт</string>
     <string name="action_filter_interval_custom">Ӗнерӳллӗ илӳ тӑтӑшлӑхӗ</string>
@@ -574,7 +572,6 @@
     <string name="onboarding_storage_help_info">Кивӗ верҫҫирен ҫӗнӗлетӗн те мӗн суламаллине пӗлместӗн? Нумайрах пӗлме усрав пӗлкӗчне кӗрсе пӑх.</string>
     <string name="onboarding_guides_returning_user">%s ҫӗнӗрен лартатӑн?</string>
     <string name="pref_relative_format_summary">«%2$s» вырӑнне «%1$s»</string>
-    <string name="label_upcoming">Пулас</string>
     <string name="action_menu_overflow_description">Ытти ӗнерӳсем</string>
     <string name="action_copy_link">Каҫҫа ӑт</string>
     <string name="action_sort_random">Ӑнсӑрт</string>

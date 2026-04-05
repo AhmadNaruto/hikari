@@ -24,12 +24,6 @@
         <item quantity="many">Наступныя %d непрачытаных раздзелаў</item>
         <item quantity="other">Наступныя %d непрачытаных раздзелаў</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Заўтра</item>
-        <item quantity="few">Праз %1$d дні</item>
-        <item quantity="many">Праз %1$d дзён</item>
-        <item quantity="other">Праз %1$d дзён</item>
-    </plurals>
     <plurals name="restore_completed_message">
         <item quantity="one">Выканана за %1$s з %2$s памылкай</item>
         <item quantity="few">Выканана за %1$s з %2$s памылкамі</item>

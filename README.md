@@ -2,11 +2,8 @@
 
 Manga reader for Android based on Mihon featuring offline downloads and security features.
 
-![Tech Stack](https://skillicons.dev/icons?i=kotlin,android,compose,gradle,sqlite,firebase)
-
-![Language](https://img.shields.io/badge/language-Kotlin-blue?style=flat-square)
-![License](https://img.shields.io/github/license/LeverTeam/hikari?style=flat-square)
-![Repo Size](https://img.shields.io/github/repo-size/LeverTeam/hikari?style=flat-square)
+[![Downloads](https://img.shields.io/github/downloads/LeverTeam/hikari/total?style=for-the-badge)](https://github.com/LeverTeam/hikari/releases)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=for-the-badge)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
 
@@ -15,10 +12,14 @@ Manga reader for Android based on Mihon featuring offline downloads and security
 - Out-of-the-box Keiyoushi extension sync
 - Chapter downloads for offline viewing
 - Biometric lock and security modes
-- Material You UI built with Jetpack Compose
+- Material You UI
 - Automatic library updates and background backups
 
 ## Installation
+
+### Downloads
+
+Latest APK releases are available on [GitHub](https://github.com/LeverTeam/hikari/releases). Downloads are tracked automatically via GitHub Assets.
 
 ### Prerequisites
 

@@ -701,7 +701,6 @@
     <string name="scanlator">Equipo de tradución</string>
     <string name="label_data_storage">Datos e almacenamento</string>
     <string name="unlock_app_title">Desbloquear %s</string>
-    <string name="action_sort_next_updated">Próxima actualización prevista</string>
     <string name="action_apply">Aplicar</string>
     <string name="action_ok">Aceptar</string>
     <string name="action_move_to_bottom_all_for_series">Mover ao último posto</string>
@@ -726,7 +725,6 @@
     <string name="onboarding_guides_new_user">Primeira vez usando %s? Recomendámosche ler a guía de introdución.</string>
     <string name="onboarding_guides_returning_user">Volvendo instalar %s?</string>
     <string name="pref_relative_format_summary">«%1$s» en lugar de «%2$s»</string>
-    <string name="pref_update_only_in_release_period">Predicir cando sae o seguinte capítulo</string>
     <string name="ext_permission_install_apps_warning">Preme aquí para conceder os permisos para instalar extensións.</string>
     <string name="ext_revoke_trust">Revogar as extensións de confianza de orixe descoñecida</string>
     <string name="label_extension_repos">Repositorios de extensións</string>
@@ -753,7 +751,6 @@
     <string name="available_disk_space_info">Dispoñible: %1$s / Total: %2$s</string>
     <string name="syncing_library">Sincronizando a biblioteca</string>
     <string name="relative_time_span_never">Nunca</string>
-    <string name="label_upcoming">Proximamente</string>
     <string name="action_replace_repo">Substituír</string>
     <string name="action_replace_repo_title">A impresión dixital da chave da firma xa existe</string>
     <string name="action_replace_repo_message">O repositorio %1$s ten a misma impresión dixital da chave da firma que %2$s.
@@ -764,7 +761,6 @@
     <string name="library_sync_complete">A biblioteca sincronizouse correctamente</string>
     <string name="intervals_header">Intervalos</string>
     <string name="manga_display_interval_title">Estimar cada</string>
-    <string name="manga_interval_expected_update">Prevese que o seguinte capítulo saia en %1$s, compróbase cada %2$s.</string>
     <string name="manga_interval_custom_amount">Frecuencia de actualización personalizada:</string>
     <string name="track_delete_title">Queres deixar de seguir %s?</string>
     <string name="notification_updating_progress">Actualizando a biblioteca… (%s)</string>
@@ -772,14 +768,9 @@
     <string name="file_null_uri_error">Non se elixiu ningún arquivo</string>
     <string name="last_auto_backup_info">Última copia de seguridade automática: %s</string>
     <string name="manga_display_modified_interval_title">Actualizar cada</string>
-    <string name="manga_interval_expected_update_soon">Pronto</string>
     <string name="exclude_scanlators">Excluír equipos de tradución</string>
     <string name="no_scanlators_found">Non se atopou ningún equipo de tradución</string>
     <string name="track_delete_text">Esto eliminará o seguimento local.</string>
-    <string name="action_view_upcoming">Ver as próximas actualizacións</string>
-    <string name="upcoming_guide">Guía dos próximos lanzamenos</string>
-    <string name="upcoming_calendar_next">Mes seguinte</string>
-    <string name="upcoming_calendar_prev">Mes anterior</string>
     <string name="information_cloudflare_help">Preme aquí para obter axuda con Cloudflare</string>
     <string name="pref_auto_update_manga_on_mark_read">Actualizar o progreso ao marcalo como lido</string>
     <string name="action_copy_link">Copiar ligazón</string>

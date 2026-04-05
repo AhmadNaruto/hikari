@@ -676,11 +676,9 @@
     <string name="action_set_interval">عيِّد المدة</string>
     <string name="action_filter_interval_custom">مدة جلب مخصَّصة</string>
     <string name="manga_display_interval_title">قدِّر كلَّ</string>
-    <string name="pref_update_only_in_release_period">ليس ضمن مدة الإصدار المتوقعة</string>
     <string name="skipped_reason_not_in_release_period">تُخُطِّيت بسبب عدم توقع صدور اليوم</string>
     <string name="manga_display_modified_interval_title">عيِّن التحديث كلَّ</string>
     <string name="intervals_header">المدة</string>
-    <string name="action_sort_next_updated">التحديث المتوقع القادم</string>
     <string name="track_delete_title">أأزيل تتبع %s؟</string>
     <string name="track_delete_text">هذا يزيل التتبع محليًّا.</string>
     <string name="action_ok">حسنًا</string>
@@ -757,7 +755,6 @@
     <string name="action_open_repo">مستودع مفتوح المصدر</string>
     <string name="invalid_backup_file_error">الخطأ الكامل:</string>
     <string name="private_settings">تضمين إعدادات حساسة (على سبيل المثال، رموز تسجيل دخول المتتبع)</string>
-    <string name="manga_interval_expected_update_soon">قريباً</string>
     <string name="manga_interval_custom_amount">تكرار تحديث مخصص:</string>
     <string name="onboarding_storage_help_info">هل تقوم بالتحديث من إصدار أقدم ولست متأكداً مما تختاره؟ ارجع إلى دليل التخزين لمزيد من المعلومات.</string>
     <string name="onboarding_storage_help_action">دليل التخزين</string>
@@ -765,13 +762,7 @@
     <string name="pref_library_update_smart_update">تحديث ذكي</string>
     <string name="information_empty_repos">لم يتم تعيين أي مستودع .</string>
     <string name="action_add_repo">إضافة مستودع</string>
-    <string name="manga_interval_expected_update">من المتوقع أن يتم إصدار فصول جديدة في حوالي 1%1$s، والتحقق من كل 2%2$s .</string>
     <string name="available_disk_space_info">متاح: %1$s / الكل: %2$s</string>
-    <string name="upcoming_calendar_prev">الشهر السابق</string>
-    <string name="upcoming_guide">الدليل القادم</string>
-    <string name="upcoming_calendar_next">الشهر القادم</string>
-    <string name="label_upcoming">القادم</string>
-    <string name="action_view_upcoming">عرض الثحديثات القادمة</string>
     <string name="action_add_anyway">أضف على أي حال</string>
     <string name="action_replace_repo">استبدل</string>
     <string name="action_replace_repo_title">بصمة مفتاح التوقيع موجودة بالفعل</string>

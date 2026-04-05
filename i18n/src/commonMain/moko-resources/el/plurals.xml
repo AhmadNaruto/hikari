@@ -76,10 +76,6 @@
         <item quantity="one">Αντιγραφή %1$d καταχώρησης;</item>
         <item quantity="other">Αντιγραφή %1$d καταχωρήσεων;</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Αύριο</item>
-        <item quantity="other">Σε %1$d ημέρες</item>
-    </plurals>
     <plurals name="pref_pages">
         <item quantity="one">1 σελίδα</item>
         <item quantity="other">%1$s σελίδες</item>

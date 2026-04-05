@@ -686,5 +686,4 @@
     <string name="action_set_interval">Аралығын қою</string>
     <string name="unlock_app_title">%s шешу</string>
     <string name="action_filter_interval_custom">Өзгермелі жаңарту жиілігі</string>
-    <string name="label_upcoming">Келешек</string>
 </resources>

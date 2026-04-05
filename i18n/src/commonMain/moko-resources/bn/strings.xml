@@ -613,7 +613,6 @@
     <string name="skipped_reason_not_started">স্কিপ করা হয়েছে কারণ আগে কোন চ্যাপ্টার পড়া হয়নি</string>
     <string name="action_sort_tracker_score">ট্রেকার স্কোর</string>
     <string name="action_ok">ওকে</string>
-    <string name="action_sort_next_updated">পরবর্তী আপডেটের সম্ভাব্য সময়</string>
     <string name="action_copy_link">লিংক কপি করুন</string>
     <string name="label_auto">স্বয়ংক্রিয়</string>
     <string name="onboarding_permission_ignore_battery_opts">পটভূমিতে ব্যাটারি ব্যবহার</string>
@@ -622,7 +621,6 @@
     <string name="action_add_anyway">যাই হোক যোগ করুন</string>
     <string name="onboarding_storage_help_action">স্টোরেজ গাইড</string>
     <string name="onboarding_storage_help_info">পুরোনো ভার্সন থেকে আপডেট করছেন এবং কী নির্বাচন করবেন তা নিশ্চিত নন? আরও তথ্যের জন্য স্টোরেজ গাইডটি দেখুন।</string>
-    <string name="label_upcoming">আসন্ন</string>
     <string name="action_display_unread_badge">অপঠিত অধ্যায়</string>
     <string name="action_notes">নোটস</string>
     <string name="action_edit_notes">নোট পরিবর্তন</string>
@@ -644,7 +642,6 @@
     <string name="firebase_summary">ক্র্যাশ লগ ও অ্যানালিটিক্স পাঠালে আমরা সমস্যা খুঁজে বের করে ঠিক করতে পারব, কর্মক্ষমতা ভালো হবে, এবং ভবিষ্যৎ আপডেটগুলো আপনার কাজে লাগবে</string>
     <string name="network_not_metered">শুধু আনলিমিটেড নেটওয়ার্কে</string>
     <string name="pref_library_update_smart_update">স্মার্ট আপডেট</string>
-    <string name="pref_update_only_in_release_period">পরবর্তী রিলিজের সময় অনুমান করুন</string>
     <string name="pref_library_update_show_tab_badge">আপডেট আইকনে অপঠিত সংখ্যা দেখান</string>
     <string name="pref_behavior">ব্যবহার</string>
     <string name="pref_chapter_swipe_end">অধ্যায় ডানে সোয়াইপ করলে</string>
@@ -797,7 +794,6 @@
     <string name="popular">জনপ্রিয়</string>
     <string name="has_results">ফলাফল আছে</string>
     <string name="manga_display_interval_title">অনুমান প্রতি</string>
-    <string name="manga_interval_expected_update_soon">শীঘ্রই</string>
     <string name="manga_interval_custom_amount">নিজস্ব আপডেট ঘনত্ব:</string>
     <string name="custom_cover">নিজস্ব কভার</string>
     <string name="exclude_scanlators">স্ক্যানলেটর বাদ</string>
@@ -809,10 +805,6 @@
     <string name="track_remove_finish_date_conf_text">এটি %s থেকে পূর্বে নির্বাচিত শেষ তারিখ মুছে ফেলবে</string>
     <string name="track_delete_title">%s ট্র্যাকিং মুছে ফেলা হবে?</string>
     <string name="updates_last_update_info">লাইব্রেরি সর্বশেষ আপডেট: %s</string>
-    <string name="action_view_upcoming">আসন্ন আপডেটগুলো দেখুন</string>
-    <string name="upcoming_guide">আসন্ন গাইড</string>
-    <string name="upcoming_calendar_next">আগামী মাস</string>
-    <string name="upcoming_calendar_prev">গত মাস</string>
     <string name="track_delete_text">এটি লোকাল ট্র্যাকিং থেকে মুছে যাবে।</string>
     <string name="migrationListScreen.latestChapterLabel">সর্বশেষ: %1$s</string>
     <string name="migrationListScreen.unknownLatestChapter">অজানা</string>

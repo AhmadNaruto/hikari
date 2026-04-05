@@ -687,7 +687,6 @@
     <string name="manga_display_interval_title">Novērtēt katru</string>
     <string name="action_set_interval">Iestatīt intervālu</string>
     <string name="action_filter_interval_custom">Pielāgots datu iegūšanas intervāls</string>
-    <string name="action_sort_next_updated">Nākamais gaidāmais atjauninājums</string>
     <string name="track_activity_name">Pieteikšanās izsekošana</string>
     <string name="syncing_library">Sinhronizē bibliotēku</string>
     <string name="library_sync_complete">Bibliotēkas sinhronizācija ir pabeigta</string>
@@ -696,7 +695,6 @@
     <string name="delete_downloaded">Izdzēst lejupielādētos</string>
     <string name="track_delete_title">Vai noņemt %s izsekošanu?</string>
     <string name="action_ok">OK</string>
-    <string name="pref_update_only_in_release_period">Ārpus paredzamā izlaišanas perioda</string>
     <string name="pref_double_tap_zoom">Dubult-pieskarieties, lai tuvinātu</string>
     <string name="unlock_app_title">Atbloķēt %s</string>
     <string name="manga_display_modified_interval_title">Atjaunināt katru</string>

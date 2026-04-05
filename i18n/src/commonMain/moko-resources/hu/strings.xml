@@ -659,13 +659,11 @@
     <string name="pref_skip_dupe_chapters">Duplikált fejezetek átugrása</string>
     <string name="action_set_interval">Időköz állítása</string>
     <string name="action_filter_interval_custom">Egyedi frissítési időköz</string>
-    <string name="action_sort_next_updated">Következő várt frissítés</string>
     <string name="pref_double_tap_zoom">Dupla koppintás a nagyításhoz</string>
     <string name="pref_hide_in_library_items">Már könyvtári elemek elrejtése</string>
     <string name="track_activity_name">Bejelentkezés nyilvántartóhoz</string>
     <string name="delete_downloaded">Letöltött törlése</string>
     <string name="split_tall_images">Magas képek szétvágása</string>
-    <string name="pref_update_only_in_release_period">Következő kiadás idejének megjóslása</string>
     <string name="pref_page_rotate">Széles oldalak forgatása az illeszkedéshez</string>
     <string name="pref_chapter_swipe_end">Fejezet jobbra húzásakor</string>
     <string name="pref_page_rotate_invert">Forgatott széles oldalak megfordítása</string>
@@ -761,14 +759,12 @@
     <string name="action_sort_tracker_score">Nyilvántartási pont</string>
     <string name="private_settings">Érzékeny beállítások megadása (Pl. szolgáltatások bejelentkezési tokenei)</string>
     <string name="pref_invalidate_download_cache">Letöltések újraindexelése</string>
-    <string name="manga_interval_expected_update">Új fejezetek megjelenése %1$s múlva várható, frissítési időköz: %2$s.</string>
     <string name="track_delete_title">Leállítja a(z) %s nyilvántartását?</string>
     <string name="label_tracked_titles">Nyilvántartott elemek</string>
     <string name="pref_webtoon_disable_zoom_out">Kicsinyítés letiltása</string>
     <string name="available_disk_space_info">Elérhető: %1$s / Összesen: %2$s</string>
     <string name="download_cache_invalidated">Letöltési index érvénytelenítve</string>
     <string name="manga_display_interval_title">Mind becslése</string>
-    <string name="manga_interval_expected_update_soon">Hamarosan</string>
     <string name="manga_interval_custom_amount">Egyedi frissítési időköz:</string>
     <string name="action_add_anyway">Hozzáadás mindenképp</string>
     <string name="pref_display_profile">Egyedi megjelenítési profil</string>
@@ -776,11 +772,6 @@
     <string name="action_replace_repo_title">Aláíró kulcs ujjlenyomat már létezik</string>
     <string name="action_replace_repo_message">A(z) %1$s tárolónak ugyanaz az aláíró kulcs ujjlenyomat, mint a(z) %2$s tárolónak.
 \nHa ez várható volt, akkor a(z) %2$s lecserélődik, ellenkező esetben lépjen kapcsolatba a tároló karbantartójával.</string>
-    <string name="label_upcoming">Közelgő</string>
-    <string name="upcoming_calendar_next">Következő hónap</string>
-    <string name="action_view_upcoming">Közelgő frissítések megtekintése</string>
-    <string name="upcoming_guide">Közelgő útmutató</string>
-    <string name="upcoming_calendar_prev">Előző hónap</string>
     <string name="action_copy_link">Hivatkozás másolása</string>
     <string name="onboarding_permission_crashlytics">Összeomlási jelentés küldése</string>
     <string name="onboarding_permission_analytics">Analitika engedélyezése</string>

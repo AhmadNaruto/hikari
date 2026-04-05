@@ -235,7 +235,6 @@
     <string name="pref_show_page_number">Vis sidetal</string>
     <string name="label_started">Påbegyndt</string>
     <string name="pref_show_reading_mode">Vis læsetilstand</string>
-    <string name="pref_update_only_in_release_period">Uden for forventet udgivelsesperiode</string>
     <string name="ext_installed">Installeret</string>
     <string name="action_ok">OK</string>
     <string name="right_and_left_nav">Højre og Venstre</string>
@@ -247,7 +246,6 @@
     <string name="ext_obsolete">Forældet</string>
     <string name="gray_background">Grå</string>
     <string name="pref_relative_format_summary">\"%1$s\" i stedet for \"%2$s\"</string>
-    <string name="action_sort_next_updated">Næste forventede opdatering</string>
     <string name="pref_browse_summary">Kilder, udvidelser, global søgning</string>
     <string name="nav_zone_left">Venstre</string>
     <string name="backup_created">Sikkerhedskopi oprettet</string>

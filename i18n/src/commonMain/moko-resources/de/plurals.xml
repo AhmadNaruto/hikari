@@ -68,10 +68,6 @@
         <item quantity="one">%d Repository</item>
         <item quantity="other">%d Repositorys</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Morgen</item>
-        <item quantity="other">In %1$d Tagen</item>
-    </plurals>
     <plurals name="pref_pages">
         <item quantity="one">1 Seite</item>
         <item quantity="other">%1$s Seiten</item>

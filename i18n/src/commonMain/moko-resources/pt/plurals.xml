@@ -85,11 +85,6 @@
         <item quantity="many">%d repositórios</item>
         <item quantity="other">%d repositórios</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Amanhã</item>
-        <item quantity="many">Em %1$d dias</item>
-        <item quantity="other">Em %1$d dias</item>
-    </plurals>
     <plurals name="migrationListScreen.migrateDialog.migrateTitle">
         <item quantity="one">Migrar %1$d entrada?</item>
         <item quantity="many">Migrar %1$d entradas?</item>

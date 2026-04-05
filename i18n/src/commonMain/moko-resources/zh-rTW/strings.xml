@@ -678,10 +678,8 @@
     <string name="track_delete_remote_text">同時移除「%s」上的資料</string>
     <string name="action_filter_interval_custom">已自訂更新頻率</string>
     <string name="action_set_interval">設定間隔</string>
-    <string name="action_sort_next_updated">下次預期更新</string>
     <string name="intervals_header">刊期</string>
     <string name="manga_display_interval_title">預計每個</string>
-    <string name="pref_update_only_in_release_period">預估下次更新時間</string>
     <string name="manga_display_modified_interval_title">設定為每個</string>
     <string name="skipped_reason_not_in_release_period">由於未臨更新日，因此略過</string>
     <string name="has_results">有結果</string>
@@ -743,7 +741,6 @@
     <string name="available_disk_space_info">可用：%1$s / 總計：%2$s</string>
     <string name="ext_permission_install_apps_warning">缺少安裝擴充套件所需的權限，輕觸此處以授予</string>
     <string name="private_settings">包含敏感設定 (如：歷程平臺登入權杖)</string>
-    <string name="manga_interval_expected_update">預計 %1$s後更新，每 %2$s檢查一次</string>
     <string name="invalid_backup_file_error">完整錯誤訊息：</string>
     <string name="manga_interval_custom_amount">自訂更新頻率：</string>
     <string name="label_add_repo_input">儲存庫網址</string>
@@ -759,7 +756,6 @@
     <string name="onboarding_storage_help_action">儲存空間指南</string>
     <string name="onboarding_storage_help_info">從舊版升級而不確定該如何選擇嗎？請參閱儲存空間指南以取得更多資訊</string>
     <string name="ext_revoke_trust">復原對不明擴充套件的信任</string>
-    <string name="manga_interval_expected_update_soon">即將</string>
     <string name="action_open_repo">開啟來源儲存庫</string>
     <string name="pref_webtoon_disable_zoom_out">停用縮小</string>
     <string name="pref_display_profile">自訂顯示設定檔</string>
@@ -767,11 +763,6 @@
     <string name="action_replace_repo">取代</string>
     <string name="action_replace_repo_title">已有相同的簽署金鑰指紋</string>
     <string name="action_replace_repo_message">「%1$s」儲存庫的簽署金鑰指紋與「%2$s」相同\n若此為預期現象，則「%2$s」將被取代，否則請聯絡該儲存庫的維護者</string>
-    <string name="upcoming_guide">即將推出的指南</string>
-    <string name="upcoming_calendar_next">下個月</string>
-    <string name="upcoming_calendar_prev">上個月</string>
-    <string name="label_upcoming">即將推出</string>
-    <string name="action_view_upcoming">檢視即將推出的更新</string>
     <string name="file_picker_uri_permission_unsupported">無法取得永久性資料夾存取權，應用程式可能會表現異常</string>
     <string name="pref_flash_style_white">白</string>
     <string name="pref_flash_style_white_black">黑白</string>

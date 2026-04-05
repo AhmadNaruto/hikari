@@ -36,8 +36,8 @@ class AppUpdateChecker {
     }
 }
 
-val GITHUB_REPO = "mihonapp/mihon"
+val GITHUB_REPO = "LeverTeam/hikari"
 
 val RELEASE_TAG = "v${BuildConfig.VERSION_NAME}"
 
-val RELEASE_URL = "https://github.com/mihonapp/mihon/releases/tag/$RELEASE_TAG"
+val RELEASE_URL = "https://github.com/LeverTeam/hikari/releases/tag/$RELEASE_TAG"

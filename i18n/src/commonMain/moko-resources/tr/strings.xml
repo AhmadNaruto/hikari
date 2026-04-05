@@ -678,8 +678,6 @@
     <string name="action_set_interval">Sıklığı ayarla</string>
     <string name="action_filter_interval_custom">Özel güncelleme sıklığı</string>
     <string name="intervals_header">Zaman aralıkları</string>
-    <string name="action_sort_next_updated">Sonraki beklenen güncelleme</string>
-    <string name="pref_update_only_in_release_period">Bir sonraki yayınlama zamanını tahmin et</string>
     <string name="action_ok">TAMAM</string>
     <string name="manga_display_interval_title">Şu sıklıkla tahmin et:</string>
     <string name="track_delete_title">%s izlemesi kaldırılsın mı?</string>
@@ -751,7 +749,6 @@
     <string name="available_disk_space_info">Kullanılabilir: %1$s / Toplam: %2$s</string>
     <string name="ext_permission_install_apps_warning">Uzantıları yüklemek için izin gerekli. İzin vermek için buraya dokunun.</string>
     <string name="private_settings">Hassas ayarları dahil et (örn. izleyici oturum açma bilgileri)</string>
-    <string name="manga_interval_expected_update">Sonraki bölümlerin %1$s içinde yayınlanacağı tahmin ediliyor, her %2$s içinde bir kontrol ediliyor.</string>
     <string name="invalid_backup_file_error">Tüm hata:</string>
     <string name="information_empty_repos">Hiç depo ayarlamadınız.</string>
     <string name="onboarding_storage_help_action">Depolama kılavuzu</string>
@@ -767,7 +764,6 @@
     <string name="pref_library_update_smart_update">Akıllı güncelleme</string>
     <string name="label_extension_repos">Uzantı depoları</string>
     <string name="ext_revoke_trust">Güvenilmiş bilinmeyen uzantıları geri al</string>
-    <string name="manga_interval_expected_update_soon">Yakında</string>
     <string name="action_open_repo">Açık kaynaklı depo</string>
     <string name="action_copy_link">Bağlantıyı kopyala</string>
     <string name="pref_flash_with">Işık rengi</string>
@@ -789,11 +785,6 @@
     <string name="action_replace_repo_title">İmzalama Anahtarı Parmak İzi Zaten Var</string>
     <string name="extensionRepo_settings">Eklenti depoları</string>
     <string name="file_picker_uri_permission_unsupported">Stabil klasör erişimi sağlanamadı. Uygulama belirsiz çalışabilir.</string>
-    <string name="label_upcoming">Takvim</string>
-    <string name="action_view_upcoming">Gelecek Güncellemeleri Görüntüle</string>
-    <string name="upcoming_guide">Yakında Gelecek Rehberi</string>
-    <string name="upcoming_calendar_next">Gelecek Ay</string>
-    <string name="upcoming_calendar_prev">Önceki Ay</string>
     <string name="pref_download_new_unread_chapters_only">Yinelenen okunmuş bölümlerin indirilmesini atla</string>
     <string name="add_repo_confirmation">\"%s\" deposunu eklemek istiyor musunuz?</string>
     <string name="confirm_tracker_update">İzleyicileri %d. bölüme güncelle?</string>

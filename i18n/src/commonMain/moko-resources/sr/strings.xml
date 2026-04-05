@@ -683,7 +683,6 @@
     <string name="create_backup_file_error">Није могуће створити датотеку резервне копије</string>
     <string name="has_results">Има резултата</string>
     <string name="skipped_reason_not_in_release_period">Прескочено јер данас није очекивано издање</string>
-    <string name="pref_update_only_in_release_period">Предвиди очекивано време изласка</string>
     <string name="action_set_interval">Постави интервал</string>
     <string name="intervals_header">Интервали</string>
     <string name="track_delete_remote_text">Такође уклони из %s</string>
@@ -698,7 +697,6 @@
     <string name="manga_display_modified_interval_title">Постави да ажурира сваки</string>
     <string name="track_delete_title">Уклони праћење %s?</string>
     <string name="track_delete_text">Ово ће уклонити локално праћење.</string>
-    <string name="action_sort_next_updated">Следеће очекивано ажурирање</string>
     <string name="syncing_library">Синхронизовање колекције</string>
     <string name="unlock_app_title">Откључај %s</string>
     <string name="exception_offline">Нема везе са интернетом</string>
@@ -717,8 +715,6 @@
     <string name="scanlator">Аматерски преводилац</string>
     <string name="no_scanlators_found">Ниједан аматерски преводилац није пронађен</string>
     <string name="exclude_scanlators">Не укључуј аматерске преводиоце</string>
-    <string name="manga_interval_expected_update">Предвиђа се да ће нова поглавља изаћи за %1$s, проверава се сваких %2$s.</string>
-    <string name="manga_interval_expected_update_soon">Ускоро</string>
     <string name="available_disk_space_info">Доступно: %1$s / Укупно: %2$s</string>
     <string name="information_empty_repos">Немате додатих репозиторија.</string>
     <string name="action_add_repo">Додај репозиторију</string>
@@ -775,7 +771,6 @@
     <string name="action_apply">Примени</string>
     <string name="action_revert_to_default">Врати на подразумевано</string>
     <string name="action_add_anyway">Dodati svejedno</string>
-    <string name="label_upcoming">Predstojeći</string>
     <string name="action_replace_repo">Zameniti</string>
     <string name="action_replace_repo_title">Otisak prsta za otključavanje već postoji</string>
 </resources>

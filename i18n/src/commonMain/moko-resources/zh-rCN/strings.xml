@@ -675,7 +675,6 @@
     <string name="pref_chapter_swipe_end">向右滑动章节</string>
     <string name="pref_chapter_swipe_start">向左滑动章节</string>
     <string name="pref_double_tap_zoom">双击放大</string>
-    <string name="pref_update_only_in_release_period">预测下次更新时间</string>
     <string name="action_ok">确定</string>
     <string name="track_delete_title">要删除 %s 的记录吗？</string>
     <string name="track_delete_remote_text">同时删除 %s 上的数据</string>
@@ -683,7 +682,6 @@
     <string name="delete_downloaded">删除已下载章节</string>
     <string name="action_filter_interval_custom">自定义更新频率</string>
     <string name="action_set_interval">设置间隔</string>
-    <string name="action_sort_next_updated">预计更新时间</string>
     <string name="intervals_header">间隔</string>
     <string name="manga_display_interval_title">估计每个</string>
     <string name="manga_display_modified_interval_title">设定更新为每</string>
@@ -742,7 +740,6 @@
     <string name="action_delete_repo">删除仓库</string>
     <string name="invalid_repo_name">仓库网址无效</string>
     <string name="pref_storage_location_info">用于自动备份、章节下载、本地图源。</string>
-    <string name="manga_interval_expected_update">预计 %1$s后更新，每 %2$s检查一次。</string>
     <string name="manga_interval_custom_amount">自定义更新频率：</string>
     <string name="onboarding_permission_install_apps">应用安装权限</string>
     <string name="onboarding_permission_install_apps_description">用来安装图源插件。</string>
@@ -766,7 +763,6 @@
 \n已选文件夹：%2$s</string>
     <string name="onboarding_storage_selection_required">必须选择一个文件夹</string>
     <string name="available_disk_space_info">%1$s / %2$s</string>
-    <string name="manga_interval_expected_update_soon">即将更新</string>
     <string name="ext_revoke_trust">撤销已信任的未知插件</string>
     <string name="action_open_repo">打开图源仓库</string>
     <string name="pref_webtoon_disable_zoom_out">禁用缩小</string>
@@ -776,11 +772,6 @@
     <string name="action_replace_repo_message">%1$s 仓库已经存在和 %2$s 仓库相同的签名密钥指纹。
 \n若继续，%2$s 将被替换，否则请联系你的仓库维护员。</string>
     <string name="action_replace_repo_title">签名密钥指纹已存在</string>
-    <string name="action_view_upcoming">显示即将推出的更新</string>
-    <string name="upcoming_guide">即将推出的指南</string>
-    <string name="label_upcoming">即将推出</string>
-    <string name="upcoming_calendar_next">下个月</string>
-    <string name="upcoming_calendar_prev">上个月</string>
     <string name="manga_interval_expected_update_null">此漫画或已完结，或无发行日期。</string>
     <string name="pref_flash_duration_summary">%1$s 毫秒</string>
     <string name="pref_flash_duration">闪烁时间</string>

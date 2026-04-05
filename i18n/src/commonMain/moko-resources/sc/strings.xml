@@ -675,8 +675,6 @@
     <string name="pref_debug_info">Informatziones de depuratzione de còdighe</string>
     <string name="manga_display_interval_title">Càrcula cada</string>
     <string name="action_filter_interval_custom">Intervallu de recùperu personalizadu</string>
-    <string name="action_sort_next_updated">Agiornamentu imbente prevìdidu</string>
-    <string name="pref_update_only_in_release_period">Foras de su perìodu de publicatzione prevìdidu</string>
     <string name="intervals_header">Intervallos</string>
     <string name="manga_display_modified_interval_title">Imposta s\'agiornamentu pro cada</string>
     <string name="skipped_reason_not_in_release_period">Brincadu ca non bi fiat peruna publicatzione prevìdida oe</string>
@@ -740,7 +738,6 @@
     <string name="pref_flash_style_white">Biancu</string>
     <string name="pref_flash_style_white_black">Biancu e nieddu</string>
     <string name="invalid_backup_file_error">Errore intreu:</string>
-    <string name="upcoming_guide">Ghia a sas atualizatziones imbenientes</string>
     <string name="pref_onboarding_guide">Ghia de introdutzione</string>
     <string name="onboarding_heading">Bene bènnidu!</string>
     <string name="onboarding_action_next">Imbeniente</string>
@@ -761,7 +758,6 @@
     <string name="label_add_repo_input">URL de su depòsitu</string>
     <string name="action_add_repo_message">Annanghe depòsitos additzionales a %s. Custu diat dèpere èssere un\'URL chi acabbat cun \"index.min.json\".</string>
     <string name="private_settings">Include impostatziones sensìbiles ( a es. getones de intrada a sos arrastadores)</string>
-    <string name="manga_interval_expected_update_soon">Luego</string>
     <string name="action_add_anyway">Annanghe su matessi</string>
     <string name="pref_webtoon_disable_zoom_out">Istuda sa ridutzione de ismanniada</string>
     <string name="onboarding_description">In antis de totus tocat a cunfigurare una paja de cosas. L\'as a pòdere semper modificare a pustis dae sas impostatziones.</string>
@@ -773,10 +769,7 @@
     <string name="onboarding_permission_notifications_description">Retzi notìficas pro agiornamentos de sa biblioteca e àteru.</string>
     <string name="onboarding_permission_ignore_battery_opts">Impreu de sa bateria in s\'isfundu</string>
     <string name="invalid_repo_name">URL de su depòsitu non vàlidu</string>
-    <string name="manga_interval_expected_update">Si pensat chi sos capìtulos los pùblichent pagu prus o mancu cada%1$s, cun verìficas cada %2$s.</string>
     <string name="manga_interval_custom_amount">Frecuèntzia de agiornamentu personalizada:</string>
-    <string name="upcoming_calendar_next">Su mese chi intrat</string>
-    <string name="upcoming_calendar_prev">Su mese coladu</string>
     <string name="onboarding_guides_returning_user">Ses torrende a installare %s?</string>
     <string name="ext_revoke_trust">Rèvoca sas estensiones disconnotas afidàbiles</string>
     <string name="label_extension_repos">Depòsitos de estensiones</string>
@@ -786,8 +779,6 @@
     <string name="action_replace_repo_message">Su depòsitu %1$s tenet sa matessi imprenta digitale de sa crae de firma de %2$s.
 \nSi custu est su chi t\'isetas, %2$s s\'at a sostituire, si nono cuntata su mantenidore de su depòsitu tuo.</string>
     <string name="pref_display_profile">Profilu de visualizatzione predefinidu</string>
-    <string name="action_view_upcoming">Abbista·ti sos agiornamentos imbenientes</string>
-    <string name="label_upcoming">Imbeniente</string>
     <string name="non_library_settings">Totu sos elementos lèghidos</string>
     <string name="action_copy_link">Còpia su ligàmene</string>
     <string name="action_sort_random">A casu</string>

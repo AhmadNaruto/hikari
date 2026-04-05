@@ -4,10 +4,6 @@
         <item quantity="one">ഇന്നലെ</item>
         <item quantity="other">%1$d ദിവസം മുമ്പ്</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">നാളെ</item>
-        <item quantity="other">%1$d ദിവസത്തിനുള്ളിൽ</item>
-    </plurals>
     <plurals name="restore_completed_message">
         <item quantity="one">%2$s പിശകോടെ %1$s-നുള്ളിൽ ചെയ്തു</item>
         <item quantity="other">%2$s പിശകുകളോടെ %1$s-നുള്ളിൽ ചെയ്തു</item>

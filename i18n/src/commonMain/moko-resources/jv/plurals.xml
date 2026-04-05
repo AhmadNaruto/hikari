@@ -9,9 +9,6 @@
     <plurals name="num_categories">
         <item quantity="other">%d kategori</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="other">%1$d Dino engkas</item>
-    </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="other">Nggawe %d chapter sing gorong diwoco</item>
     </plurals>
