@@ -3,11 +3,9 @@ package eu.kanade.presentation.more.settings.screen.browse
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import eu.kanade.domain.manga.interactor.UpdateManga
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import tachiyomi.core.common.util.lang.launchIO
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -92,8 +90,4 @@ class HiddenMangaScreenModel(
     ) {
         val selectionMode: Boolean = selected.isNotEmpty()
     }
-}
-
-private fun CoroutineScope.launchIO(block: suspend CoroutineScope.() -> Unit) {
-    launch(Dispatchers.IO, block = block)
 }

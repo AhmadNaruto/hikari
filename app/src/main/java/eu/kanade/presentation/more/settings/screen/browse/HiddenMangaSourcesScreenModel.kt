@@ -4,11 +4,9 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import tachiyomi.core.common.util.lang.launchIO
 import tachiyomi.domain.manga.interactor.GetHiddenManga
 import tachiyomi.domain.source.repository.SourceRepository
 import uy.kohesive.injekt.Injekt
@@ -46,8 +44,3 @@ class HiddenMangaSourcesScreenModel(
         ) : State
     }
 }
-
-private fun CoroutineScope.launchIO(block: suspend CoroutineScope.() -> Unit) {
-    launch(Dispatchers.IO, block = block)
-}
-

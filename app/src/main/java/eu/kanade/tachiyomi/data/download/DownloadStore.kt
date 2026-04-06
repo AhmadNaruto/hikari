@@ -4,13 +4,10 @@ import android.content.Context
 import androidx.core.content.edit
 import eu.kanade.tachiyomi.data.download.model.Download
 import eu.kanade.tachiyomi.source.online.HttpSource
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import tachiyomi.domain.chapter.interactor.GetChapter
 import tachiyomi.domain.manga.interactor.GetManga
-import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.source.service.SourceManager
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
@@ -90,23 +87,25 @@ class DownloadStore(
     /**
      * Returns the list of downloads to restore. It should be called in a background thread.
      */
-    fun restore(): List<Download> {
+    suspend fun restore(): List<Download> {
         val objs = preferences.all
             .mapNotNull { it.value as? String }
             .mapNotNull { deserialize(it) }
             .sortedBy { it.order }
 
-        val downloads = mutableListOf<Download>()
-        if (objs.isNotEmpty()) {
-            val cachedManga = mutableMapOf<Long, Manga?>()
-            for ((mangaId, chapterId) in objs) {
-                val manga = cachedManga.getOrPut(mangaId) {
-                    runBlocking { getManga.await(mangaId) }
-                } ?: continue
-                val source = sourceManager.get(manga.source) as? HttpSource ?: continue
-                val chapter = runBlocking { getChapter.await(chapterId) } ?: continue
-                downloads.add(Download(source, manga, chapter))
-            }
+        if (objs.isEmpty()) return emptyList()
+
+        val mangaIds = objs.map { it.mangaId }.distinct()
+        val chapterIds = objs.map { it.chapterId }
+
+        val mangas = getManga.await(mangaIds).associateBy { it.id }
+        val chapters = getChapter.await(chapterIds).associateBy { it.id }
+
+        val downloads = objs.mapNotNull { obj ->
+            val manga = mangas[obj.mangaId] ?: return@mapNotNull null
+            val source = sourceManager.get(manga.source) as? HttpSource ?: return@mapNotNull null
+            val chapter = chapters[obj.chapterId] ?: return@mapNotNull null
+            Download(source, manga, chapter)
         }
 
         // Clear the store, downloads will be added again immediately.
@@ -132,7 +131,7 @@ class DownloadStore(
     private fun deserialize(string: String): DownloadObject? {
         return try {
             json.decodeFromString<DownloadObject>(string)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }

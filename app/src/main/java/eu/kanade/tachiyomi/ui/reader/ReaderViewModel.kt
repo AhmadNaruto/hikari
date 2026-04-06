@@ -192,6 +192,7 @@ class ReaderViewModel @JvmOverloads constructor(
                                 (manga.bookmarkedFilterRaw == Manga.CHAPTER_SHOW_BOOKMARKED && !it.bookmark) ||
                                 (manga.bookmarkedFilterRaw == Manga.CHAPTER_SHOW_NOT_BOOKMARKED && it.bookmark)
                         }
+
                         else -> false
                     }
                 }
@@ -202,6 +203,7 @@ class ReaderViewModel @JvmOverloads constructor(
                     filteredChapters + listOf(selectedChapter)
                 }
             }
+
             else -> chapters
         }
 
@@ -887,7 +889,7 @@ class ReaderViewModel @JvmOverloads constructor(
                 } else {
                     SetAsCoverResult.AddToLibraryFirst
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 SetAsCoverResult.Error
             }
             eventChannel.send(Event.SetCoverResult(result))

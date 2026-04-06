@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased] - 2026-04-06
+
+### Changed
+- Refactored database operations to use batch processing for manga, chapters, and history
+- Optimized UpdatesScreenModel to avoid N+1 query patterns during bulk actions
+- Standardized coroutine scopes by migrating local extensions to global core utilities
+- Refined coroutine usage by replacing runBlocking with non-blocking suspending calls in data restoration and download management pipelines
+
+
 ## [0.1.2] - 2026-04-06
 
 ### Added
