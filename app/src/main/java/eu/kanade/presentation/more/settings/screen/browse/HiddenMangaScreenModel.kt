@@ -74,9 +74,8 @@ class HiddenMangaScreenModel(
     fun unhideSelected() {
         screenModelScope.launchIO {
             val selectedManga = state.value.selected
-            selectedManga.forEach { manga ->
-                updateManga.await(manga.toMangaUpdate().copy(hidden = false))
-            }
+            val updates = selectedManga.map { it.toMangaUpdate().copy(hidden = false) }
+            updateManga.awaitAll(updates)
             selectAll(false)
         }
     }

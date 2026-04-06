@@ -21,6 +21,10 @@ class MangaRepositoryImpl(
         return handler.awaitOne { mangasQueries.getMangaById(id, MangaMapper::mapManga) }
     }
 
+    override suspend fun getMangaByIds(ids: List<Long>): List<Manga> {
+        return handler.awaitList { mangasQueries.getMangaByIds(ids, MangaMapper::mapManga) }
+    }
+
     override suspend fun getMangaByIdAsFlow(id: Long): Flow<Manga> {
         return handler.subscribeToOne { mangasQueries.getMangaById(id, MangaMapper::mapManga) }
     }

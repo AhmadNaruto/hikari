@@ -223,14 +223,17 @@ class UpdatesScreenModel(
                         downloadManager.startDownloads()
                     }
                 }
+
                 ChapterDownloadAction.START_NOW -> {
                     val chapterId = items.singleOrNull()?.update?.chapterId ?: return@launch
                     startDownloadingNow(chapterId)
                 }
+
                 ChapterDownloadAction.CANCEL -> {
                     val chapterId = items.singleOrNull()?.update?.chapterId ?: return@launch
                     cancelDownload(chapterId)
                 }
+
                 ChapterDownloadAction.DELETE -> {
                     deleteChapters(items)
                 }
@@ -256,11 +259,11 @@ class UpdatesScreenModel(
      */
     fun markUpdatesRead(updates: List<UpdatesItem>, read: Boolean) {
         screenModelScope.launchIO {
+            val chapterIds = updates.map { it.update.chapterId }
+            val chapters = getChapter.await(chapterIds)
             setReadStatus.await(
                 read = read,
-                chapters = updates
-                    .mapNotNull { getChapter.await(it.update.chapterId) }
-                    .toTypedArray(),
+                chapters = chapters.toTypedArray(),
             )
         }
         toggleAllSelection(false)
@@ -286,13 +289,15 @@ class UpdatesScreenModel(
      */
     private fun downloadChapters(updatesItem: List<UpdatesItem>) {
         screenModelScope.launchNonCancellable {
-            val groupedUpdates = updatesItem.groupBy { it.update.mangaId }.values
-            for (updates in groupedUpdates) {
-                val mangaId = updates.first().update.mangaId
-                val manga = getManga.await(mangaId) ?: continue
+            val mangaIds = updatesItem.map { it.update.mangaId }.distinct()
+            val mangas = getManga.await(mangaIds).associateBy { it.id }
+            val chapterIds = updatesItem.map { it.update.chapterId }
+            val chaptersByMangaId = getChapter.await(chapterIds).groupBy { it.mangaId }
+
+            mangas.values.forEach { manga ->
+                val chapters = chaptersByMangaId[manga.id] ?: return@forEach
                 // Don't download if source isn't available
-                sourceManager.get(manga.source) ?: continue
-                val chapters = updates.mapNotNull { getChapter.await(it.update.chapterId) }
+                sourceManager.get(manga.source) ?: return@forEach
                 downloadManager.downloadChapters(manga, chapters)
             }
         }
@@ -305,15 +310,16 @@ class UpdatesScreenModel(
      */
     fun deleteChapters(updatesItem: List<UpdatesItem>) {
         screenModelScope.launchNonCancellable {
-            updatesItem
-                .groupBy { it.update.mangaId }
-                .entries
-                .forEach { (mangaId, updates) ->
-                    val manga = getManga.await(mangaId) ?: return@forEach
-                    val source = sourceManager.get(manga.source) ?: return@forEach
-                    val chapters = updates.mapNotNull { getChapter.await(it.update.chapterId) }
-                    downloadManager.deleteChapters(chapters, manga, source)
-                }
+            val mangaIds = updatesItem.map { it.update.mangaId }.distinct()
+            val mangas = getManga.await(mangaIds).associateBy { it.id }
+            val chapterIds = updatesItem.map { it.update.chapterId }
+            val chaptersByMangaId = getChapter.await(chapterIds).groupBy { it.mangaId }
+
+            mangas.values.forEach { manga ->
+                val chapters = chaptersByMangaId[manga.id] ?: return@forEach
+                val source = sourceManager.get(manga.source) ?: return@forEach
+                downloadManager.deleteChapters(chapters, manga, source)
+            }
         }
         toggleAllSelection(false)
     }

@@ -111,6 +111,10 @@ class ChapterRepositoryImpl(
         return handler.awaitOneOrNull { chaptersQueries.getChapterById(id, ::mapChapter) }
     }
 
+    override suspend fun getChaptersByIds(ids: List<Long>): List<Chapter> {
+        return handler.awaitList { chaptersQueries.getChaptersByIds(ids, ::mapChapter) }
+    }
+
     override suspend fun getChapterByMangaIdAsFlow(mangaId: Long, applyScanlatorFilter: Boolean): Flow<List<Chapter>> {
         return handler.subscribeToList {
             chaptersQueries.getChaptersByMangaId(mangaId, applyScanlatorFilter.toLong(), ::mapChapter)

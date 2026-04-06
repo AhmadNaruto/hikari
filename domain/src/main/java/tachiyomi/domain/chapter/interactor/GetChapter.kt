@@ -26,4 +26,13 @@ class GetChapter(
             null
         }
     }
+
+    suspend fun await(ids: List<Long>): List<Chapter> {
+        return try {
+            chapterRepository.getChaptersByIds(ids)
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e)
+            emptyList()
+        }
+    }
 }

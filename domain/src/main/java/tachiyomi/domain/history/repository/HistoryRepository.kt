@@ -22,4 +22,6 @@ interface HistoryRepository {
     suspend fun deleteAllHistory(): Boolean
 
     suspend fun upsertHistory(historyUpdate: HistoryUpdate)
+
+    suspend fun upsertAll(historyUpdates: List<HistoryUpdate>)
 }

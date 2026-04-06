@@ -72,4 +72,20 @@ class HistoryRepositoryImpl(
             logcat(LogPriority.ERROR, throwable = e)
         }
     }
+
+    override suspend fun upsertAll(historyUpdates: List<HistoryUpdate>) {
+        try {
+            handler.await(inTransaction = true) {
+                historyUpdates.forEach { update ->
+                    historyQueries.upsert(
+                        update.chapterId,
+                        update.readAt,
+                        update.sessionReadDuration,
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, throwable = e)
+        }
+    }
 }
