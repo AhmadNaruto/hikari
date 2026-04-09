@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2026-04-09
+## [0.3.2] - 2026-04-10
 
 ### Added
 - Native C++ image pipeline for reader performance and zero-copy bitmap operations
