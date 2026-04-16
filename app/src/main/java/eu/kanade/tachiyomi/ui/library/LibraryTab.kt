@@ -184,6 +184,7 @@ data object LibraryTab : Tab {
                         selection = state.selection,
                         contentPadding = contentPadding,
                         currentPage = state.coercedActiveCategoryIndex,
+                        isRefreshing = state.isLibraryUpdating,
                         hasActiveFilters = state.hasActiveFilters,
                         showPageTabs = state.showCategoryTabs || !state.searchQuery.isNullOrEmpty(),
                         onChangeCurrentPage = screenModel::updateActiveCategoryIndex,

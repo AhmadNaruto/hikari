@@ -50,6 +50,9 @@ class ExtensionManager(
     private val _isInitialized = MutableStateFlow(false)
     val isInitialized: StateFlow<Boolean> = _isInitialized.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     /**
      * API where all the available extensions can be found.
      */
@@ -135,19 +138,24 @@ class ExtensionManager(
      * Finds the available extensions in the [api] and updates [availableExtensionMapFlow].
      */
     suspend fun findAvailableExtensions() {
-        val extensions: List<Extension.Available> = try {
-            api.findExtensions()
-        } catch (e: Exception) {
-            logcat(LogPriority.ERROR, e)
-            withUIContext { context.toast(MR.strings.extension_api_error) }
-            return
+        _isRefreshing.value = true
+        try {
+            val extensions: List<Extension.Available> = try {
+                api.findExtensions()
+            } catch (e: Exception) {
+                logcat(LogPriority.ERROR, e)
+                withUIContext { context.toast(MR.strings.extension_api_error) }
+                return
+            }
+
+            enableAdditionalSubLanguages(extensions)
+
+            availableExtensionMapFlow.value = extensions.associateBy { it.pkgName }
+            updatedInstalledExtensionsStatuses(extensions)
+            setupAvailableExtensionsSourcesDataMap(extensions)
+        } finally {
+            _isRefreshing.value = false
         }
-
-        enableAdditionalSubLanguages(extensions)
-
-        availableExtensionMapFlow.value = extensions.associateBy { it.pkgName }
-        updatedInstalledExtensionsStatuses(extensions)
-        setupAvailableExtensionsSourcesDataMap(extensions)
     }
 
     /**

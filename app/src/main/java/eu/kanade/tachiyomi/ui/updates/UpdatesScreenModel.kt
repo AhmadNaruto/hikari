@@ -141,6 +141,12 @@ class UpdatesScreenModel(
                 }
             }
             .launchIn(screenModelScope)
+
+        LibraryUpdateJob.isRunningFlow(Injekt.get<Application>())
+            .onEach { isUpdating ->
+                mutableState.update { it.copy(isLibraryUpdating = isUpdating) }
+            }
+            .launchIn(screenModelScope)
     }
 
     private fun List<UpdatesItem>.applyFilters(
@@ -458,6 +464,7 @@ class UpdatesScreenModel(
     @Immutable
     data class State(
         val isLoading: Boolean = true,
+        val isLibraryUpdating: Boolean = false,
         val hasActiveFilters: Boolean = false,
         val items: PersistentList<UpdatesItem> = persistentListOf(),
         val dialog: Dialog? = null,

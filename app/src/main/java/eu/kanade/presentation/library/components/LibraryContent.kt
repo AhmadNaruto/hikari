@@ -32,6 +32,7 @@ fun LibraryContent(
     selection: Set<Long>,
     contentPadding: PaddingValues,
     currentPage: Int,
+    isRefreshing: Boolean,
     hasActiveFilters: Boolean,
     showPageTabs: Boolean,
     onChangeCurrentPage: (Int) -> Unit,
@@ -39,7 +40,7 @@ fun LibraryContent(
     onContinueReadingClicked: ((LibraryManga) -> Unit)?,
     onToggleSelection: (Category, LibraryManga) -> Unit,
     onToggleRangeSelection: (Category, LibraryManga) -> Unit,
-    onRefresh: () -> Boolean,
+    onRefresh: () -> Unit,
     onGlobalSearchClicked: () -> Unit,
     getItemCountForCategory: (Category) -> Int?,
     getDisplayMode: (Int) -> PreferenceMutableState<LibraryDisplayMode>,
@@ -56,7 +57,6 @@ fun LibraryContent(
         val pagerState = rememberPagerState(currentPage) { categories.size }
 
         val scope = rememberCoroutineScope()
-        var isRefreshing by remember(pagerState.currentPage) { mutableStateOf(false) }
 
         if (showPageTabs && categories.isNotEmpty() && (categories.size > 1 || !categories.first().isSystemCategory)) {
             LaunchedEffect(categories) {
@@ -64,7 +64,7 @@ fun LibraryContent(
                     pagerState.scrollToPage(categories.size - 1)
                 }
             }
-            LibraryFilterChips(
+            LibraryTabs(
                 categories = categories,
                 pagerState = pagerState,
                 getItemCountForCategory = getItemCountForCategory,
@@ -79,16 +79,7 @@ fun LibraryContent(
         PullRefresh(
             refreshing = isRefreshing,
             enabled = selection.isEmpty(),
-            onRefresh = {
-                val started = onRefresh()
-                if (!started) return@PullRefresh
-                scope.launch {
-                    // Fake refresh status but hide it after a second as it's a long running task
-                    isRefreshing = true
-                    delay(1.seconds)
-                    isRefreshing = false
-                }
-            },
+            onRefresh = onRefresh,
         ) {
             LibraryPager(
                 state = pagerState,

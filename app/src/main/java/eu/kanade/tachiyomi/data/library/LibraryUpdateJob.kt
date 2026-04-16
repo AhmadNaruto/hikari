@@ -38,6 +38,10 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.sync.withPermit
 import logcat.LogPriority
 import hikari.domain.chapter.interactor.FilterChaptersForDownload
@@ -399,7 +403,7 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
     }
 
     companion object {
-        private const val TAG = "LibraryUpdate"
+        const val TAG = "LibraryUpdate"
         private const val WORK_NAME_AUTO = "LibraryUpdate-auto"
         private const val WORK_NAME_AUTO_PREFIX = "LibraryUpdate-auto-"
         private const val WORK_NAME_MANUAL = "LibraryUpdate-manual"
@@ -412,6 +416,13 @@ class LibraryUpdateJob(private val context: Context, workerParams: WorkerParamet
          * Key for category to update.
          */
         private const val KEY_CATEGORY = "category"
+
+        fun isRunningFlow(context: Context): Flow<Boolean> {
+            return context.workManager.getWorkInfosByTagFlow(TAG)
+                .map { list -> list.any { it.state == WorkInfo.State.RUNNING } }
+                .distinctUntilChanged()
+                .debounce(500)
+        }
 
         fun setupTask(context: Context) {
             val preferences = Injekt.get<LibraryPreferences>()

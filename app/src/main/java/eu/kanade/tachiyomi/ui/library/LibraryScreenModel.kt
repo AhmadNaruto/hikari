@@ -21,6 +21,7 @@ import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.data.track.TrackerManager
 import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.source.online.HttpSource
+import eu.kanade.tachiyomi.data.library.LibraryUpdateJob
 import eu.kanade.tachiyomi.util.chapter.getNextUnread
 import eu.kanade.tachiyomi.util.removeCovers
 import kotlinx.collections.immutable.ImmutableList
@@ -85,7 +86,7 @@ class LibraryScreenModel(
     private val downloadManager: DownloadManager = Injekt.get(),
     private val downloadCache: DownloadCache = Injekt.get(),
     private val trackerManager: TrackerManager = Injekt.get(),
-) : StateScreenModel<LibraryScreenModel.State>(State()) {
+) : StateScreenModel<LibraryScreenModel.State>(LibraryScreenModel.State()) {
 
     init {
         mutableState.update { state ->
@@ -176,6 +177,16 @@ class LibraryScreenModel(
                 mutableState.update { state ->
                     state.copy(hasActiveFilters = it)
                 }
+            }
+            .launchIn(screenModelScope)
+
+        LibraryUpdateJob.isRunningFlow(Injekt.get<android.app.Application>())
+            .onEach { isUpdating ->
+                mutableState.update { it.copy(isLibraryUpdating = it.isLibraryUpdating || isUpdating) }
+            }
+            .debounce(500)
+            .onEach { isUpdating ->
+                mutableState.update { it.copy(isLibraryUpdating = isUpdating) }
             }
             .launchIn(screenModelScope)
     }
@@ -764,8 +775,9 @@ class LibraryScreenModel(
         val showMangaContinueButton: Boolean = false,
         val dialog: Dialog? = null,
         val libraryData: LibraryData = LibraryData(),
-        private val activeCategoryIndex: Int = 0,
-        private val groupedFavorites: Map<Category, List</* LibraryItem */ Long>> = emptyMap(),
+        val isLibraryUpdating: Boolean = false,
+        val activeCategoryIndex: Int = 0,
+        val groupedFavorites: Map<Category, List</* LibraryItem */ Long>> = emptyMap(),
     ) {
         val displayedCategories: List<Category> = groupedFavorites.keys.toList()
 

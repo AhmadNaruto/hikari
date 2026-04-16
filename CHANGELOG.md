@@ -1,6 +1,23 @@
 # Changelog
 
-## [Unreleased] - 2026-04-12
+## [Unreleased] - 2026-04-16
+
+### Changed
+
+- Refactored library and update screens to reactively observe actual background update status
+- Migrated extension manager to a reactive state flow for background fetching
+- Centralized WorkManager status observation in LibraryUpdateJob with integrated debounce
+
+### Fixed
+
+- Fixed InjektionException in LibraryScreenModel during context resolution
+- Removed legacy hardcoded delays from refresh indicators across the application
+
+### Removed
+
+- Removed unused LibraryFilterChips component
+
+## [0.3.4] - 2026-04-12
 
 ### Added
 

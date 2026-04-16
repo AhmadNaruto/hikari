@@ -14,7 +14,6 @@ import eu.kanade.tachiyomi.extension.model.Extension
 import eu.kanade.tachiyomi.extension.model.InstallStep
 import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.util.system.LocaleHelper
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -33,7 +32,6 @@ import tachiyomi.core.common.util.lang.launchIO
 import tachiyomi.i18n.MR
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import kotlin.time.Duration.Companion.seconds
 
 class ExtensionsScreenModel(
     preferences: SourcePreferences = Injekt.get(),
@@ -104,6 +102,12 @@ class ExtensionsScreenModel(
 
         basePreferences.extensionInstaller.changes()
             .onEach { mutableState.update { state -> state.copy(installer = it) } }
+            .launchIn(screenModelScope)
+
+        extensionManager.isRefreshing
+            .onEach { isRefreshing ->
+                mutableState.update { it.copy(isRefreshing = isRefreshing) }
+            }
             .launchIn(screenModelScope)
     }
 
@@ -191,14 +195,7 @@ class ExtensionsScreenModel(
 
     fun findAvailableExtensions() {
         screenModelScope.launchIO {
-            mutableState.update { it.copy(isRefreshing = true) }
-
             extensionManager.findAvailableExtensions()
-
-            // Fake slower refresh so it doesn't seem like it's not doing anything
-            delay(1.seconds)
-
-            mutableState.update { it.copy(isRefreshing = false) }
         }
     }
 
