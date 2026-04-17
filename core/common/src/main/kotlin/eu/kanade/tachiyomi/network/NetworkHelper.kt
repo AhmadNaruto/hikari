@@ -40,7 +40,7 @@ class NetworkHelper(
             .cache(
                 Cache(
                     directory = File(context.cacheDir, "network_cache"),
-                    maxSize = 10L * 1024 * 1024, // 10 MiB
+                    maxSize = 10L * 1024 * 1024,
                 ),
             )
             .addInterceptor(UncaughtExceptionInterceptor())
@@ -94,9 +94,6 @@ class NetworkHelper(
 
     fun baseClientBuilder(authenticated: Boolean): OkHttpClient.Builder {
         val builder = baseClientBuilder()
-        if (authenticated) {
-            // Add a placeholder to be replaced or let caller add it first
-        }
         return builder
     }
 

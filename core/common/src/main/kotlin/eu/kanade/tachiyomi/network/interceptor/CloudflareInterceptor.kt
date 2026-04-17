@@ -31,14 +31,12 @@ class CloudflareInterceptor(
     private val executor = ContextCompat.getMainExecutor(context)
 
     override fun shouldIntercept(response: Response): Boolean {
-        // Check if Cloudflare anti-bot is on
         return if (response.code in ERROR_CODES && response.header("Server") in SERVER_CHECK) {
             val document = Jsoup.parse(
                 response.peekBody(Long.MAX_VALUE).string(),
                 response.request.url.toString(),
             )
 
-            // solve with webview only on captcha, not on geo block
             document.getElementById("challenge-error-title") != null ||
                 document.getElementById("challenge-error-text") != null
         } else {
@@ -101,7 +99,6 @@ class CloudflareInterceptor(
                     }
 
                     if (url == origRequestUrl && !challengeFound) {
-                        // The first request didn't return the challenge, abort.
                         latch.countDown()
                     }
                 }
@@ -113,10 +110,8 @@ class CloudflareInterceptor(
                 ) {
                     if (request?.isForMainFrame == true) {
                         if (errorResponse?.statusCode in ERROR_CODES) {
-                            // Found the Cloudflare challenge page.
                             challengeFound = true
                         } else {
-                            // Unlock thread, the challenge wasn't found.
                             latch.countDown()
                         }
                     }
@@ -139,9 +134,7 @@ class CloudflareInterceptor(
             }
         }
 
-        // Throw exception if we failed to bypass Cloudflare
         if (!cloudflareBypassed) {
-            // Prompt user to update WebView if it seems too outdated
             if (isWebViewOutdated) {
                 context.toast(MR.strings.information_webview_outdated, Toast.LENGTH_LONG)
             }

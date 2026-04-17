@@ -68,7 +68,7 @@ internal class RateLimitInterceptor(
 
         val request = chain.request()
         when (host) {
-            null, request.url.host -> {} // need rate limit
+            null, request.url.host -> {}
             else -> return chain.proceed(request)
         }
 
@@ -83,7 +83,7 @@ internal class RateLimitInterceptor(
 
         try {
             synchronized(requestQueue) {
-                while (requestQueue.size >= permits) { // queue is full, remove expired entries
+                while (requestQueue.size >= permits) {
                     val periodStart = SystemClock.elapsedRealtime() - rateLimitMillis
                     var hasRemovedExpired = false
                     while (!requestQueue.isEmpty() && requestQueue.first <= periodStart) {
@@ -95,7 +95,7 @@ internal class RateLimitInterceptor(
                     } else if (hasRemovedExpired) {
                         break
                     } else {
-                        try { // wait for the first entry to expire, or notified by cached response
+                        try {
                             (requestQueue as Object).wait(requestQueue.first - periodStart)
                         } catch (_: InterruptedException) {
                             continue
@@ -103,7 +103,6 @@ internal class RateLimitInterceptor(
                     }
                 }
 
-                // add request to queue
                 timestamp = SystemClock.elapsedRealtime()
                 requestQueue.addLast(timestamp)
             }
@@ -112,7 +111,7 @@ internal class RateLimitInterceptor(
         }
 
         val response = chain.proceed(request)
-        if (response.networkResponse == null) { // response is cached, remove it from queue
+        if (response.networkResponse == null) {
             synchronized(requestQueue) {
                 if (requestQueue.isEmpty() || timestamp < requestQueue.first) return@synchronized
                 requestQueue.removeFirstOccurrence(timestamp)
