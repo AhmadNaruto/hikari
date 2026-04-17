@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import tachiyomi.presentation.core.components.SectionCard
 import tachiyomi.presentation.core.components.material.padding
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.HorizontalDivider
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.domain.ui.UiPreferences
@@ -127,6 +128,8 @@ object AboutScreen : Screen() {
                                     }
                                 },
                             )
+
+                            HorizontalDivider()
                         }
 
                         if (!BuildConfig.DEBUG) {
@@ -134,12 +137,16 @@ object AboutScreen : Screen() {
                                 title = stringResource(MR.strings.whats_new),
                                 onPreferenceClick = { uriHandler.openUri(RELEASE_URL) },
                             )
+
+                            HorizontalDivider()
                         }
 
                         TextPreferenceWidget(
                             title = stringResource(MR.strings.licenses),
                             onPreferenceClick = { navigator.push(OpenSourceLicensesScreen()) },
                         )
+
+                        HorizontalDivider()
 
                         TextPreferenceWidget(
                             title = stringResource(MR.strings.privacy_policy),

@@ -62,14 +62,10 @@ internal fun AppThemePreferenceWidget(
     amoled: Boolean,
     onItemClick: (AppTheme) -> Unit,
 ) {
-    BasePreferenceWidget(
-        subcomponent = {
-            AppThemesList(
-                currentTheme = value,
-                amoled = amoled,
-                onItemClick = onItemClick,
-            )
-        },
+    AppThemesList(
+        currentTheme = value,
+        amoled = amoled,
+        onItemClick = onItemClick,
     )
 }
 
