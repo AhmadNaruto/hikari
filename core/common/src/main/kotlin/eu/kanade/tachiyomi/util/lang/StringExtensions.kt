@@ -75,3 +75,19 @@ fun String.normalizeTitle(): String {
         .replace(Regex("[^\\p{L}\\p{N}]"), "")
         .trim()
 }
+
+/**
+ * Extracts deduplication IDs in the format [id:service:value]
+ */
+fun String.extractDeduplicationIds(): List<String> {
+    val regex = Regex("\\[id:([^:]+):([^\\]]+)\\]")
+    return regex.findAll(this).map { it.value }.toList()
+}
+
+/**
+ * Strips deduplication IDs from the string for UI display.
+ */
+fun String.stripDeduplicationIds(): String {
+    val regex = Regex("\n*\\[id:([^:]+):([^\\]]+)\\]")
+    return this.replace(regex, "").trim()
+}

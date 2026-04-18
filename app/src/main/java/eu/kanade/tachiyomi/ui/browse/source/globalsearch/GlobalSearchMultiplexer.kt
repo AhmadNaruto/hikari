@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.Dispatchers
 import eu.kanade.tachiyomi.util.lang.normalizeTitle
+import eu.kanade.tachiyomi.util.lang.extractDeduplicationIds
 import hikari.domain.manga.model.toDomainManga
 import tachiyomi.domain.manga.model.Manga
 
@@ -60,7 +61,15 @@ class GlobalSearchMultiplexer(
                             .distinctBy { it.url }
                             .let { networkToLocalManga(it) }
 
-                        val normalized = titles.associateBy { it.title.normalizeTitle() }
+                        val normalized = mutableMapOf<String, Manga>()
+                        titles.forEach { manga ->
+                            val ids = manga.description?.extractDeduplicationIds() ?: emptyList()
+                            if (ids.isNotEmpty()) {
+                                ids.forEach { id -> normalized[id] = manga }
+                            } else {
+                                normalized[manga.title.normalizeTitle()] = manga
+                            }
+                        }
 
                         emit(GlobalSearchUpdate.Success(source, titles, normalized))
                     } catch (e: Exception) {
