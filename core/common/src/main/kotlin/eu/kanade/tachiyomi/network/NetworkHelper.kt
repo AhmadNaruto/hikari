@@ -5,6 +5,7 @@ import com.google.net.cronet.okhttptransport.CronetInterceptor
 import eu.kanade.tachiyomi.network.interceptor.CloudflareInterceptor
 import eu.kanade.tachiyomi.network.interceptor.IgnoreGzipInterceptor
 import eu.kanade.tachiyomi.network.interceptor.UncaughtExceptionInterceptor
+import eu.kanade.tachiyomi.network.interceptor.CronetCookieSyncInterceptor
 import eu.kanade.tachiyomi.network.interceptor.UserAgentInterceptor
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -68,14 +69,24 @@ class NetworkHelper(
 
     fun addCronetInterceptor(builder: OkHttpClient.Builder) {
         if (preferences.enableCronet.get()) {
+            builder.addInterceptor(CronetCookieSyncInterceptor(cookieJar))
             val cronetInterceptor = CronetInterceptor.newBuilder(cronetEngine).build()
             builder.addInterceptor { chain ->
                 try {
                     cronetInterceptor.intercept(chain)
                 } catch (e: Exception) {
-                    val isCronetError = e is NullPointerException && e.message?.contains("okhttp3.Response\$Builder.body") == true ||
-                        e is java.util.concurrent.ExecutionException ||
-                        e.javaClass.name.contains("org.chromium.net")
+                    var isCronetError = false
+                    var current: Throwable? = e
+                    while (current != null) {
+                        if (current.javaClass.name.contains("org.chromium.net") ||
+                            current is java.util.concurrent.ExecutionException ||
+                            (current is NullPointerException && current.message?.contains("okhttp3.Response\$Builder.body") == true)
+                        ) {
+                            isCronetError = true
+                            break
+                        }
+                        current = current.cause
+                    }
 
                     if (isCronetError) {
                         chain.proceed(chain.request())

@@ -131,6 +131,52 @@ void easu(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
   }
 }
 
+void sharpen(uint32_t *pixels, int w, int h) {
+  std::vector<uint32_t> src(pixels, pixels + w * h);
+  for (int y = 1; y < h - 1; y++) {
+    for (int x = 1; x < w - 1; x++) {
+      int idx = y * w + x;
+
+      auto getR = [&](uint32_t p) { return p & 0xFF; };
+      auto getG = [&](uint32_t p) { return (p >> 8) & 0xFF; };
+      auto getB = [&](uint32_t p) { return (p >> 16) & 0xFF; };
+
+      int r = 5 * getR(src[idx]) - getR(src[idx - 1]) - getR(src[idx + 1]) -
+              getR(src[idx - w]) - getR(src[idx + w]);
+      int g = 5 * getG(src[idx]) - getG(src[idx - 1]) - getG(src[idx + 1]) -
+              getG(src[idx - w]) - getG(src[idx + w]);
+      int b = 5 * getB(src[idx]) - getB(src[idx - 1]) - getB(src[idx + 1]) -
+              getB(src[idx - w]) - getB(src[idx + w]);
+
+      uint32_t a = (src[idx] >> 24) & 0xFF;
+      pixels[idx] = (a << 24) | ((uint32_t)clamp(b, 0, 255) << 16) |
+                    ((uint32_t)clamp(g, 0, 255) << 8) |
+                    (uint32_t)clamp(r, 0, 255);
+    }
+  }
+}
+
+void denoise(uint32_t *pixels, int w, int h) {
+  std::vector<uint32_t> src(pixels, pixels + w * h);
+  for (int y = 1; y < h - 1; y++) {
+    for (int x = 1; x < w - 1; x++) {
+      int r = 0, g = 0, b = 0, a = 0;
+      for (int ky = -1; ky <= 1; ky++) {
+        for (int kx = -1; kx <= 1; kx++) {
+          uint32_t p = src[(y + ky) * w + (x + kx)];
+          r += p & 0xFF;
+          g += (p >> 8) & 0xFF;
+          b += (p >> 16) & 0xFF;
+          a += (p >> 24) & 0xFF;
+        }
+      }
+      pixels[y * w + x] = ((uint32_t)(a / 9) << 24) |
+                          ((uint32_t)(b / 9) << 16) | ((uint32_t)(g / 9) << 8) |
+                          (uint32_t)(r / 9);
+    }
+  }
+}
+
 } // namespace hikari
 
 extern "C" {
@@ -161,7 +207,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
   void *pixels;
   AndroidBitmap_lockPixels(env, bitmap, &pixels);
 
-  if (filters & 4) { // FILTER_UPSCALING
+  if (filters & 4) {
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
     int sw = gDecoder.getWidth(header);
     int sh = gDecoder.getHeight(header);
@@ -175,6 +221,14 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     gDecoder.setTargetSize(decoder, info.width, info.height);
     gDecoder.decodeImage(decoder, pixels, info.stride,
                          info.stride * info.height);
+  }
+
+  if (filters & 2) {
+    hikari::denoise((uint32_t *)pixels, info.width, info.height);
+  }
+
+  if (filters & 1) {
+    hikari::sharpen((uint32_t *)pixels, info.width, info.height);
   }
 
   AndroidBitmap_unlockPixels(env, bitmap);
@@ -206,20 +260,25 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   void *pixels;
   AndroidBitmap_lockPixels(env, bitmap, &pixels);
 
-  // Set the source crop (region)
   if (gDecoder.setTargetRect) {
     gDecoder.setTargetRect(decoder, {left, top, right, bottom});
   }
 
-  // Apply sample size / target size for the region
   int targetWidth = (right - left) / sampleSize;
   int targetHeight = (bottom - top) / sampleSize;
   if (gDecoder.setTargetSize) {
     gDecoder.setTargetSize(decoder, targetWidth, targetHeight);
   }
 
-  // Decode directly into the provided bitmap pixels
   gDecoder.decodeImage(decoder, pixels, info.stride, info.stride * info.height);
+
+  if (filters & 2) {
+    hikari::denoise((uint32_t *)pixels, info.width, info.height);
+  }
+
+  if (filters & 1) {
+    hikari::sharpen((uint32_t *)pixels, info.width, info.height);
+  }
 
   AndroidBitmap_unlockPixels(env, bitmap);
   gDecoder.deleteDecoder(decoder);

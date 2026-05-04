@@ -98,6 +98,14 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
         label = stringResource(MR.strings.pref_reader_upscaling),
         pref = screenModel.preferences.readerUpscaling,
     )
+    CheckboxItem(
+        label = stringResource(MR.strings.pref_reader_sharpening),
+        pref = screenModel.preferences.readerSharpening,
+    )
+    CheckboxItem(
+        label = stringResource(MR.strings.pref_reader_denoising),
+        pref = screenModel.preferences.readerDenoising,
+    )
 
     CheckboxItem(
         label = stringResource(MR.strings.pref_flash_page),

@@ -12,8 +12,11 @@ import coil3.fetch.SourceFetchResult
 import coil3.request.Options
 import coil3.request.allowRgb565
 import okio.BufferedSource
+import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
 import tachiyomi.core.common.util.system.ImageUtil
 import tachiyomi.core.common.util.system.NativeImageDecoder
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -28,6 +31,7 @@ import kotlin.math.roundToInt
 class HikariImageDecoder(
     private val resources: ImageSource,
     private val options: Options,
+    private val preferences: ReaderPreferences,
 ) : Decoder {
 
     override suspend fun decode(): DecodeResult? {
@@ -35,7 +39,6 @@ class HikariImageDecoder(
 
         val bytes = resources.source().readByteArray()
 
-        // Extract original dimensions
         val dimenOptions = ImageUtil.extractImageOptions(okio.Buffer().write(bytes))
         val srcWidth = dimenOptions.outWidth
         val srcHeight = dimenOptions.outHeight
@@ -64,8 +67,14 @@ class HikariImageDecoder(
 
         val isUpscaling = dstWidth > srcWidth / sampleSize || dstHeight > srcHeight / sampleSize
         var filters = 0
-        if (isUpscaling) {
+        if (isUpscaling && preferences.readerUpscaling.get()) {
             filters = filters or NativeImageDecoder.FILTER_UPSCALING
+        }
+        if (preferences.readerSharpening.get()) {
+            filters = filters or NativeImageDecoder.FILTER_SHARPEN
+        }
+        if (preferences.readerDenoising.get()) {
+            filters = filters or NativeImageDecoder.FILTER_DENOISE
         }
 
         val bitmap = Bitmap.createBitmap(
@@ -96,7 +105,8 @@ class HikariImageDecoder(
 
             if (isLargeOrTall(source)) return null
 
-            return HikariImageDecoder(result.source, options)
+            val preferences = Injekt.get<ReaderPreferences>()
+            return HikariImageDecoder(result.source, options, preferences)
         }
 
         private fun isLargeOrTall(source: BufferedSource): Boolean {

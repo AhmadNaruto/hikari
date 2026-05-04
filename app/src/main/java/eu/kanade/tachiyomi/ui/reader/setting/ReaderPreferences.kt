@@ -86,6 +86,8 @@ class ReaderPreferences(
     val webtoonDisableZoomOut: Preference<Boolean> = preferenceStore.getBoolean("webtoon_disable_zoom_out", false)
 
     val readerUpscaling: Preference<Boolean> = preferenceStore.getBoolean("reader_upscaling", false)
+    val readerSharpening: Preference<Boolean> = preferenceStore.getBoolean("reader_sharpening", false)
+    val readerDenoising: Preference<Boolean> = preferenceStore.getBoolean("reader_denoising", false)
 
     // endregion
 

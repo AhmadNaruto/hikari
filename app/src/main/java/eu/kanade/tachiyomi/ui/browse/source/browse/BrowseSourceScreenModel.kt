@@ -80,20 +80,23 @@ class BrowseSourceScreenModel(
 
     init {
         if (source is CatalogueSource) {
-            mutableState.update {
-                var query: String? = null
-                var listing = it.listing
+            screenModelScope.launchIO {
+                val filters = source.getFilterList()
+                mutableState.update {
+                    var query: String? = null
+                    var listing = it.listing
 
-                if (listing is Listing.Search) {
-                    query = listing.query
-                    listing = Listing.Search(query, source.getFilterList())
+                    if (listing is Listing.Search) {
+                        query = listing.query
+                        listing = Listing.Search(query, filters)
+                    }
+
+                    it.copy(
+                        listing = listing,
+                        filters = filters,
+                        toolbarQuery = query,
+                    )
                 }
-
-                it.copy(
-                    listing = listing,
-                    filters = source.getFilterList(),
-                    toolbarQuery = query,
-                )
             }
         }
 
@@ -148,7 +151,10 @@ class BrowseSourceScreenModel(
     fun resetFilters() {
         if (source !is CatalogueSource) return
 
-        mutableState.update { it.copy(filters = source.getFilterList()) }
+        screenModelScope.launchIO {
+            val filters = source.getFilterList()
+            mutableState.update { it.copy(filters = filters) }
+        }
     }
 
     fun setListing(listing: Listing) {
@@ -168,62 +174,66 @@ class BrowseSourceScreenModel(
     fun search(query: String? = null, filters: FilterList? = null) {
         if (source !is CatalogueSource) return
 
-        val input = state.value.listing as? Listing.Search
-            ?: Listing.Search(query = null, filters = source.getFilterList())
+        screenModelScope.launchIO {
+            val input = state.value.listing as? Listing.Search
+                ?: Listing.Search(query = null, filters = source.getFilterList())
 
-        mutableState.update {
-            it.copy(
-                listing = input.copy(
-                    query = query ?: input.query,
-                    filters = filters ?: input.filters,
-                ),
-                toolbarQuery = query ?: input.query,
-            )
+            mutableState.update {
+                it.copy(
+                    listing = input.copy(
+                        query = query ?: input.query,
+                        filters = filters ?: input.filters,
+                    ),
+                    toolbarQuery = query ?: input.query,
+                )
+            }
         }
     }
 
     fun searchGenre(genreName: String) {
         if (source !is CatalogueSource) return
 
-        val defaultFilters = source.getFilterList()
-        var genreExists = false
+        screenModelScope.launchIO {
+            val defaultFilters = source.getFilterList()
+            var genreExists = false
 
-        filter@ for (sourceFilter in defaultFilters) {
-            if (sourceFilter is SourceModelFilter.Group<*>) {
-                for (filter in sourceFilter.state) {
-                    if (filter is SourceModelFilter<*> && filter.name.equals(genreName, true)) {
-                        when (filter) {
-                            is SourceModelFilter.TriState -> filter.state = 1
-                            is SourceModelFilter.CheckBox -> filter.state = true
-                            else -> {}
+            filter@ for (sourceFilter in defaultFilters) {
+                if (sourceFilter is SourceModelFilter.Group<*>) {
+                    for (filter in sourceFilter.state) {
+                        if (filter is SourceModelFilter<*> && filter.name.equals(genreName, true)) {
+                            when (filter) {
+                                is SourceModelFilter.TriState -> filter.state = 1
+                                is SourceModelFilter.CheckBox -> filter.state = true
+                                else -> {}
+                            }
+                            genreExists = true
+                            break@filter
                         }
+                    }
+                } else if (sourceFilter is SourceModelFilter.Select<*>) {
+                    val index = sourceFilter.values.filterIsInstance<String>()
+                        .indexOfFirst { it.equals(genreName, true) }
+
+                    if (index != -1) {
+                        sourceFilter.state = index
                         genreExists = true
-                        break@filter
+                        break
                     }
                 }
-            } else if (sourceFilter is SourceModelFilter.Select<*>) {
-                val index = sourceFilter.values.filterIsInstance<String>()
-                    .indexOfFirst { it.equals(genreName, true) }
+            }
 
-                if (index != -1) {
-                    sourceFilter.state = index
-                    genreExists = true
-                    break
+            mutableState.update {
+                val listing = if (genreExists) {
+                    Listing.Search(query = null, filters = defaultFilters)
+                } else {
+                    Listing.Search(query = genreName, filters = defaultFilters)
                 }
+                it.copy(
+                    filters = defaultFilters,
+                    listing = listing,
+                    toolbarQuery = listing.query,
+                )
             }
-        }
-
-        mutableState.update {
-            val listing = if (genreExists) {
-                Listing.Search(query = null, filters = defaultFilters)
-            } else {
-                Listing.Search(query = genreName, filters = defaultFilters)
-            }
-            it.copy(
-                filters = defaultFilters,
-                listing = listing,
-                toolbarQuery = listing.query,
-            )
         }
     }
 

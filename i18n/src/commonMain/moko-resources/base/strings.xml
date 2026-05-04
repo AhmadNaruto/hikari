@@ -504,6 +504,8 @@
     <string name="pref_viewer_nav">Tap zones</string>
     <string name="pref_image_scale_type">Scale type</string>
     <string name="pref_reader_upscaling">High Quality Upscaling (Native)</string>
+    <string name="pref_reader_sharpening">Sharpening (Native)</string>
+    <string name="pref_reader_denoising">Denoising (Native)</string>
     <string name="scale_type_fit_screen">Fit screen</string>
     <string name="scale_type_stretch">Stretch</string>
     <string name="scale_type_fit_width">Fit width</string>
