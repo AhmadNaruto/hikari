@@ -9,6 +9,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import tachiyomi.presentation.core.util.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -85,6 +86,11 @@ data object LibraryTab : Tab {
         val screenModel = rememberScreenModel { LibraryScreenModel() }
         val settingsScreenModel = rememberScreenModel { LibrarySettingsScreenModel() }
         val state by screenModel.state.collectAsState()
+        val filterDownloaded by settingsScreenModel.libraryPreferences.filterDownloaded.collectAsState()
+        val filterUnread by settingsScreenModel.libraryPreferences.filterUnread.collectAsState()
+        val filterStarted by settingsScreenModel.libraryPreferences.filterStarted.collectAsState()
+        val filterBookmarked by settingsScreenModel.libraryPreferences.filterBookmarked.collectAsState()
+        val filterCompleted by settingsScreenModel.libraryPreferences.filterCompleted.collectAsState()
         var showCategorySelector by remember { mutableStateOf(false) }
         val visibleCategories = remember(state.displayedCategories, state.searchQuery, state.activeCategory) {
             if (!state.searchQuery.isNullOrEmpty()) {
@@ -144,6 +150,12 @@ data object LibraryTab : Tab {
                     onSearchQueryChange = screenModel::search,
                     // For scroll overlay when no tab
                     scrollBehavior = scrollBehavior.takeIf { !state.showCategoryTabs },
+                    filterDownloaded = filterDownloaded,
+                    filterUnread = filterUnread,
+                    filterStarted = filterStarted,
+                    filterBookmarked = filterBookmarked,
+                    filterCompleted = filterCompleted,
+                    onToggleFilter = settingsScreenModel::toggleFilter,
                 )
             },
             bottomBar = {

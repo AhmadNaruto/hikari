@@ -3,6 +3,7 @@ package eu.kanade.presentation.components
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
@@ -127,6 +128,7 @@ fun AppBar(
     onCancelActionMode: () -> Unit = {},
 
     scrollBehavior: TopAppBarScrollBehavior? = null,
+    subContent: @Composable ColumnScope.() -> Unit = {},
 ) {
     Column(
         modifier = modifier,
@@ -157,6 +159,7 @@ fun AppBar(
             ),
             scrollBehavior = scrollBehavior,
         )
+        subContent()
     }
 }
 
@@ -277,6 +280,7 @@ fun SearchToolbar(
     scrollBehavior: TopAppBarScrollBehavior? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    subContent: @Composable ColumnScope.() -> Unit = {},
 ) {
     val focusRequester = remember { FocusRequester() }
 
@@ -398,6 +402,7 @@ fun SearchToolbar(
         },
         isActionMode = false,
         scrollBehavior = scrollBehavior,
+        subContent = subContent,
     )
 }
 

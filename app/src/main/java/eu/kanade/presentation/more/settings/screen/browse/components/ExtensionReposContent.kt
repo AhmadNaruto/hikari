@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
@@ -17,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +27,8 @@ import eu.kanade.tachiyomi.util.system.copyToClipboard
 import hikari.domain.extensionrepo.model.ExtensionRepo
 import kotlinx.collections.immutable.ImmutableSet
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.HikariCard
+import tachiyomi.presentation.core.components.HikariGroupedListItem
+import tachiyomi.presentation.core.components.HikariListItemPosition
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -38,21 +41,29 @@ fun ExtensionReposContent(
     onClickDelete: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val reposList = remember(repos) { repos.toList() }
     LazyColumn(
         state = lazyListState,
         contentPadding = paddingValues,
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
         modifier = modifier,
     ) {
-        repos.forEach {
-            item {
-                ExtensionRepoListItem(
-                    modifier = Modifier.animateItem(),
-                    repo = it,
-                    onOpenWebsite = { onOpenWebsite(it) },
-                    onDelete = { onClickDelete(it.baseUrl) },
-                )
+        itemsIndexed(
+            items = reposList,
+            key = { _, repo -> repo.baseUrl },
+        ) { index, repo ->
+            val position = when {
+                reposList.size == 1 -> HikariListItemPosition.Single
+                index == 0 -> HikariListItemPosition.First
+                index == reposList.size - 1 -> HikariListItemPosition.Last
+                else -> HikariListItemPosition.Middle
             }
+            ExtensionRepoListItem(
+                modifier = Modifier.animateItem(),
+                repo = repo,
+                position = position,
+                onOpenWebsite = { onOpenWebsite(repo) },
+                onDelete = { onClickDelete(repo.baseUrl) },
+            )
         }
     }
 }
@@ -60,13 +71,18 @@ fun ExtensionReposContent(
 @Composable
 private fun ExtensionRepoListItem(
     repo: ExtensionRepo,
+    position: HikariListItemPosition,
     onOpenWebsite: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
-    HikariCard(modifier = modifier) {
+    HikariGroupedListItem(
+        position = position,
+        modifier = modifier,
+        horizontalPadding = 0.dp,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

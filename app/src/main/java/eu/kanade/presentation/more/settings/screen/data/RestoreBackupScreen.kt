@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
@@ -14,8 +15,15 @@ import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
 import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Public
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -93,13 +101,40 @@ class RestoreBackupScreen(
 
                     item {
                         SectionCard {
-                            RestoreOptions.options.forEach { option ->
-                                LabeledCheckbox(
-                                    label = stringResource(option.label),
-                                    checked = option.getter(state.options),
-                                    onCheckedChange = {
-                                        model.toggle(option.setter, it)
+                            RestoreOptions.options.forEachIndexed { index, option ->
+                                if (index > 0) {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
+                                    )
+                                }
+                                val label = stringResource(option.label)
+                                val checked = option.getter(state.options)
+                                ListItem(
+                                    headlineContent = {
+                                        Text(
+                                            text = label,
+                                            style = MaterialTheme.typography.titleMedium,
+                                        )
                                     },
+                                    supportingContent = {
+                                        Text(
+                                            text = getOptionDescription(option.label),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            modifier = Modifier.secondaryItemAlpha(),
+                                        )
+                                    },
+                                    trailingContent = {
+                                        Switch(
+                                            checked = checked,
+                                            onCheckedChange = {
+                                                model.toggle(option.setter, it)
+                                            },
+                                        )
+                                    },
+                                    colors = ListItemDefaults.colors(
+                                        containerColor = androidx.compose.ui.graphics.Color.Transparent,
+                                    ),
                                 )
                             }
                         }
@@ -116,36 +151,55 @@ class RestoreBackupScreen(
     @Composable
     private fun BackupSummaryCard(results: BackupFileValidator.Results?) {
         if (results == null) return
-        SectionCard {
-            Column(
-                modifier = Modifier.padding(vertical = MaterialTheme.padding.small),
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
-            ) {
-                Text(
-                    text = stringResource(MR.strings.label_overview_section),
-                    style = MaterialTheme.typography.titleMedium,
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
+        ) {
+            Text(
+                text = stringResource(MR.strings.label_overview_section),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
 
-                Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small)) {
-                    SummaryItem(
+            Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                ) {
+                    SummaryGridItem(
                         icon = Icons.AutoMirrored.Outlined.LibraryBooks,
                         label = stringResource(MR.strings.label_library),
                         value = results.mangaCount.toString(),
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
-                    SummaryItem(
+                    SummaryGridItem(
                         icon = Icons.Outlined.History,
                         label = stringResource(MR.strings.label_recent_manga),
                         value = results.categoryCount.toString(),
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                     )
-                    SummaryItem(
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                ) {
+                    SummaryGridItem(
                         icon = Icons.Outlined.Public,
                         label = stringResource(MR.strings.label_sources),
                         value = results.sourceCount.toString(),
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
                     )
-                    SummaryItem(
+                    SummaryGridItem(
                         icon = Icons.Outlined.Settings,
                         label = stringResource(MR.strings.label_settings),
                         value = results.preferenceCount.toString(),
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -153,31 +207,57 @@ class RestoreBackupScreen(
     }
 
     @Composable
-    private fun SummaryItem(
+    private fun RowScope.SummaryGridItem(
         icon: ImageVector,
         label: String,
         value: String,
+        containerColor: androidx.compose.ui.graphics.Color,
+        contentColor: androidx.compose.ui.graphics.Color,
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
+        Card(
+            modifier = Modifier.weight(1f),
+            colors = CardDefaults.cardColors(
+                containerColor = containerColor,
+                contentColor = contentColor,
+            ),
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.secondaryItemAlpha(),
-            )
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.weight(1f),
-            )
-            Text(
-                text = value,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Bold,
-            )
+            Column(
+                modifier = Modifier.padding(MaterialTheme.padding.medium),
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.secondaryItemAlpha(),
+                    )
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Medium,
+                    )
+                }
+                Text(
+                    text = value,
+                    style = MaterialTheme.typography.displaySmall,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun getOptionDescription(label: dev.icerock.moko.resources.StringResource): String {
+        return when (label) {
+            MR.strings.label_library -> "Restores all manga entries, tracking histories, and local catalog states."
+            MR.strings.categories -> "Restores user-defined category groups and tab classifications."
+            MR.strings.app_settings -> "Restores general preferences, appearance layouts, and reader customisations."
+            MR.strings.extensionRepo_settings -> "Restores custom external extension repository URLs."
+            MR.strings.source_settings -> "Restores source preferences, configuration parameters, and access credentials."
+            else -> ""
         }
     }
 
@@ -185,16 +265,36 @@ class RestoreBackupScreen(
         error: Any?,
     ) {
         item {
-            SectionCard {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer,
+                    contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                ),
+            ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                    modifier = Modifier.padding(MaterialTheme.padding.medium),
                     verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
                 ) {
-                    Text(
-                        text = stringResource(MR.strings.label_warning),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.error,
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Warning,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.error,
+                        )
+                        Text(
+                            text = stringResource(MR.strings.label_warning),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+
                     val msg = buildAnnotatedString {
                         when (error) {
                             is MissingRestoreComponents -> {

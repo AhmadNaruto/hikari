@@ -13,11 +13,21 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.outlined.BookmarkAdd
+import androidx.compose.material.icons.outlined.BookmarkRemove
+import androidx.compose.material.icons.outlined.Done
 import androidx.compose.material.icons.outlined.History
+import androidx.compose.material.icons.outlined.RemoveDone
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import me.saket.swipe.SwipeableActionsBox
+import me.saket.swipe.SwipeAction
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -91,6 +101,8 @@ internal fun LazyListScope.updatesUiItems(
     onClickCover: (UpdatesItem) -> Unit,
     onClickUpdate: (UpdatesItem) -> Unit,
     onDownloadChapter: (List<UpdatesItem>, ChapterDownloadAction) -> Unit,
+    onMultiBookmarkClicked: (List<UpdatesItem>, bookmark: Boolean) -> Unit,
+    onMultiMarkAsReadClicked: (List<UpdatesItem>, read: Boolean) -> Unit,
 ) {
     uiModels.forEachIndexed { index, item ->
         when (item) {
@@ -158,6 +170,12 @@ internal fun LazyListScope.updatesUiItems(
                         onDownloadChapter = { action: ChapterDownloadAction ->
                             onDownloadChapter(listOf(updatesItem), action)
                         }.takeIf { !selectionMode },
+                        onToggleBookmark = {
+                            onMultiBookmarkClicked(listOf(updatesItem), !updatesItem.update.bookmark)
+                        }.takeIf { !selectionMode },
+                        onToggleRead = {
+                            onMultiMarkAsReadClicked(listOf(updatesItem), !updatesItem.update.read)
+                        }.takeIf { !selectionMode },
                         downloadStateProvider = updatesItem.downloadStateProvider,
                         downloadProgressProvider = updatesItem.downloadProgressProvider,
                     )
@@ -177,6 +195,8 @@ private fun UpdatesUiItem(
     onLongClick: () -> Unit,
     onClickCover: (() -> Unit)?,
     onDownloadChapter: ((ChapterDownloadAction) -> Unit)?,
+    onToggleBookmark: (() -> Unit)?,
+    onToggleRead: (() -> Unit)?,
     downloadStateProvider: () -> Download.State,
     downloadProgressProvider: () -> Int,
     modifier: Modifier = Modifier,
@@ -184,95 +204,212 @@ private fun UpdatesUiItem(
     val haptic = LocalHapticFeedback.current
     val textAlpha = if (update.read) DISABLED_ALPHA else 1f
 
-    HikariGroupedListItem(
-        modifier = modifier,
-        position = position.toHikariListItemPosition(),
-        selected = selected,
-        height = 72.dp,
-        onClick = onClick,
-        onLongClick = {
-            onLongClick()
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-        },
-    ) {
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = MaterialTheme.padding.medium),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            MangaCover.Square(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .fillMaxHeight(),
-                data = update.coverData,
-                onClick = onClickCover,
-            )
+    val bookmarkAction = onToggleBookmark?.let {
+        swipeAction(
+            onSwipe = it,
+            icon = if (update.bookmark) Icons.Outlined.BookmarkRemove else Icons.Outlined.BookmarkAdd,
+            background = MaterialTheme.colorScheme.tertiaryContainer,
+        )
+    }
+    val readAction = onToggleRead?.let {
+        swipeAction(
+            onSwipe = it,
+            icon = if (update.read) Icons.Outlined.RemoveDone else Icons.Outlined.Done,
+            background = MaterialTheme.colorScheme.primaryContainer,
+        )
+    }
 
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = MaterialTheme.padding.medium)
-                    .weight(1f),
+    if (bookmarkAction != null || readAction != null) {
+        SwipeableActionsBox(
+            modifier = modifier.clipToBounds(),
+            startActions = listOfNotNull(readAction),
+            endActions = listOfNotNull(bookmarkAction),
+            swipeThreshold = 56.dp,
+            backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceContainerLowest,
+        ) {
+            HikariGroupedListItem(
+                modifier = Modifier,
+                position = position.toHikariListItemPosition(),
+                selected = selected,
+                height = 72.dp,
+                onClick = onClick,
+                onLongClick = {
+                    onLongClick()
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                },
             ) {
-                Text(
-                    text = update.mangaTitle,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = LocalContentColor.current.copy(alpha = textAlpha),
-                    overflow = TextOverflow.Ellipsis,
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = MaterialTheme.padding.medium),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    MangaCover.Square(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxHeight(),
+                        data = update.coverData,
+                        onClick = onClickCover,
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = MaterialTheme.padding.medium)
+                            .weight(1f),
+                    ) {
+                        Text(
+                            text = update.mangaTitle,
+                            maxLines = 1,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = LocalContentColor.current.copy(alpha = textAlpha),
+                            overflow = TextOverflow.Ellipsis,
+                        )
+
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            var textHeight by remember { mutableIntStateOf(0) }
+                            if (!update.read) {
+                                Icon(
+                                    imageVector = Icons.Filled.Circle,
+                                    contentDescription = stringResource(MR.strings.unread),
+                                    modifier = Modifier.size(8.dp),
+                                    tint = MaterialTheme.colorScheme.primary,
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                            }
+                            if (update.bookmark) {
+                                Icon(
+                                    imageVector = Icons.Filled.Bookmark,
+                                    contentDescription = stringResource(MR.strings.action_filter_bookmarked),
+                                    modifier = Modifier
+                                        .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
+                                    tint = MaterialTheme.colorScheme.primary,
+                                )
+                                Spacer(modifier = Modifier.width(2.dp))
+                            }
+                            Text(
+                                text = update.chapterName,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = LocalContentColor.current.copy(alpha = textAlpha),
+                                overflow = TextOverflow.Ellipsis,
+                                onTextLayout = { textHeight = it.size.height },
+                                modifier = Modifier
+                                    .weight(weight = 1f, fill = false),
+                            )
+                            if (readProgress != null) {
+                                DotSeparatorText()
+                                Text(
+                                    text = readProgress,
+                                    maxLines = 1,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = LocalContentColor.current.copy(alpha = textAlpha),
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+                        }
+                    }
+
+                    ChapterDownloadIndicator(
+                        enabled = onDownloadChapter != null,
+                        modifier = Modifier.padding(start = 4.dp),
+                        downloadStateProvider = downloadStateProvider,
+                        downloadProgressProvider = downloadProgressProvider,
+                        onClick = { onDownloadChapter?.invoke(it) },
+                    )
+                }
+            }
+        }
+    } else {
+        HikariGroupedListItem(
+            modifier = modifier,
+            position = position.toHikariListItemPosition(),
+            selected = selected,
+            height = 72.dp,
+            onClick = onClick,
+            onLongClick = {
+                onLongClick()
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            },
+        ) {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = MaterialTheme.padding.medium),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                MangaCover.Square(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxHeight(),
+                    data = update.coverData,
+                    onClick = onClickCover,
                 )
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    var textHeight by remember { mutableIntStateOf(0) }
-                    if (!update.read) {
-                        Icon(
-                            imageVector = Icons.Filled.Circle,
-                            contentDescription = stringResource(MR.strings.unread),
-                            modifier = Modifier.size(8.dp),
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                    }
-                    if (update.bookmark) {
-                        Icon(
-                            imageVector = Icons.Filled.Bookmark,
-                            contentDescription = stringResource(MR.strings.action_filter_bookmarked),
-                            modifier = Modifier
-                                .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                        Spacer(modifier = Modifier.width(2.dp))
-                    }
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = MaterialTheme.padding.medium)
+                        .weight(1f),
+                ) {
                     Text(
-                        text = update.chapterName,
+                        text = update.mangaTitle,
                         maxLines = 1,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = LocalContentColor.current.copy(alpha = textAlpha),
                         overflow = TextOverflow.Ellipsis,
-                        onTextLayout = { textHeight = it.size.height },
-                        modifier = Modifier
-                            .weight(weight = 1f, fill = false),
                     )
-                    if (readProgress != null) {
-                        DotSeparatorText()
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        var textHeight by remember { mutableIntStateOf(0) }
+                        if (!update.read) {
+                            Icon(
+                                imageVector = Icons.Filled.Circle,
+                                contentDescription = stringResource(MR.strings.unread),
+                                modifier = Modifier.size(8.dp),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                        }
+                        if (update.bookmark) {
+                            Icon(
+                                imageVector = Icons.Filled.Bookmark,
+                                contentDescription = stringResource(MR.strings.action_filter_bookmarked),
+                                modifier = Modifier
+                                    .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                            Spacer(modifier = Modifier.width(2.dp))
+                        }
                         Text(
-                            text = readProgress,
+                            text = update.chapterName,
                             maxLines = 1,
                             style = MaterialTheme.typography.bodySmall,
                             color = LocalContentColor.current.copy(alpha = textAlpha),
                             overflow = TextOverflow.Ellipsis,
+                            onTextLayout = { textHeight = it.size.height },
+                            modifier = Modifier
+                                .weight(weight = 1f, fill = false),
                         )
+                        if (readProgress != null) {
+                            DotSeparatorText()
+                            Text(
+                                text = readProgress,
+                                maxLines = 1,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = LocalContentColor.current.copy(alpha = textAlpha),
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     }
                 }
-            }
 
-            ChapterDownloadIndicator(
-                enabled = onDownloadChapter != null,
-                modifier = Modifier.padding(start = 4.dp),
-                downloadStateProvider = downloadStateProvider,
-                downloadProgressProvider = downloadProgressProvider,
-                onClick = { onDownloadChapter?.invoke(it) },
-            )
+                ChapterDownloadIndicator(
+                    enabled = onDownloadChapter != null,
+                    modifier = Modifier.padding(start = 4.dp),
+                    downloadStateProvider = downloadStateProvider,
+                    downloadProgressProvider = downloadProgressProvider,
+                    onClick = { onDownloadChapter?.invoke(it) },
+                )
+            }
         }
     }
 }
@@ -291,4 +428,25 @@ enum class ItemPosition {
     Middle,
     Last,
     Single,
+}
+
+private fun swipeAction(
+    onSwipe: () -> Unit,
+    icon: ImageVector,
+    background: Color,
+    isUndo: Boolean = false,
+): SwipeAction {
+    return SwipeAction(
+        icon = {
+            Icon(
+                modifier = androidx.compose.ui.Modifier.padding(16.dp),
+                imageVector = icon,
+                tint = contentColorFor(background),
+                contentDescription = null,
+            )
+        },
+        background = background,
+        onSwipe = onSwipe,
+        isUndo = isUndo,
+    )
 }

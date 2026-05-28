@@ -4,9 +4,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
+import androidx.compose.material3.contentColorFor
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import me.saket.swipe.SwipeableActionsBox
+import me.saket.swipe.SwipeAction
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -41,72 +48,91 @@ fun HistoryItem(
     onClickFavorite: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    HikariGroupedListItem(
-        modifier = modifier,
-        position = position.toHikariListItemPosition(),
-        height = 72.dp,
-        onClick = onClickResume,
+    val favoriteAction = swipeAction(
+        onSwipe = onClickFavorite,
+        icon = if (history.coverData.isMangaFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+        background = MaterialTheme.colorScheme.primaryContainer,
+    )
+    val deleteAction = swipeAction(
+        onSwipe = onClickDelete,
+        icon = Icons.Outlined.Delete,
+        background = MaterialTheme.colorScheme.errorContainer,
+    )
+
+    SwipeableActionsBox(
+        modifier = modifier.clipToBounds(),
+        startActions = listOf(favoriteAction),
+        endActions = listOf(deleteAction),
+        swipeThreshold = 56.dp,
+        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceContainerLowest,
     ) {
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = MaterialTheme.padding.medium),
-            verticalAlignment = Alignment.CenterVertically,
+        HikariGroupedListItem(
+            modifier = Modifier,
+            position = position.toHikariListItemPosition(),
+            height = 72.dp,
+            onClick = onClickResume,
         ) {
-            MangaCover.Square(
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
-                    .fillMaxHeight(),
-                data = history.coverData,
-                onClick = onClickCover,
-            )
-            androidx.compose.foundation.layout.Column(
+            Row(
                 modifier = Modifier
                     .weight(1f)
                     .padding(horizontal = MaterialTheme.padding.medium),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                val textStyle = MaterialTheme.typography.bodyMedium
-                Text(
-                    text = history.title,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = textStyle,
+                MangaCover.Square(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxHeight(),
+                    data = history.coverData,
+                    onClick = onClickCover,
                 )
-                val readAt = remember { history.readAt?.toTimestampString() ?: "" }
-                Text(
-                    text = if (history.chapterNumber > -1) {
-                        stringResource(
-                            MR.strings.recent_manga_time,
-                            formatChapterNumber(history.chapterNumber),
-                            readAt,
-                        )
-                    } else {
-                        readAt
-                    },
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+                androidx.compose.foundation.layout.Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = MaterialTheme.padding.medium),
+                ) {
+                    val textStyle = MaterialTheme.typography.bodyMedium
+                    Text(
+                        text = history.title,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = textStyle,
+                    )
+                    val readAt = remember { history.readAt?.toTimestampString() ?: "" }
+                    Text(
+                        text = if (history.chapterNumber > -1) {
+                            stringResource(
+                                MR.strings.recent_manga_time,
+                                formatChapterNumber(history.chapterNumber),
+                                readAt,
+                            )
+                        } else {
+                            readAt
+                        },
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
 
-            if (!history.coverData.isMangaFavorite) {
-                IconButton(onClick = onClickFavorite) {
+                if (!history.coverData.isMangaFavorite) {
+                    IconButton(onClick = onClickFavorite) {
+                        Icon(
+                            imageVector = Icons.Outlined.FavoriteBorder,
+                            contentDescription = stringResource(MR.strings.add_to_library),
+                            tint = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+
+                IconButton(onClick = onClickDelete) {
                     Icon(
-                        imageVector = Icons.Outlined.FavoriteBorder,
-                        contentDescription = stringResource(MR.strings.add_to_library),
+                        imageVector = Icons.Outlined.Delete,
+                        contentDescription = stringResource(MR.strings.action_delete),
                         tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
-            }
-
-            IconButton(onClick = onClickDelete) {
-                Icon(
-                    imageVector = Icons.Outlined.Delete,
-                    contentDescription = stringResource(MR.strings.action_delete),
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
             }
         }
     }
@@ -146,4 +172,25 @@ private fun HistoryItemPreviews(
             )
         }
     }
+}
+
+private fun swipeAction(
+    onSwipe: () -> Unit,
+    icon: ImageVector,
+    background: Color,
+    isUndo: Boolean = false,
+): SwipeAction {
+    return SwipeAction(
+        icon = {
+            Icon(
+                modifier = androidx.compose.ui.Modifier.padding(16.dp),
+                imageVector = icon,
+                tint = contentColorFor(background),
+                contentDescription = null,
+            )
+        },
+        background = background,
+        onSwipe = onSwipe,
+        isUndo = isUndo,
+    )
 }

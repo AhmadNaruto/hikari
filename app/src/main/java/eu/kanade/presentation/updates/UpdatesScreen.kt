@@ -109,6 +109,8 @@ fun UpdateScreen(
                             onClickCover = onClickCover,
                             onClickUpdate = onOpenChapter,
                             onDownloadChapter = onDownloadChapter,
+                            onMultiBookmarkClicked = onMultiBookmarkClicked,
+                            onMultiMarkAsReadClicked = onMultiMarkAsReadClicked,
                         )
                     }
                 }

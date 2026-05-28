@@ -1,12 +1,11 @@
 package eu.kanade.presentation.category
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import tachiyomi.domain.category.model.Category
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariListItemPosition
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
@@ -102,16 +102,22 @@ private fun CategoryContent(
         contentPadding = paddingValues +
             topSmallPaddingValues +
             PaddingValues(horizontal = MaterialTheme.padding.medium),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
     ) {
-        items(
+        itemsIndexed(
             items = categoriesState,
-            key = { category -> category.key },
-        ) { category ->
+            key = { _, category -> category.key },
+        ) { index, category ->
+            val position = when {
+                categoriesState.size == 1 -> HikariListItemPosition.Single
+                index == 0 -> HikariListItemPosition.First
+                index == categoriesState.size - 1 -> HikariListItemPosition.Last
+                else -> HikariListItemPosition.Middle
+            }
             ReorderableItem(reorderableState, category.key) {
                 CategoryListItem(
                     modifier = Modifier.animateItem(),
                     category = category,
+                    position = position,
                     onRename = { onClickRename(category) },
                     onDelete = { onClickDelete(category) },
                 )

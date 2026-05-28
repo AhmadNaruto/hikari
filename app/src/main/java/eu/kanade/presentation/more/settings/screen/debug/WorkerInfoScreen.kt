@@ -2,7 +2,10 @@ package eu.kanade.presentation.more.settings.screen.debug
 
 import android.content.Context
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -37,7 +40,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariCard
 import tachiyomi.presentation.core.components.material.Scaffold
+import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.plus
 import uy.kohesive.injekt.Injekt
@@ -85,37 +90,59 @@ class WorkerInfoScreen : Screen() {
             },
         ) { contentPadding ->
             LazyColumn(
-                contentPadding = contentPadding + PaddingValues(horizontal = 16.dp),
-                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                contentPadding = contentPadding + PaddingValues(horizontal = MaterialTheme.padding.medium, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                item { SectionTitle(title = "Enqueued") }
-                item { SectionText(text = enqueued) }
-
-                item { SectionTitle(title = "Finished") }
-                item { SectionText(text = finished) }
-
-                item { SectionTitle(title = "Running") }
-                item { SectionText(text = running) }
+                item {
+                    SectionCard(
+                        title = "Enqueued",
+                        text = enqueued,
+                    )
+                }
+                item {
+                    SectionCard(
+                        title = "Finished",
+                        text = finished,
+                    )
+                }
+                item {
+                    SectionCard(
+                        title = "Running",
+                        text = running,
+                    )
+                }
             }
         }
     }
 
     @Composable
-    private fun SectionTitle(title: String) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(vertical = 8.dp),
-        )
-    }
-
-    @Composable
-    private fun SectionText(text: String) {
-        Text(
-            text = text,
-            softWrap = false,
-            fontFamily = FontFamily.Monospace,
-        )
+    private fun SectionCard(
+        title: String,
+        text: String,
+        modifier: Modifier = Modifier,
+    ) {
+        val scrollState = rememberScrollState()
+        HikariCard(
+            modifier = modifier.fillMaxWidth(),
+        ) {
+            Column(
+                modifier = Modifier.padding(MaterialTheme.padding.medium),
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                )
+                Text(
+                    text = text,
+                    softWrap = false,
+                    fontFamily = FontFamily.Monospace,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.horizontalScroll(scrollState),
+                )
+            }
+        }
     }
 
     private class Model(context: Context) : ScreenModel {

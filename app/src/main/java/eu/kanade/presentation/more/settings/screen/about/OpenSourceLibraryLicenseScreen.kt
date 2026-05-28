@@ -1,11 +1,13 @@
 package eu.kanade.presentation.more.settings.screen.about
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -20,7 +22,9 @@ import eu.kanade.presentation.components.AppBarActions
 import eu.kanade.presentation.util.Screen
 import kotlinx.collections.immutable.persistentListOf
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariCard
 import tachiyomi.presentation.core.components.material.Scaffold
+import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 
 class OpenSourceLibraryLicenseScreen(
@@ -60,9 +64,17 @@ class OpenSourceLibraryLicenseScreen(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
-                    .padding(16.dp),
+                    .padding(horizontal = MaterialTheme.padding.medium, vertical = 12.dp),
             ) {
-                HtmlLicenseText(html = license)
+                HikariCard(
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(MaterialTheme.padding.medium),
+                    ) {
+                        HtmlLicenseText(html = license)
+                    }
+                }
             }
         }
     }

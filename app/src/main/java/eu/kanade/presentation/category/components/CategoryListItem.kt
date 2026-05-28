@@ -16,20 +16,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import sh.calvin.reorderable.ReorderableCollectionItemScope
+import androidx.compose.ui.unit.dp
 import tachiyomi.domain.category.model.Category
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.HikariCard
+import tachiyomi.presentation.core.components.HikariGroupedListItem
+import tachiyomi.presentation.core.components.HikariListItemPosition
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 
 @Composable
 fun ReorderableCollectionItemScope.CategoryListItem(
     category: Category,
+    position: HikariListItemPosition,
     onRename: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    HikariCard(modifier = modifier) {
+    HikariGroupedListItem(
+        position = position,
+        modifier = modifier,
+        horizontalPadding = 0.dp,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
