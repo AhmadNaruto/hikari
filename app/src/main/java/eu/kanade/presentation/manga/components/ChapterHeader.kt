@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariCardGroup
 import tachiyomi.presentation.core.components.material.SECONDARY_ALPHA
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.pluralStringResource
@@ -30,38 +31,44 @@ fun ChapterHeader(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(
-                enabled = enabled,
-                onClick = onClick,
-            )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    HikariCardGroup(
+        modifier = modifier,
+        horizontalPadding = 16.dp,
+        verticalPadding = 4.dp,
     ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(
+                    enabled = enabled,
+                    onClick = onClick,
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = if (chapterCount == null) {
-                    stringResource(MR.strings.chapters)
-                } else {
-                    pluralStringResource(MR.plurals.manga_num_chapters, count = chapterCount, chapterCount)
-                },
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+            ) {
+                Text(
+                    text = if (chapterCount == null) {
+                        stringResource(MR.strings.chapters)
+                    } else {
+                        pluralStringResource(MR.plurals.manga_num_chapters, count = chapterCount, chapterCount)
+                    },
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+
+                MissingChaptersWarning(missingChapterCount)
+            }
+
+            Icon(
+                imageVector = Icons.Outlined.FilterList,
+                contentDescription = stringResource(MR.strings.action_filter),
+                tint = MaterialTheme.colorScheme.onBackground,
             )
-
-            MissingChaptersWarning(missingChapterCount)
         }
-
-        Icon(
-            imageVector = Icons.Outlined.FilterList,
-            contentDescription = stringResource(MR.strings.action_filter),
-            tint = MaterialTheme.colorScheme.onBackground,
-        )
     }
 }
 

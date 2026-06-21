@@ -11,7 +11,12 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.outlined.PushPin
-import androidx.compose.material3.AlertDialog
+import eu.kanade.presentation.components.AdaptiveSheet
+import tachiyomi.presentation.core.components.HikariGroupedListItem
+import tachiyomi.presentation.core.components.HikariListItemPosition
+import tachiyomi.presentation.core.components.Badge
+import tachiyomi.presentation.core.components.BadgeGroup
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
@@ -145,14 +150,30 @@ private fun SourceHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
+            .padding(
+                start = MaterialTheme.padding.medium,
+                end = MaterialTheme.padding.medium,
+                top = MaterialTheme.padding.small,
+                bottom = MaterialTheme.padding.small,
+            ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
     ) {
         Text(
             text = LocaleHelper.getSourceDisplayName(language, context),
-            style = MaterialTheme.typography.header,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (count > 0) {
+            BadgeGroup {
+                Badge(
+                    text = "$count",
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    textColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                )
+            }
+        }
     }
 }
 
@@ -220,34 +241,68 @@ fun SourceOptionsDialog(
     onClickDisable: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    AlertDialog(
-        title = {
-            Text(text = source.visualName)
-        },
-        text = {
-            Column {
-                val textId = if (Pin.Pinned in source.pin) MR.strings.action_unpin else MR.strings.action_pin
+    AdaptiveSheet(
+        onDismissRequest = onDismiss,
+        header = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = source.visualName,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            val isLocal = source.isLocal()
+            val textId = if (Pin.Pinned in source.pin) MR.strings.action_unpin else MR.strings.action_pin
+
+            HikariGroupedListItem(
+                position = if (isLocal) HikariListItemPosition.Single else HikariListItemPosition.First,
+                onClick = {
+                    onClickPin()
+                    onDismiss()
+                }
+            ) {
                 Text(
                     text = stringResource(textId),
                     modifier = Modifier
-                        .clickable(onClick = onClickPin)
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                        .padding(horizontal = 16.dp, vertical = 16.dp),
+                    style = MaterialTheme.typography.bodyMedium,
                 )
-                if (!source.isLocal()) {
+            }
+
+            if (!isLocal) {
+                HikariGroupedListItem(
+                    position = HikariListItemPosition.Last,
+                    onClick = {
+                        onClickDisable()
+                        onDismiss()
+                    }
+                ) {
                     Text(
                         text = stringResource(MR.strings.action_disable),
                         modifier = Modifier
-                            .clickable(onClick = onClickDisable)
                             .fillMaxWidth()
-                            .padding(vertical = 16.dp),
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
                     )
                 }
             }
-        },
-        onDismissRequest = onDismiss,
-        confirmButton = {},
-    )
+        }
+    }
 }
 
 sealed interface SourceUiModel {

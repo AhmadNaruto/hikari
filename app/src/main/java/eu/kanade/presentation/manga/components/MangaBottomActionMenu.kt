@@ -7,6 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Label
@@ -63,6 +65,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariCardDefaults
 import tachiyomi.presentation.core.i18n.stringResource
 import kotlin.time.Duration.Companion.seconds
 
@@ -87,7 +90,8 @@ fun MangaBottomActionMenu(
         Surface(
             modifier = modifier,
             shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            color = HikariCardDefaults.containerColor(4.dp),
+            border = BorderStroke(0.5.dp, HikariCardDefaults.dividerColor()),
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false, false) }
@@ -101,77 +105,88 @@ fun MangaBottomActionMenu(
                     if (isActive) confirm[toConfirmIndex] = false
                 }
             }
-            Row(
-                modifier = Modifier
-                    .padding(
-                        WindowInsets.navigationBars
-                            .only(WindowInsetsSides.Bottom)
-                            .asPaddingValues(),
-                    )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                if (onBookmarkClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_bookmark),
-                        icon = Icons.Outlined.BookmarkAdd,
-                        toConfirm = confirm[0],
-                        onLongClick = { onLongClickItem(0) },
-                        onClick = onBookmarkClicked,
-                    )
-                }
-                if (onRemoveBookmarkClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_remove_bookmark),
-                        icon = Icons.Outlined.BookmarkRemove,
-                        toConfirm = confirm[1],
-                        onLongClick = { onLongClickItem(1) },
-                        onClick = onRemoveBookmarkClicked,
-                    )
-                }
-                if (onMarkAsReadClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_mark_as_read),
-                        icon = Icons.Outlined.DoneAll,
-                        toConfirm = confirm[2],
-                        onLongClick = { onLongClickItem(2) },
-                        onClick = onMarkAsReadClicked,
-                    )
-                }
-                if (onMarkAsUnreadClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_mark_as_unread),
-                        icon = Icons.Outlined.RemoveDone,
-                        toConfirm = confirm[3],
-                        onLongClick = { onLongClickItem(3) },
-                        onClick = onMarkAsUnreadClicked,
-                    )
-                }
-                if (onMarkPreviousAsReadClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_mark_previous_as_read),
-                        icon = ImageVector.vectorResource(R.drawable.ic_done_prev_24dp),
-                        toConfirm = confirm[4],
-                        onLongClick = { onLongClickItem(4) },
-                        onClick = onMarkPreviousAsReadClicked,
-                    )
-                }
-                if (onDownloadClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_download),
-                        icon = Icons.Outlined.Download,
-                        toConfirm = confirm[5],
-                        onLongClick = { onLongClickItem(5) },
-                        onClick = onDownloadClicked,
-                    )
-                }
-                if (onDeleteClicked != null) {
-                    Button(
-                        title = stringResource(MR.strings.action_delete),
-                        icon = Icons.Outlined.Delete,
-                        toConfirm = confirm[6],
-                        onLongClick = { onLongClickItem(6) },
-                        onClick = onDeleteClicked,
-                    )
+                Surface(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .size(36.dp, 4.dp),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.35f),
+                    shape = CircleShape,
+                ) {}
+                Row(
+                    modifier = Modifier
+                        .padding(
+                            WindowInsets.navigationBars
+                                .only(WindowInsetsSides.Bottom)
+                                .asPaddingValues(),
+                        )
+                        .padding(horizontal = 8.dp, vertical = 12.dp),
+                ) {
+                    if (onBookmarkClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_bookmark),
+                            icon = Icons.Outlined.BookmarkAdd,
+                            toConfirm = confirm[0],
+                            onLongClick = { onLongClickItem(0) },
+                            onClick = onBookmarkClicked,
+                        )
+                    }
+                    if (onRemoveBookmarkClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_remove_bookmark),
+                            icon = Icons.Outlined.BookmarkRemove,
+                            toConfirm = confirm[1],
+                            onLongClick = { onLongClickItem(1) },
+                            onClick = onRemoveBookmarkClicked,
+                        )
+                    }
+                    if (onMarkAsReadClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_mark_as_read),
+                            icon = Icons.Outlined.DoneAll,
+                            toConfirm = confirm[2],
+                            onLongClick = { onLongClickItem(2) },
+                            onClick = onMarkAsReadClicked,
+                        )
+                    }
+                    if (onMarkAsUnreadClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_mark_as_unread),
+                            icon = Icons.Outlined.RemoveDone,
+                            toConfirm = confirm[3],
+                            onLongClick = { onLongClickItem(3) },
+                            onClick = onMarkAsUnreadClicked,
+                        )
+                    }
+                    if (onMarkPreviousAsReadClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_mark_previous_as_read),
+                            icon = ImageVector.vectorResource(R.drawable.ic_done_prev_24dp),
+                            toConfirm = confirm[4],
+                            onLongClick = { onLongClickItem(4) },
+                            onClick = onMarkPreviousAsReadClicked,
+                        )
+                    }
+                    if (onDownloadClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_download),
+                            icon = Icons.Outlined.Download,
+                            toConfirm = confirm[5],
+                            onLongClick = { onLongClickItem(5) },
+                            onClick = onDownloadClicked,
+                        )
+                    }
+                    if (onDeleteClicked != null) {
+                        Button(
+                            title = stringResource(MR.strings.action_delete),
+                            icon = Icons.Outlined.Delete,
+                            toConfirm = confirm[6],
+                            onLongClick = { onLongClickItem(6) },
+                            onClick = onDeleteClicked,
+                        )
+                    }
                 }
             }
         }
@@ -248,7 +263,8 @@ fun LibraryBottomActionMenu(
         Surface(
             modifier = modifier,
             shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            color = HikariCardDefaults.containerColor(4.dp),
+            border = BorderStroke(0.5.dp, HikariCardDefaults.dividerColor()),
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false) }
@@ -263,89 +279,100 @@ fun LibraryBottomActionMenu(
                 }
             }
             val itemOverflow = onDownloadClicked != null
-            Row(
-                modifier = Modifier
-                    .windowInsetsPadding(
-                        WindowInsets.navigationBars
-                            .only(WindowInsetsSides.Bottom),
-                    )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Button(
-                    title = stringResource(MR.strings.action_move_category),
-                    icon = Icons.AutoMirrored.Outlined.Label,
-                    toConfirm = confirm[0],
-                    onLongClick = { onLongClickItem(0) },
-                    onClick = onChangeCategoryClicked,
-                )
-                Button(
-                    title = stringResource(MR.strings.action_mark_as_read),
-                    icon = Icons.Outlined.DoneAll,
-                    toConfirm = confirm[1],
-                    onLongClick = { onLongClickItem(1) },
-                    onClick = onMarkAsReadClicked,
-                )
-                Button(
-                    title = stringResource(MR.strings.action_mark_as_unread),
-                    icon = Icons.Outlined.RemoveDone,
-                    toConfirm = confirm[2],
-                    onLongClick = { onLongClickItem(2) },
-                    onClick = onMarkAsUnreadClicked,
-                )
-                if (onDownloadClicked != null) {
-                    var downloadExpanded by remember { mutableStateOf(false) }
-                    Button(
-                        title = stringResource(MR.strings.action_download),
-                        icon = Icons.Outlined.Download,
-                        toConfirm = confirm[3],
-                        onLongClick = { onLongClickItem(3) },
-                        onClick = { downloadExpanded = !downloadExpanded },
-                    ) {
-                        DownloadDropdownMenu(
-                            expanded = downloadExpanded,
-                            onDismissRequest = { downloadExpanded = false },
-                            onDownloadClicked = onDownloadClicked,
-                            offset = BottomBarMenuDpOffset,
+                Surface(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .size(36.dp, 4.dp),
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.35f),
+                    shape = CircleShape,
+                ) {}
+                Row(
+                    modifier = Modifier
+                        .windowInsetsPadding(
+                            WindowInsets.navigationBars
+                                .only(WindowInsetsSides.Bottom),
                         )
-                    }
-                }
-                if (!itemOverflow) {
+                        .padding(horizontal = 8.dp, vertical = 12.dp),
+                ) {
                     Button(
-                        title = stringResource(MR.strings.migrate),
-                        icon = Icons.Outlined.SwapCalls,
-                        toConfirm = confirm[4],
-                        onLongClick = { onLongClickItem(4) },
-                        onClick = onMigrateClicked,
+                        title = stringResource(MR.strings.action_move_category),
+                        icon = Icons.AutoMirrored.Outlined.Label,
+                        toConfirm = confirm[0],
+                        onLongClick = { onLongClickItem(0) },
+                        onClick = onChangeCategoryClicked,
                     )
                     Button(
-                        title = stringResource(MR.strings.action_delete),
-                        icon = Icons.Outlined.Delete,
-                        toConfirm = confirm[5],
-                        onLongClick = { onLongClickItem(5) },
-                        onClick = onDeleteClicked,
+                        title = stringResource(MR.strings.action_mark_as_read),
+                        icon = Icons.Outlined.DoneAll,
+                        toConfirm = confirm[1],
+                        onLongClick = { onLongClickItem(1) },
+                        onClick = onMarkAsReadClicked,
                     )
-                } else {
-                    var overflowMenuOpen by remember { mutableStateOf(false) }
                     Button(
-                        title = stringResource(MR.strings.label_more),
-                        icon = Icons.Outlined.MoreVert,
-                        toConfirm = false,
-                        onLongClick = {},
-                        onClick = { overflowMenuOpen = true },
-                    ) {
-                        DropdownMenu(
-                            expanded = overflowMenuOpen,
-                            onDismissRequest = { overflowMenuOpen = false },
-                            offset = BottomBarMenuDpOffset,
+                        title = stringResource(MR.strings.action_mark_as_unread),
+                        icon = Icons.Outlined.RemoveDone,
+                        toConfirm = confirm[2],
+                        onLongClick = { onLongClickItem(2) },
+                        onClick = onMarkAsUnreadClicked,
+                    )
+                    if (onDownloadClicked != null) {
+                        var downloadExpanded by remember { mutableStateOf(false) }
+                        Button(
+                            title = stringResource(MR.strings.action_download),
+                            icon = Icons.Outlined.Download,
+                            toConfirm = confirm[3],
+                            onLongClick = { onLongClickItem(3) },
+                            onClick = { downloadExpanded = !downloadExpanded },
                         ) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(MR.strings.migrate)) },
-                                onClick = onMigrateClicked,
+                            DownloadDropdownMenu(
+                                expanded = downloadExpanded,
+                                onDismissRequest = { downloadExpanded = false },
+                                onDownloadClicked = onDownloadClicked,
+                                offset = BottomBarMenuDpOffset,
                             )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(MR.strings.action_delete)) },
-                                onClick = onDeleteClicked,
-                            )
+                        }
+                    }
+                    if (!itemOverflow) {
+                        Button(
+                            title = stringResource(MR.strings.migrate),
+                            icon = Icons.Outlined.SwapCalls,
+                            toConfirm = confirm[4],
+                            onLongClick = { onLongClickItem(4) },
+                            onClick = onMigrateClicked,
+                        )
+                        Button(
+                            title = stringResource(MR.strings.action_delete),
+                            icon = Icons.Outlined.Delete,
+                            toConfirm = confirm[5],
+                            onLongClick = { onLongClickItem(5) },
+                            onClick = onDeleteClicked,
+                        )
+                    } else {
+                        var overflowMenuOpen by remember { mutableStateOf(false) }
+                        Button(
+                            title = stringResource(MR.strings.label_more),
+                            icon = Icons.Outlined.MoreVert,
+                            toConfirm = false,
+                            onLongClick = {},
+                            onClick = { overflowMenuOpen = true },
+                        ) {
+                            DropdownMenu(
+                                expanded = overflowMenuOpen,
+                                onDismissRequest = { overflowMenuOpen = false },
+                                offset = BottomBarMenuDpOffset,
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(MR.strings.migrate)) },
+                                    onClick = onMigrateClicked,
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(MR.strings.action_delete)) },
+                                    onClick = onDeleteClicked,
+                                )
+                            }
                         }
                     }
                 }

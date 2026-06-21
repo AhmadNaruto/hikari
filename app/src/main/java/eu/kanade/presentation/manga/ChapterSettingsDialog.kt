@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.PeopleAlt
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +36,11 @@ import kotlinx.collections.immutable.persistentListOf
 import tachiyomi.core.common.preference.TriState
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.HikariCardDefaults
+import tachiyomi.presentation.core.components.HikariCardGroup
+import tachiyomi.presentation.core.components.HikariGroupedListItem
+import tachiyomi.presentation.core.components.HikariListItemPosition
+import tachiyomi.presentation.core.components.HikariSectionHeader
 import tachiyomi.presentation.core.components.LabeledCheckbox
 import tachiyomi.presentation.core.components.RadioItem
 import tachiyomi.presentation.core.components.SortItem
@@ -145,53 +151,70 @@ private fun ColumnScope.FilterPage(
     scanlatorFilterActive: Boolean,
     onScanlatorFilterClicked: (() -> Unit),
 ) {
-    TriStateItem(
-        label = stringResource(MR.strings.label_downloaded),
-        state = downloadFilter,
-        onClick = onDownloadFilterChanged,
-    )
-    TriStateItem(
-        label = stringResource(MR.strings.action_filter_unread),
-        state = unreadFilter,
-        onClick = onUnreadFilterChanged,
-    )
-    TriStateItem(
-        label = stringResource(MR.strings.action_filter_bookmarked),
-        state = bookmarkedFilter,
-        onClick = onBookmarkedFilterChanged,
-    )
-    ScanlatorFilterItem(
-        active = scanlatorFilterActive,
-        onClick = onScanlatorFilterClicked,
-    )
-}
-
-@Composable
-fun ScanlatorFilterItem(
-    active: Boolean,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .clickable(onClick = onClick)
-            .fillMaxWidth()
-            .padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
+    Column(
+        modifier = Modifier.padding(vertical = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Icon(
-            imageVector = Icons.Outlined.PeopleAlt,
-            contentDescription = null,
-            tint = if (active) {
-                MaterialTheme.colorScheme.active
-            } else {
-                LocalContentColor.current
-            },
-        )
-        Text(
-            text = stringResource(MR.strings.scanlator),
-            style = MaterialTheme.typography.bodyMedium,
-        )
+        Column {
+            HikariSectionHeader(text = stringResource(MR.strings.action_filter))
+            HikariCardGroup {
+                TriStateItem(
+                    label = stringResource(MR.strings.label_downloaded),
+                    state = downloadFilter,
+                    onClick = onDownloadFilterChanged,
+                )
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                    thickness = 0.5.dp,
+                    color = HikariCardDefaults.dividerColor(),
+                )
+                TriStateItem(
+                    label = stringResource(MR.strings.action_filter_unread),
+                    state = unreadFilter,
+                    onClick = onUnreadFilterChanged,
+                )
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                    thickness = 0.5.dp,
+                    color = HikariCardDefaults.dividerColor(),
+                )
+                TriStateItem(
+                    label = stringResource(MR.strings.action_filter_bookmarked),
+                    state = bookmarkedFilter,
+                    onClick = onBookmarkedFilterChanged,
+                )
+            }
+        }
+
+        Column {
+            HikariSectionHeader(text = stringResource(MR.strings.scanlator))
+            HikariGroupedListItem(
+                position = HikariListItemPosition.Single,
+                onClick = onScanlatorFilterClicked,
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(24.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.PeopleAlt,
+                        contentDescription = null,
+                        tint = if (scanlatorFilterActive) {
+                            MaterialTheme.colorScheme.active
+                        } else {
+                            LocalContentColor.current
+                        },
+                    )
+                    Text(
+                        text = stringResource(MR.strings.scanlator),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -201,17 +224,32 @@ private fun ColumnScope.SortPage(
     sortDescending: Boolean,
     onItemSelected: (Long) -> Unit,
 ) {
-    listOf(
-        MR.strings.sort_by_source to Manga.CHAPTER_SORTING_SOURCE,
-        MR.strings.sort_by_number to Manga.CHAPTER_SORTING_NUMBER,
-        MR.strings.sort_by_upload_date to Manga.CHAPTER_SORTING_UPLOAD_DATE,
-        MR.strings.action_sort_alpha to Manga.CHAPTER_SORTING_ALPHABET,
-    ).forEach { (titleRes, mode) ->
-        SortItem(
-            label = stringResource(titleRes),
-            sortDescending = sortDescending.takeIf { sortingMode == mode },
-            onClick = { onItemSelected(mode) },
-        )
+    Column(
+        modifier = Modifier.padding(vertical = 4.dp),
+    ) {
+        HikariSectionHeader(text = "Sort order")
+        HikariCardGroup {
+            val items = listOf(
+                MR.strings.sort_by_source to Manga.CHAPTER_SORTING_SOURCE,
+                MR.strings.sort_by_number to Manga.CHAPTER_SORTING_NUMBER,
+                MR.strings.sort_by_upload_date to Manga.CHAPTER_SORTING_UPLOAD_DATE,
+                MR.strings.action_sort_alpha to Manga.CHAPTER_SORTING_ALPHABET,
+            )
+            items.forEachIndexed { index, (titleRes, mode) ->
+                SortItem(
+                    label = stringResource(titleRes),
+                    sortDescending = sortDescending.takeIf { sortingMode == mode },
+                    onClick = { onItemSelected(mode) },
+                )
+                if (index < items.lastIndex) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                        thickness = 0.5.dp,
+                        color = HikariCardDefaults.dividerColor(),
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -222,23 +260,46 @@ private fun ColumnScope.DisplayPage(
     smartChapterMerging: Boolean,
     onSmartChapterMergingChanged: (Boolean) -> Unit,
 ) {
-    listOf(
-        MR.strings.show_title to Manga.CHAPTER_DISPLAY_NAME,
-        MR.strings.show_chapter_number to Manga.CHAPTER_DISPLAY_NUMBER,
-    ).forEach { (titleRes, mode) ->
-        RadioItem(
-            label = stringResource(titleRes),
-            selected = displayMode == mode,
-            onClick = { onItemSelected(mode) },
-        )
-    }
+    Column(
+        modifier = Modifier.padding(vertical = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        Column {
+            HikariSectionHeader(text = "Display mode")
+            HikariCardGroup {
+                val items = listOf(
+                    MR.strings.show_title to Manga.CHAPTER_DISPLAY_NAME,
+                    MR.strings.show_chapter_number to Manga.CHAPTER_DISPLAY_NUMBER,
+                )
+                items.forEachIndexed { index, (titleRes, mode) ->
+                    RadioItem(
+                        label = stringResource(titleRes),
+                        selected = displayMode == mode,
+                        onClick = { onItemSelected(mode) },
+                    )
+                    if (index < items.lastIndex) {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                            thickness = 0.5.dp,
+                            color = HikariCardDefaults.dividerColor(),
+                        )
+                    }
+                }
+            }
+        }
 
-    LabeledCheckbox(
-        modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = 12.dp),
-        label = "Smart chapter merging",
-        checked = smartChapterMerging,
-        onCheckedChange = onSmartChapterMergingChanged,
-    )
+        Column {
+            HikariSectionHeader(text = "Options")
+            HikariCardGroup {
+                LabeledCheckbox(
+                    modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = 12.dp),
+                    label = "Smart chapter merging",
+                    checked = smartChapterMerging,
+                    onCheckedChange = onSmartChapterMergingChanged,
+                )
+            }
+        }
+    }
 }
 
 @Composable
