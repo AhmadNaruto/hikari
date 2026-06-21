@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.window.DialogProperties
 import eu.kanade.presentation.more.settings.Preference
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
