@@ -3,7 +3,6 @@ package eu.kanade.tachiyomi.ui.reader.loader
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import io.github.ahmadnaruto.libbbf.BbfReader
-import java.io.ByteArrayInputStream
 
 /**
  * Loader used to load a chapter from a BBF (Bound Book Format) file.
@@ -19,8 +18,8 @@ internal class BbfPageLoader(private val reader: BbfReader) : PageLoader() {
             pages.add(
                 ReaderPage(i).apply {
                     stream = {
-                        val bytes = reader.getAssetBytes(assetIndex) ?: throw Exception("Failed to get asset bytes")
-                        ByteArrayInputStream(bytes)
+                        reader.getAssetInputStream(assetIndex)
+                            ?: throw Exception("Failed to get asset stream")
                     }
                     status = Page.State.Ready
                 }

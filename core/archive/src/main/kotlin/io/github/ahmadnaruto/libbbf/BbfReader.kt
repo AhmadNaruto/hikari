@@ -73,6 +73,15 @@ class BbfReader(val filePath: String) : Closeable {
     }
 
     /**
+     * Returns a zero-copy java.io.InputStream referencing the asset payload directly inside the memory map.
+     * Note: Accessing this InputStream after calling close() on this BbfReader will cause a JVM crash.
+     */
+    fun getAssetInputStream(assetIndex: Int): java.io.InputStream? {
+        val byteBuf = getAssetByteBuffer(assetIndex) ?: return null
+        return ByteBufferInputStream(byteBuf)
+    }
+
+    /**
      * Returns a copy of the asset data in a ByteArray. This copy is safe to use even after close() is called.
      */
     fun getAssetBytes(assetIndex: Int): ByteArray? {
@@ -146,5 +155,32 @@ class BbfReader(val filePath: String) : Closeable {
         @JvmStatic private external fun getAssetType(readerPtr: Long, assetIndex: Int): Int
         @JvmStatic private external fun getMetadata(readerPtr: Long, index: Int): MetadataEntry?
         @JvmStatic private external fun getSection(readerPtr: Long, index: Int): SectionEntry?
+    }
+}
+
+/**
+ * A zero-copy InputStream wrapping a ByteBuffer.
+ */
+private class ByteBufferInputStream(buf: ByteBuffer) : java.io.InputStream() {
+    private val buf = buf.duplicate()
+
+    override fun read(): Int {
+        if (!buf.hasRemaining()) {
+            return -1
+        }
+        return buf.get().toInt() and 0xFF
+    }
+
+    override fun read(bytes: ByteArray, off: Int, len: Int): Int {
+        if (!buf.hasRemaining()) {
+            return -1
+        }
+        val lenToRead = Math.min(len, buf.remaining())
+        buf.get(bytes, off, lenToRead)
+        return lenToRead
+    }
+
+    override fun available(): Int {
+        return buf.remaining()
     }
 }

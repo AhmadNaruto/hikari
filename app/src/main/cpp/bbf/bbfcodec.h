@@ -22,6 +22,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <vector>
+#include <unordered_map>
+#include <string>
 
 class BBFBuilder
 {
@@ -164,6 +167,11 @@ class BBFReader
         uint8_t* fileBuffer;
         BBFFooter* footerCache;
         size_t fileSize;
+
+        bool pathCacheBuilt;
+        std::unordered_map<std::string, int64_t> pathCache;
+        std::vector<std::string> assetPaths;
+        void buildPathCache();
 
 };
 

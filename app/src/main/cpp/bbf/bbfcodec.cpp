@@ -56,7 +56,7 @@ BBFBuilder::BBFBuilder(const char* oFile, uint32_t alignment, uint32_t reamSize,
     if ( !this->file )
     {
         fprintf(stderr, "[BBFCODEC] Could not open file: %s\n", oFile);
-        exit(1);
+        throw std::runtime_error("Could not open file for writing");
     }
 
     this->guardValue = alignment;
@@ -86,7 +86,7 @@ BBFBuilder::BBFBuilder(const char* oFile, uint32_t alignment, uint32_t reamSize,
     if (written != sizeof(BBFHeader))
     {
         fprintf(stderr, "[BBFCODEC] Failed to write blank header to %s\n",oFile);
-        exit(1);
+        throw std::runtime_error("Failed to write blank header");
     }
 
     // set current offset after writing header
@@ -135,7 +135,7 @@ void BBFBuilder::growAssets()
     if (!pAsset)
     {
         fprintf(stderr, "[BBFCODEC] Unable to allocate %zu bytes for assets.", newCap);
-        exit(1);
+        throw std::bad_alloc();
     }
 
     // Zero out the memory area so it doesn't turn to garbage.
@@ -152,7 +152,7 @@ void BBFBuilder::growPages()
     if (!pPage)
     {
         fprintf(stderr, "[BBFCODEC] Unable to allocate %zu bytes for page sector.", newCap);
-        exit(1);
+        throw std::bad_alloc();
     }
 
     memset(pPage + this->pageCount, 0, (newCap - this->pageCount) * sizeof(BBFPage));
@@ -168,7 +168,7 @@ void BBFBuilder::growSections()
     if (!pSection)
     {
         fprintf(stderr, "[BBFCODEC] Unable to allocate %zu bytes for section sector.", newCap);
-        exit(1);
+        throw std::bad_alloc();
     }
 
     memset(pSection + this->sectionCount, 0, (newCap - this->sectionCount) * sizeof(BBFSection));
@@ -184,7 +184,7 @@ void BBFBuilder::growMeta()
     if (!pMeta)
     {
         fprintf(stderr, "[BBFCODEC] Unable to allocate %zu bytes for metadata sector.", newCap);
-        exit(1);
+        throw std::bad_alloc();
     }
 
     memset(pMeta + this->keyCount, 0, (newCap - this->keyCount) * sizeof(BBFMeta));
@@ -225,7 +225,15 @@ uint8_t BBFBuilder::detectType(const char* fPath)
         return (uint8_t)BBF::BBFMediaType::UNKNOWN;
     }
 
-    const char* fExt = strrchr(fPath, '.');
+    const char* lastSlash = strrchr(fPath, '/');
+#ifdef _WIN32
+    const char* lastBackslash = strrchr(fPath, '\\');
+    if (lastBackslash > lastSlash) {
+        lastSlash = lastBackslash;
+    }
+#endif
+    const char* filename = lastSlash ? lastSlash + 1 : fPath;
+    const char* fExt = strrchr(filename, '.');
     if ( !fExt )
     {
         return (uint8_t)BBF::BBFMediaType::UNKNOWN;
@@ -287,46 +295,43 @@ uint8_t BBFBuilder::detectType(const char* fPath)
 
 bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
 {
-    // Program flow
-    // Open file, hash it, see if it's in the hashtable.
-    // If not, check the size. If the file size is below the variable ream size flag,
-    // and --variable-alignment is enabled, sub-align the file, put it in the hash table. 
-    // If --variable-alignment is not enabled, align to the chosen alignment (from the -a/--alignment option)
-    // or if not specified, use the default alignment value from the BBF namespace.
-
-    // Get media type
     uint8_t mediaType = detectType(fPath);
 
     FILE* iImg = fopen(fPath, "rb");
-
     if (!iImg)
     {
         fprintf(stderr, "[BBFCODEC] Unable to open %s for reading.\n", fPath);
         return false;
     }
 
-    // Filesize
     fseek(iImg, 0, SEEK_END);
-    uint64_t fileSize = ftell(iImg); // may not work for large files. TODO: handle biiig files.
+    long sizeVal = ftell(iImg);
     fseek(iImg, 0, SEEK_SET);
 
-    //Hash
-    XXH3_state_t* state = XXH3_createState();
-    XXH3_128bits_reset(state); // Use 128-bit xxh3
-
-    uint8_t iBuffer[16384];
-    size_t rBytes = 0;
-
-    while((rBytes = fread(iBuffer, 1, sizeof(iBuffer), iImg)) > 0)
+    std::vector<uint8_t> buffer;
+    if (sizeVal > 0)
     {
-        XXH3_128bits_update(state, iBuffer, rBytes);
+        buffer.resize(sizeVal);
+        size_t readSize = fread(buffer.data(), 1, sizeVal, iImg);
+        if (readSize < (size_t)sizeVal)
+        {
+            buffer.resize(readSize);
+        }
     }
+    else
+    {
+        uint8_t tempBuf[16384];
+        size_t bytesRead;
+        while ((bytesRead = fread(tempBuf, 1, sizeof(tempBuf), iImg)) > 0)
+        {
+            buffer.insert(buffer.end(), tempBuf, tempBuf + bytesRead);
+        }
+    }
+    fclose(iImg);
 
-    XXH128_hash_t iHash = XXH3_128bits_digest(state);
-    XXH3_freeState(state);
+    uint64_t fileSize = buffer.size();
+    XXH128_hash_t iHash = XXH3_128bits(buffer.data(), fileSize);
 
-    // TODO: Load small files into RAM for reading
-    fseek(iImg, 0, SEEK_SET);
     uint64_t aIndex = this->assetLookupTable.findAsset(iHash);
 
     // If already added...
@@ -341,7 +346,6 @@ bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
         this->pages[this->pageCount].flags = pFlags;
         this->pageCount++;
 
-        fclose(iImg);
         return true;
     }
 
@@ -362,15 +366,11 @@ bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
     writePadding(alignmentBytes);
     uint64_t aStartOffset = this->currentOffset;
 
-    // write
-    while ((rBytes = fread(iBuffer, 1, sizeof(iBuffer), iImg)) > 0)
+    if (fileSize > 0)
     {
-        fwrite(iBuffer, 1, rBytes, this->file);
-        this->currentOffset += rBytes;
+        fwrite(buffer.data(), 1, fileSize, this->file);
+        this->currentOffset += fileSize;
     }
-
-    // close image
-    fclose(iImg);
 
     // update builder
     if (this->assetCount >= this->assetCap)
@@ -406,7 +406,6 @@ int64_t BBFBuilder::addAsset(const char* fPath, uint32_t aFlags)
     uint8_t mediaType = detectType(fPath);
 
     FILE* iImg = fopen(fPath, "rb");
-
     if (!iImg)
     {
         fprintf(stderr, "[BBFCODEC] Unable to open %s for reading.\n", fPath);
@@ -414,29 +413,37 @@ int64_t BBFBuilder::addAsset(const char* fPath, uint32_t aFlags)
     }
 
     fseek(iImg, 0, SEEK_END);
-    uint64_t fileSize = ftell(iImg);
+    long sizeVal = ftell(iImg);
     fseek(iImg, 0, SEEK_SET);
 
-    XXH3_state_t* state = XXH3_createState();
-    XXH3_128bits_reset(state);
-
-    uint8_t iBuffer[16384];
-    size_t rBytes = 0;
-
-    while((rBytes = fread(iBuffer, 1, sizeof(iBuffer), iImg)) > 0)
+    std::vector<uint8_t> buffer;
+    if (sizeVal > 0)
     {
-        XXH3_128bits_update(state, iBuffer, rBytes);
+        buffer.resize(sizeVal);
+        size_t readSize = fread(buffer.data(), 1, sizeVal, iImg);
+        if (readSize < (size_t)sizeVal)
+        {
+            buffer.resize(readSize);
+        }
     }
+    else
+    {
+        uint8_t tempBuf[16384];
+        size_t bytesRead;
+        while ((bytesRead = fread(tempBuf, 1, sizeof(tempBuf), iImg)) > 0)
+        {
+            buffer.insert(buffer.end(), tempBuf, tempBuf + bytesRead);
+        }
+    }
+    fclose(iImg);
 
-    XXH128_hash_t iHash = XXH3_128bits_digest(state);
-    XXH3_freeState(state);
+    uint64_t fileSize = buffer.size();
+    XXH128_hash_t iHash = XXH3_128bits(buffer.data(), fileSize);
 
-    fseek(iImg, 0, SEEK_SET);
     uint64_t aIndex = this->assetLookupTable.findAsset(iHash);
 
     if (aIndex != 0xFFFFFFFFFFFFFFFF)
     {
-        fclose(iImg);
         return (int64_t)aIndex;
     }
 
@@ -456,13 +463,11 @@ int64_t BBFBuilder::addAsset(const char* fPath, uint32_t aFlags)
     writePadding(alignmentBytes);
     uint64_t aStartOffset = this->currentOffset;
 
-    while ((rBytes = fread(iBuffer, 1, sizeof(iBuffer), iImg)) > 0)
+    if (fileSize > 0)
     {
-        fwrite(iBuffer, 1, rBytes, this->file);
-        this->currentOffset += rBytes;
+        fwrite(buffer.data(), 1, fileSize, this->file);
+        this->currentOffset += fileSize;
     }
-
-    fclose(iImg);
 
     if (this->assetCount >= this->assetCap)
     {
@@ -789,19 +794,19 @@ bool BBFBuilder::finalize()
 // Copy helper
 static bool copyRange(FILE* source, FILE* dest, uint64_t bToCopy)
 {
-    static uint8_t buffer[65536];
+    std::vector<uint8_t> buffer(65536);
     uint64_t remaining = bToCopy;
 
     while ( remaining > 0)
     {
-        size_t fChunk = (remaining > sizeof(buffer)) ? sizeof(buffer) : (size_t)remaining;
+        size_t fChunk = (remaining > buffer.size()) ? buffer.size() : (size_t)remaining;
 
-        if (fread(buffer, 1, fChunk, source) != fChunk)
+        if (fread(buffer.data(), 1, fChunk, source) != fChunk)
         {
             return false;
         }
 
-        if (fwrite(buffer, 1, fChunk, dest) != fChunk)
+        if (fwrite(buffer.data(), 1, fChunk, dest) != fChunk)
         {
             return false;
         }
@@ -1008,6 +1013,7 @@ BBFReader::BBFReader(const char* iFile)
     this->fileBuffer = nullptr;
     this->fileSize = 0;
     this->footerCache = nullptr;
+    this->pathCacheBuilt = false;
 
     // Windows memory mapping
     #ifdef _WIN32
@@ -1142,7 +1148,7 @@ bool BBFReader::isSafe(uint64_t offset) const
         return false;
     }
 
-    if (offset > this->fileSize)
+    if (offset >= this->fileSize)
     {
         return false;
     }
@@ -1152,25 +1158,22 @@ bool BBFReader::isSafe(uint64_t offset) const
 
 bool BBFReader::isSafe(uint64_t count, int index) const
 {
-    // Check if file exists
     if (!this->fileBuffer)
     {
         return false;
     }
-    // Size should be size of the struct.
 
     if (index < 0)
     {
         return false;
     }
 
-    if ((uint64_t)index > count)
+    if ((uint64_t)index >= count)
     {
         return false;
     }
 
     return true;
-
 }
 
 BBFFooter* BBFReader::getFooterView(uint64_t fOffset)
@@ -1185,7 +1188,6 @@ BBFFooter* BBFReader::getFooterView(uint64_t fOffset)
         return nullptr;
     }
 
-    // Set the footerCache to the footer.
     footerCache = (BBFFooter*)(this->fileBuffer + fOffset);
 
     return footerCache;
@@ -1199,15 +1201,26 @@ const char* BBFReader::getStringView(uint64_t strOffset)
         return nullptr;
     }
 
-    if ((this->footerCache->stringPoolOffset) + strOffset < (this->footerCache->stringPoolOffset) || strOffset >= (this->footerCache->stringPoolOffset + this->footerCache->stringPoolSize))
+    if (strOffset >= this->footerCache->stringPoolSize)
     {
         return nullptr;
     }
 
-    uint64_t bytesLeft = (this->footerCache->stringPoolOffset + this->footerCache->stringPoolSize) - strOffset;
+    uint64_t absOffset = this->footerCache->stringPoolOffset + strOffset;
+    if (absOffset < this->footerCache->stringPoolOffset || absOffset >= this->fileSize)
+    {
+        return nullptr;
+    }
+
+    uint64_t bytesLeft = this->footerCache->stringPoolSize - strOffset;
+    if (absOffset + bytesLeft > this->fileSize)
+    {
+        bytesLeft = this->fileSize - absOffset;
+    }
+
     uint64_t scanLimit = (BBF::MAX_FORME_SIZE < bytesLeft) ? BBF::MAX_FORME_SIZE : bytesLeft;
 
-    const char* pPtr = (const char*)(this->fileBuffer + strOffset + this->footerCache->stringPoolOffset);
+    const char* pPtr = (const char*)(this->fileBuffer + absOffset);
 
     uint64_t iterator = 0;
     for(; iterator < scanLimit; iterator++)
@@ -1219,12 +1232,10 @@ const char* BBFReader::getStringView(uint64_t strOffset)
     }
 
     return nullptr;
-
 }
 
 bool BBFReader::checkMagic(BBFHeader* pHeader)
 {
-    // Check the magic number of the file
     uint32_t fileMagic = (pHeader->magic[0] << 24) | (pHeader->magic[1] << 16) | (pHeader->magic[2] << 8)  | (pHeader->magic[3]);
     if (!(fileMagic == 0x42424633))
     {
@@ -1266,12 +1277,16 @@ XXH128_hash_t BBFReader::computeAssetHash(uint8_t* assetTableView, int assetInde
     return XXH3_128bits(dataView, assetView->fileSize);
 }
 
-int64_t BBFReader::findAssetByPath(const char* path)
+void BBFReader::buildPathCache()
 {
-    if (!path || !this->footerCache) return -1;
+    if (this->pathCacheBuilt || !this->footerCache) return;
+    this->pathCacheBuilt = true;
+
+    this->assetPaths.resize(this->footerCache->assetCount);
+
     const uint8_t* metaTable = this->getMetadataView(this->footerCache->metaOffset);
-    if (!metaTable) return -1;
-    
+    if (!metaTable) return;
+
     for (uint64_t i = 0; i < this->footerCache->metaCount; i++)
     {
         const BBFMeta* meta = this->getMetaEntryView(metaTable, i);
@@ -1280,11 +1295,30 @@ int64_t BBFReader::findAssetByPath(const char* path)
         if (key && strncmp(key, "path:", 5) == 0)
         {
             const char* val = this->getStringView(meta->valueOffset);
-            if (val && strcmp(val, path) == 0)
+            if (val)
             {
-                return strtoll(key + 5, nullptr, 10);
+                int64_t assetIndex = strtoll(key + 5, nullptr, 10);
+                this->pathCache[val] = assetIndex;
+                if (assetIndex >= 0 && (size_t)assetIndex < this->assetPaths.size())
+                {
+                    this->assetPaths[assetIndex] = val;
+                }
             }
         }
+    }
+}
+
+int64_t BBFReader::findAssetByPath(const char* path)
+{
+    if (!path || !this->footerCache) return -1;
+    if (!this->pathCacheBuilt)
+    {
+        buildPathCache();
+    }
+    auto it = this->pathCache.find(path);
+    if (it != this->pathCache.end())
+    {
+        return it->second;
     }
     return -1;
 }
@@ -1292,21 +1326,14 @@ int64_t BBFReader::findAssetByPath(const char* path)
 const char* BBFReader::getAssetPath(int assetIndex)
 {
     if (!this->footerCache) return nullptr;
-    const uint8_t* metaTable = this->getMetadataView(this->footerCache->metaOffset);
-    if (!metaTable) return nullptr;
-    
-    char keyPrefix[32];
-    snprintf(keyPrefix, sizeof(keyPrefix), "path:%d", assetIndex);
-    
-    for (uint64_t i = 0; i < this->footerCache->metaCount; i++)
+    if (assetIndex < 0 || (uint64_t)assetIndex >= this->footerCache->assetCount) return nullptr;
+    if (!this->pathCacheBuilt)
     {
-        const BBFMeta* meta = this->getMetaEntryView(metaTable, i);
-        if (!meta) continue;
-        const char* key = this->getStringView(meta->keyOffset);
-        if (key && strcmp(key, keyPrefix) == 0)
-        {
-            return this->getStringView(meta->valueOffset);
-        }
+        buildPathCache();
     }
-    return nullptr;
+    if (this->assetPaths[assetIndex].empty())
+    {
+        return nullptr;
+    }
+    return this->assetPaths[assetIndex].c_str();
 }

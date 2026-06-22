@@ -353,9 +353,9 @@ actual class LocalSource(
                                 type == io.github.ahmadnaruto.libbbf.BbfMediaType.JXL ||
                                 type == io.github.ahmadnaruto.libbbf.BbfMediaType.BMP ||
                                 type == io.github.ahmadnaruto.libbbf.BbfMediaType.GIF) {
-                                val bytes = reader.getAssetBytes(assetIndex)
-                                if (bytes != null) {
-                                    coverStream = java.io.ByteArrayInputStream(bytes)
+                                val stream = reader.getAssetInputStream(assetIndex)
+                                if (stream != null) {
+                                    coverStream = stream
                                     break
                                 }
                             }
