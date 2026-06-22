@@ -12,7 +12,6 @@ import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.util.storage.DiskUtil
 import eu.kanade.tachiyomi.util.storage.DiskUtil.NOMEDIA_FILE
 import eu.kanade.tachiyomi.util.storage.saveTo
-import java.io.File
 import hikari.core.archive.ZipWriter
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
