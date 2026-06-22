@@ -53,6 +53,7 @@ import tachiyomi.core.metadata.comicinfo.COMIC_INFO_FILE
 import tachiyomi.core.metadata.comicinfo.ComicInfo
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.chapter.model.Chapter
+import tachiyomi.domain.download.service.ChapterFormat
 import tachiyomi.domain.download.service.DownloadPreferences
 import tachiyomi.domain.download.service.DownloadQueueSortingMode
 import tachiyomi.domain.manga.model.Manga
@@ -413,9 +414,9 @@ class Downloader(
 
             // Only rename the directory if it's downloaded
             when (downloadPreferences.chapterFormat.get()) {
-                DownloadPreferences.ChapterFormat.CBZ -> archiveChapter(mangaDir, chapterDirname, tmpDir)
-                DownloadPreferences.ChapterFormat.BBF -> archiveChapterAsBbf(mangaDir, chapterDirname, tmpDir)
-                DownloadPreferences.ChapterFormat.IMAGES -> tmpDir.renameTo(chapterDirname)
+                ChapterFormat.CBZ -> archiveChapter(mangaDir, chapterDirname, tmpDir)
+                ChapterFormat.BBF -> archiveChapterAsBbf(mangaDir, chapterDirname, tmpDir)
+                ChapterFormat.IMAGES -> tmpDir.renameTo(chapterDirname)
             }
             cache.addChapter(chapterDirname, mangaDir, download.manga)
 

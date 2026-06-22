@@ -22,6 +22,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import tachiyomi.domain.category.interactor.GetCategories
+import tachiyomi.domain.download.service.ChapterFormat
 import tachiyomi.domain.category.model.Category
 import tachiyomi.domain.download.service.DownloadPreferences
 import tachiyomi.domain.download.service.DownloadQueueSortingMode
@@ -91,9 +92,9 @@ object SettingsDownloadScreen : SearchableSettings {
                                 item = Preference.PreferenceItem.ListPreference(
                                     preference = downloadPreferences.chapterFormat,
                                     entries = persistentMapOf(
-                                        DownloadPreferences.ChapterFormat.IMAGES to stringResource(MR.strings.chapter_format_images),
-                                        DownloadPreferences.ChapterFormat.CBZ to stringResource(MR.strings.chapter_format_cbz),
-                                        DownloadPreferences.ChapterFormat.BBF to stringResource(MR.strings.chapter_format_bbf),
+                                        ChapterFormat.IMAGES to stringResource(MR.strings.chapter_format_images),
+                                        ChapterFormat.CBZ to stringResource(MR.strings.chapter_format_cbz),
+                                        ChapterFormat.BBF to stringResource(MR.strings.chapter_format_bbf),
                                     ),
                                     title = stringResource(MR.strings.pref_chapter_format),
                                 ),
