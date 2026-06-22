@@ -34,6 +34,7 @@ import tachiyomi.i18n.MR
 import tachiyomi.source.local.filter.OrderBy
 import tachiyomi.source.local.image.LocalCoverManager
 import tachiyomi.source.local.io.Archive
+import io.github.ahmadnaruto.libbbf.BbfReader
 import tachiyomi.source.local.io.Format
 import tachiyomi.source.local.io.LocalSourceFileSystem
 import tachiyomi.source.local.metadata.fillMetadata
@@ -165,8 +166,33 @@ actual class LocalSource(
                     if (copiedFile != null) {
                         setMangaDetailsFromComicInfoFile(copiedFile.openInputStream(), manga)
                     } else {
-                        // Avoid re-scanning
-                        mangaDir.createFile(".noxml")
+                        // Let's check if there is a BBF file and read metadata from it
+                        val bbfFile = mangaDirFiles.firstOrNull { it.extension.equals("bbf", true) }
+                        if (bbfFile != null) {
+                            try {
+                                BbfReader(bbfFile.filePath!!).use { reader ->
+                                    val genres = mutableListOf<String>()
+                                    for (i in 0 until reader.metaCount) {
+                                        val meta = reader.getMetadata(i) ?: continue
+                                        when (meta.key.lowercase()) {
+                                            "author" -> manga.author = meta.value
+                                            "writer" -> manga.author = meta.value
+                                            "artist" -> manga.artist = meta.value
+                                            "summary" -> manga.description = meta.value
+                                            "genre" -> genres.add(meta.value)
+                                        }
+                                    }
+                                     if (genres.isNotEmpty()) {
+                                         manga.genre = genres.joinToString(", ")
+                                     }
+                                }
+                            } catch (e: Exception) {
+                                logcat(LogPriority.ERROR, e) { "Failed to read BBF metadata for manga details" }
+                            }
+                        } else {
+                            // Avoid re-scanning
+                            mangaDir.createFile(".noxml")
+                        }
                     }
                 }
             }
@@ -230,7 +256,7 @@ actual class LocalSource(
         val chapters = fileSystem.getFilesInMangaDirectory(manga.url)
             // Only keep supported formats
             .filterNot { it.name.orEmpty().startsWith('.') }
-            .filter { it.isDirectory || Archive.isSupported(it) || it.extension.equals("epub", true) }
+            .filter { it.isDirectory || Archive.isSupported(it) || it.extension.equals("epub", true) || it.extension.equals("bbf", true) }
             .map { chapterFile ->
                 SChapter.create().apply {
                     url = "${manga.url}/${chapterFile.name}"
@@ -248,6 +274,21 @@ actual class LocalSource(
                     if (format is Format.Epub) {
                         format.file.epubReader(context).use { epub ->
                             epub.fillMetadata(manga, this)
+                        }
+                    } else if (format is Format.Bbf) {
+                        try {
+                            BbfReader(chapterFile.filePath!!).use { reader ->
+                                for (i in 0 until reader.metaCount) {
+                                    val meta = reader.getMetadata(i) ?: continue
+                                    when (meta.key.lowercase()) {
+                                        "title" -> name = meta.value
+                                        "number" -> meta.value.toFloatOrNull()?.let { chapter_number = it }
+                                        "translator" -> scanlator = meta.value
+                                    }
+                                }
+                            }
+                        } catch (e: Exception) {
+                            logcat(LogPriority.ERROR, e) { "Failed to read BBF metadata for chapter list" }
                         }
                     } else {
                         getComicInfoForChapter(chapterFile) { stream ->
@@ -323,6 +364,17 @@ actual class LocalSource(
                         val entry = epub.getImagesFromPages().firstOrNull()
 
                         entry?.let { coverManager.update(manga, epub.getInputStream(it)!!) }
+                    }
+                }
+                is Format.Bbf -> {
+                    BbfReader(format.file.filePath!!).use { reader ->
+                        val bytes = if (reader.pageCount > 0) {
+                            val assetIndex = reader.getPageAssetIndex(0)
+                            reader.getAssetBytes(assetIndex)
+                        } else {
+                            null
+                        }
+                        bytes?.let { coverManager.update(manga, it.inputStream()) }
                     }
                 }
             }

@@ -53,6 +53,8 @@ import tachiyomi.core.metadata.comicinfo.COMIC_INFO_FILE
 import tachiyomi.core.metadata.comicinfo.ComicInfo
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.chapter.model.Chapter
+import io.github.ahmadnaruto.libbbf.BbfBuilder
+import tachiyomi.domain.download.service.ChapterDownloadFormat
 import tachiyomi.domain.download.service.DownloadPreferences
 import tachiyomi.domain.download.service.DownloadQueueSortingMode
 import tachiyomi.domain.manga.model.Manga
@@ -412,10 +414,16 @@ class Downloader(
             )
 
             // Only rename the directory if it's downloaded
-            if (downloadPreferences.saveChaptersAsCBZ.get()) {
-                archiveChapter(mangaDir, chapterDirname, tmpDir)
-            } else {
-                tmpDir.renameTo(chapterDirname)
+            when (downloadPreferences.chapterDownloadFormat.get()) {
+                ChapterDownloadFormat.CBZ -> {
+                    archiveChapter(mangaDir, chapterDirname, tmpDir)
+                }
+                ChapterDownloadFormat.BBF -> {
+                    archiveChapterAsBbf(mangaDir, chapterDirname, tmpDir)
+                }
+                ChapterDownloadFormat.DIRECTORY -> {
+                    tmpDir.renameTo(chapterDirname)
+                }
             }
             cache.addChapter(chapterDirname, mangaDir, download.manga)
 
@@ -636,6 +644,73 @@ class Downloader(
         }
         zip.renameTo("$dirname.cbz")
         tmpDir.delete()
+    }
+
+    private fun archiveChapterAsBbf(
+        mangaDir: UniFile,
+        dirname: String,
+        tmpDir: UniFile,
+    ) {
+        val cacheTempDir = java.io.File(context.cacheDir, "bbf_temp_${System.currentTimeMillis()}").apply { mkdirs() }
+        val tempBbfFile = java.io.File(cacheTempDir, "chapter.bbf")
+
+        try {
+            BbfBuilder(tempBbfFile.absolutePath).use { builder ->
+                val files: List<UniFile> = tmpDir.listFiles()?.sortedBy { it.name } ?: emptyList()
+                logcat(LogPriority.INFO) { "BBF Muxing: starting with ${files.size} files in tmpDir" }
+
+                val comicInfoFile = files.find { it.name == COMIC_INFO_FILE }
+                if (comicInfoFile != null) {
+                    try {
+                        val comicInfoString = comicInfoFile.openInputStream().use { it.reader().readText() }
+                        val comicInfo = xml.decodeFromString(ComicInfo.serializer(), comicInfoString)
+                        comicInfo.title?.let { builder.addMeta("Title", it.value) }
+                        comicInfo.series?.let { builder.addMeta("Series", it.value) }
+                        comicInfo.writer?.let { builder.addMeta("Writer", it.value) }
+                        comicInfo.translator?.let { builder.addMeta("Translator", it.value) }
+                        comicInfo.summary?.let { builder.addMeta("Summary", it.value) }
+                        comicInfo.number?.let { builder.addMeta("Number", it.value) }
+                        comicInfo.genre?.let { builder.addMeta("Genre", it.value) }
+                    } catch (e: Exception) {
+                        logcat(LogPriority.ERROR, e) { "Failed to parse ComicInfo.xml for BBF metadata" }
+                    }
+                }
+
+                val imageFiles = files.filter { it.name != COMIC_INFO_FILE && ImageUtil.isImage(it.name) { it.openInputStream() } }
+                logcat(LogPriority.INFO) { "BBF Muxing: found ${imageFiles.size} images out of ${files.size} total files" }
+
+                imageFiles.forEachIndexed { index, file ->
+                    val tempPageFile = java.io.File(cacheTempDir, "page_$index.${file.extension ?: "jpg"}")
+                    file.openInputStream().use { input ->
+                        tempPageFile.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                    val added = builder.addPage(tempPageFile.absolutePath)
+                    logcat(LogPriority.INFO) { "BBF Muxing: addPage $index (path: ${tempPageFile.absolutePath}, size: ${tempPageFile.length()} bytes) result: $added" }
+                }
+
+                val finalized = builder.finalizeBuilder()
+                logcat(LogPriority.INFO) { "BBF Muxing: finalizeBuilder result: $finalized" }
+            }
+
+            val petrifiedBbfFile = java.io.File(cacheTempDir, "chapter_petrified.bbf")
+            val petrified = BbfBuilder.petrifyFile(tempBbfFile.absolutePath, petrifiedBbfFile.absolutePath)
+            logcat(LogPriority.INFO) { "BBF Muxing: petrifyFile result: $petrified, tempBbf size: ${tempBbfFile.length()} bytes, petrified size: ${petrifiedBbfFile.length()} bytes" }
+
+            val destBbfFile = mangaDir.createFile("$dirname.bbf")!!
+            destBbfFile.openOutputStream().use { output ->
+                petrifiedBbfFile.inputStream().use { input ->
+                    input.copyTo(output)
+                }
+            }
+            logcat(LogPriority.INFO) { "BBF Muxing: successfully copied petrified file to final destination: $dirname.bbf" }
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e) { "BBF Muxing failed with exception" }
+        } finally {
+            cacheTempDir.deleteRecursively()
+            tmpDir.delete()
+        }
     }
 
     /**

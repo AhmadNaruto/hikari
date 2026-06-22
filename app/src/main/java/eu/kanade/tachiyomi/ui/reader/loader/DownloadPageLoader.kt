@@ -10,6 +10,7 @@ import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import io.github.ahmadnaruto.libbbf.BbfReader
 import hikari.core.archive.archiveReader
 import tachiyomi.domain.manga.model.Manga
 import uy.kohesive.injekt.injectLazy
@@ -28,6 +29,7 @@ internal class DownloadPageLoader(
     private val context: Application by injectLazy()
 
     private var archivePageLoader: ArchivePageLoader? = null
+    private var bbfPageLoader: BbfPageLoader? = null
 
     override var isLocal: Boolean = true
 
@@ -41,7 +43,11 @@ internal class DownloadPageLoader(
             source,
         )
         return if (chapterPath?.isFile == true) {
-            getPagesFromArchive(chapterPath)
+            if (chapterPath.name?.endsWith(".bbf", ignoreCase = true) == true) {
+                getPagesFromBbf(chapterPath)
+            } else {
+                getPagesFromArchive(chapterPath)
+            }
         } else {
             getPagesFromDirectory()
         }
@@ -50,10 +56,16 @@ internal class DownloadPageLoader(
     override fun recycle() {
         super.recycle()
         archivePageLoader?.recycle()
+        bbfPageLoader?.recycle()
     }
 
     private suspend fun getPagesFromArchive(file: UniFile): List<ReaderPage> {
         val loader = ArchivePageLoader(file.archiveReader(context)).also { archivePageLoader = it }
+        return loader.getPages()
+    }
+
+    private suspend fun getPagesFromBbf(file: UniFile): List<ReaderPage> {
+        val loader = BbfPageLoader(BbfReader(file.filePath!!)).also { bbfPageLoader = it }
         return loader.getPages()
     }
 
@@ -70,5 +82,6 @@ internal class DownloadPageLoader(
 
     override suspend fun loadPage(page: ReaderPage) {
         archivePageLoader?.loadPage(page)
+        bbfPageLoader?.loadPage(page)
     }
 }

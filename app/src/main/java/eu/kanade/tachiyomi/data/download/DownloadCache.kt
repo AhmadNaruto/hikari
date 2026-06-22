@@ -387,6 +387,8 @@ class DownloadCache(
                                         it.isDirectory -> it.name
                                         // CBZ files
                                         it.isFile && it.extension == "cbz" -> it.nameWithoutExtension
+                                        // BBF files
+                                        it.isFile && it.extension == "bbf" -> it.nameWithoutExtension
                                         // Anything else is irrelevant
                                         else -> null
                                     }
