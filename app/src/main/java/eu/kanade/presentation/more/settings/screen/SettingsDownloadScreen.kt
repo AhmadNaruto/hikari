@@ -88,9 +88,14 @@ object SettingsDownloadScreen : SearchableSettings {
                             )
 
                             PreferenceItem(
-                                item = Preference.PreferenceItem.SwitchPreference(
-                                    preference = downloadPreferences.saveChaptersAsCBZ,
-                                    title = stringResource(MR.strings.save_chapter_as_cbz),
+                                item = Preference.PreferenceItem.ListPreference(
+                                    preference = downloadPreferences.chapterFormat,
+                                    entries = persistentMapOf(
+                                        DownloadPreferences.ChapterFormat.IMAGES to stringResource(MR.strings.chapter_format_images),
+                                        DownloadPreferences.ChapterFormat.CBZ to stringResource(MR.strings.chapter_format_cbz),
+                                        DownloadPreferences.ChapterFormat.BBF to stringResource(MR.strings.chapter_format_bbf),
+                                    ),
+                                    title = stringResource(MR.strings.pref_chapter_format),
                                 ),
                                 highlightKey = null,
                             )

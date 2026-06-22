@@ -412,10 +412,10 @@ class Downloader(
             )
 
             // Only rename the directory if it's downloaded
-            if (downloadPreferences.saveChaptersAsCBZ.get()) {
-                archiveChapter(mangaDir, chapterDirname, tmpDir)
-            } else {
-                tmpDir.renameTo(chapterDirname)
+            when (downloadPreferences.chapterFormat.get()) {
+                DownloadPreferences.ChapterFormat.CBZ -> archiveChapter(mangaDir, chapterDirname, tmpDir)
+                DownloadPreferences.ChapterFormat.BBF -> archiveChapterAsBbf(mangaDir, chapterDirname, tmpDir)
+                DownloadPreferences.ChapterFormat.IMAGES -> tmpDir.renameTo(chapterDirname)
             }
             cache.addChapter(chapterDirname, mangaDir, download.manga)
 
@@ -635,6 +635,33 @@ class Downloader(
             }
         }
         zip.renameTo("$dirname.cbz")
+        tmpDir.delete()
+    }
+
+    private fun archiveChapterAsBbf(
+        mangaDir: UniFile,
+        dirname: String,
+        tmpDir: UniFile,
+    ) {
+        val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
+        val bbfPath = bbfFile.filePath ?: throw Exception("Failed to get local path for BBF file")
+        
+        io.github.ahmadnaruto.libbbf.BbfBuilder(bbfPath).use { builder ->
+            tmpDir.listFiles()
+                ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
+                ?.forEach { file ->
+                    val filePath = file.filePath ?: return@forEach
+                    if (file.name == tachiyomi.core.metadata.comicinfo.COMIC_INFO_FILE) {
+                        builder.addAssetWithPath(filePath, file.name)
+                    } else if (tachiyomi.core.common.util.system.ImageUtil.isImage(file.name) { file.openInputStream() }) {
+                        builder.addPageWithPath(filePath, file.name)
+                    } else {
+                        builder.addAssetWithPath(filePath, file.name)
+                    }
+                }
+            builder.finalizeBuilder()
+        }
+        bbfFile.renameTo("$dirname.bbf")
         tmpDir.delete()
     }
 
