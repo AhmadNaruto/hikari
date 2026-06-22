@@ -53,6 +53,8 @@ import tachiyomi.core.metadata.comicinfo.COMIC_INFO_FILE
 import tachiyomi.core.metadata.comicinfo.ComicInfo
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.chapter.model.Chapter
+import io.github.ahmadnaruto.libbbf.BbfBuilder
+import tachiyomi.domain.download.service.ChapterDownloadFormat
 import tachiyomi.domain.download.service.DownloadPreferences
 import tachiyomi.domain.download.service.DownloadQueueSortingMode
 import tachiyomi.domain.manga.model.Manga
@@ -412,10 +414,16 @@ class Downloader(
             )
 
             // Only rename the directory if it's downloaded
-            if (downloadPreferences.saveChaptersAsCBZ.get()) {
-                archiveChapter(mangaDir, chapterDirname, tmpDir)
-            } else {
-                tmpDir.renameTo(chapterDirname)
+            when (downloadPreferences.chapterDownloadFormat.get()) {
+                ChapterDownloadFormat.CBZ -> {
+                    archiveChapter(mangaDir, chapterDirname, tmpDir)
+                }
+                ChapterDownloadFormat.BBF -> {
+                    archiveChapterAsBbf(mangaDir, chapterDirname, tmpDir)
+                }
+                ChapterDownloadFormat.DIRECTORY -> {
+                    tmpDir.renameTo(chapterDirname)
+                }
             }
             cache.addChapter(chapterDirname, mangaDir, download.manga)
 
@@ -635,6 +643,51 @@ class Downloader(
             }
         }
         zip.renameTo("$dirname.cbz")
+        tmpDir.delete()
+    }
+
+    private fun archiveChapterAsBbf(
+        mangaDir: UniFile,
+        dirname: String,
+        tmpDir: UniFile,
+    ) {
+        val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
+        val bbfPath = bbfFile.filePath ?: throw Exception("Failed to get filePath for BBF creation")
+        BbfBuilder(bbfPath).use { builder ->
+            val files: List<UniFile> = tmpDir.listFiles()?.sortedBy { it.name } ?: emptyList()
+
+            val comicInfoFile = files.find { it.name == COMIC_INFO_FILE }
+            if (comicInfoFile != null) {
+                try {
+                    val comicInfoString = comicInfoFile.openInputStream().use { it.reader().readText() }
+                    val comicInfo = xml.decodeFromString(ComicInfo.serializer(), comicInfoString)
+                    comicInfo.title?.let { builder.addMeta("Title", it.value) }
+                    comicInfo.series?.let { builder.addMeta("Series", it.value) }
+                    comicInfo.writer?.let { builder.addMeta("Writer", it.value) }
+                    comicInfo.translator?.let { builder.addMeta("Translator", it.value) }
+                    comicInfo.summary?.let { builder.addMeta("Summary", it.value) }
+                    comicInfo.number?.let { builder.addMeta("Number", it.value) }
+                    comicInfo.genre?.let { builder.addMeta("Genre", it.value) }
+                } catch (e: Exception) {
+                    logcat(LogPriority.ERROR, e) { "Failed to parse ComicInfo.xml for BBF metadata" }
+                }
+            }
+
+            files.filter { it.name != COMIC_INFO_FILE && ImageUtil.isImage(it.name) { it.openInputStream() } }
+                .forEach { file ->
+                    val filePath = file.filePath
+                    if (filePath != null) {
+                        builder.addPage(filePath)
+                    }
+                }
+
+            builder.finalizeBuilder()
+        }
+
+        val finalBbfPath = bbfPath.removeSuffix(TMP_DIR_SUFFIX)
+        BbfBuilder.petrifyFile(bbfPath, finalBbfPath)
+
+        bbfFile.delete()
         tmpDir.delete()
     }
 

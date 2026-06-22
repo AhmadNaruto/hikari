@@ -24,6 +24,7 @@ import kotlinx.collections.immutable.toImmutableMap
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.category.model.Category
 import tachiyomi.domain.download.service.DownloadPreferences
+import tachiyomi.domain.download.service.ChapterDownloadFormat
 import tachiyomi.domain.download.service.DownloadQueueSortingMode
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.HikariCardDefaults
@@ -88,9 +89,14 @@ object SettingsDownloadScreen : SearchableSettings {
                             )
 
                             PreferenceItem(
-                                item = Preference.PreferenceItem.SwitchPreference(
-                                    preference = downloadPreferences.saveChaptersAsCBZ,
-                                    title = stringResource(MR.strings.save_chapter_as_cbz),
+                                item = Preference.PreferenceItem.ListPreference(
+                                    preference = downloadPreferences.chapterDownloadFormat,
+                                    entries = persistentMapOf(
+                                        ChapterDownloadFormat.DIRECTORY to stringResource(MR.strings.chapter_download_format_directory),
+                                        ChapterDownloadFormat.CBZ to stringResource(MR.strings.chapter_download_format_cbz),
+                                        ChapterDownloadFormat.BBF to stringResource(MR.strings.chapter_download_format_bbf),
+                                    ),
+                                    title = stringResource(MR.strings.pref_chapter_download_format),
                                 ),
                                 highlightKey = null,
                             )

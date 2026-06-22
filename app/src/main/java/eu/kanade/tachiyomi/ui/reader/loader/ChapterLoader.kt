@@ -15,6 +15,7 @@ import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.source.model.StubSource
 import tachiyomi.i18n.MR
 import tachiyomi.source.local.LocalSource
+import io.github.ahmadnaruto.libbbf.BbfReader
 import tachiyomi.source.local.io.Format
 
 /**
@@ -98,6 +99,7 @@ class ChapterLoader(
                     is Format.Directory -> DirectoryPageLoader(format.file)
                     is Format.Archive -> ArchivePageLoader(format.file.archiveReader(context))
                     is Format.Epub -> EpubPageLoader(format.file.epubReader(context))
+                    is Format.Bbf -> BbfPageLoader(BbfReader(format.file.filePath!!))
                 }
             }
             source is HttpSource -> HttpPageLoader(chapter, source)

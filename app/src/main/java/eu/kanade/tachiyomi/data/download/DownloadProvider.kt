@@ -247,11 +247,13 @@ class DownloadProvider(
             add(chapterDirName)
             // Archived chapters
             add("$chapterDirName.cbz")
+            add("$chapterDirName.bbf")
 
             // any legacy names
             legacyChapterDirNames.forEach {
                 add(it)
                 add("$it.cbz")
+                add("$it.bbf")
             }
         }
     }

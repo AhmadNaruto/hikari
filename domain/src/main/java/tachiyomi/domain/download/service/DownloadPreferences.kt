@@ -59,6 +59,15 @@ class DownloadPreferences(
         DownloadQueueSortingMode.FIFO,
     )
 
+    val chapterDownloadFormat: Preference<ChapterDownloadFormat> = preferenceStore.getEnum(
+        "chapter_download_format",
+        if (preferenceStore.getBoolean("save_chapter_as_cbz", true).get()) {
+            ChapterDownloadFormat.CBZ
+        } else {
+            ChapterDownloadFormat.DIRECTORY
+        }
+    )
+
     companion object {
         private const val REMOVE_EXCLUDE_CATEGORIES_PREF_KEY = "remove_exclude_categories"
         private const val DOWNLOAD_NEW_CATEGORIES_PREF_KEY = "download_new_categories"
@@ -76,4 +85,10 @@ enum class DownloadQueueSortingMode {
     LIFO,
     CHAPTER_ASC,
     CHAPTER_DESC,
+}
+
+enum class ChapterDownloadFormat {
+    DIRECTORY,
+    CBZ,
+    BBF
 }

@@ -543,6 +543,10 @@
     <string name="on_hiatus">Sedang Hiatus</string>
     <string name="library_errors_help">Untuk bantuan cara memperbaiki kesalahan pembaruan pustaka, lihat %1$s</string>
     <string name="save_chapter_as_cbz">Simpan sebagai arsip CBZ</string>
+    <string name="pref_chapter_download_format">Format unduhan bab</string>
+    <string name="chapter_download_format_directory">Direktori (Gambar)</string>
+    <string name="chapter_download_format_cbz">Arsip CBZ</string>
+    <string name="chapter_download_format_bbf">Arsip BBF</string>
     <string name="action_show_manga">Lihat entri</string>
     <string name="action_display_cover_only_grid">Grid sampul saja</string>
     <string name="pref_update_only_started">Lewati dafter yang belum mulai dibaca</string>
