@@ -362,15 +362,22 @@ inline float computeRcasLobe(float e, float b, float d, float f, float h,
 }
 
 void rcas(uint32_t *pixels, int w, int h, float sharpness) {
-  std::vector<uint32_t> src(pixels, pixels + w * h);
+  if (h < 3 || w < 3) return;
+
+  std::vector<uint32_t> prev_row(w);
+  std::vector<uint32_t> curr_row(w);
+
+  std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
+
   for (int y = 1; y < h - 1; y++) {
+    std::memcpy(curr_row.data(), pixels + y * w, w * sizeof(uint32_t));
+
     for (int x = 1; x < w - 1; x++) {
-      int idx = y * w + x;
-      uint32_t cE = src[idx];
-      uint32_t cB = src[idx - w];
-      uint32_t cD = src[idx - 1];
-      uint32_t cF = src[idx + 1];
-      uint32_t cH = src[idx + w];
+      uint32_t cE = curr_row[x];
+      uint32_t cB = prev_row[x];
+      uint32_t cD = curr_row[x - 1];
+      uint32_t cF = curr_row[x + 1];
+      uint32_t cH = pixels[(y + 1) * w + x];
 
       float eR = (cE & 0xFF) / 255.0f;
       float eG = ((cE >> 8) & 0xFF) / 255.0f;
@@ -402,60 +409,101 @@ void rcas(uint32_t *pixels, int w, int h, float sharpness) {
       float lobeB = computeRcasLobe(eB, bB, dB, fB, hB, sharpness);
       float rB = (lobeB * (bB + dB + fB + hB) + eB) / (4.0f * lobeB + 1.0f);
 
-      pixels[idx] = ((uint32_t)clamp(eA * 255.0f, 0.0f, 255.0f) << 24) |
-                    ((uint32_t)clamp(rB * 255.0f, 0.0f, 255.0f) << 16) |
-                    ((uint32_t)clamp(rG * 255.0f, 0.0f, 255.0f) << 8) |
-                    (uint32_t)clamp(rR * 255.0f, 0.0f, 255.0f);
+      pixels[y * w + x] = ((uint32_t)clamp(eA * 255.0f, 0.0f, 255.0f) << 24) |
+                          ((uint32_t)clamp(rB * 255.0f, 0.0f, 255.0f) << 16) |
+                          ((uint32_t)clamp(rG * 255.0f, 0.0f, 255.0f) << 8) |
+                          (uint32_t)clamp(rR * 255.0f, 0.0f, 255.0f);
     }
+
+    std::memcpy(prev_row.data(), curr_row.data(), w * sizeof(uint32_t));
   }
 }
 
 void sharpen(uint32_t *pixels, int w, int h) {
-  std::vector<uint32_t> src(pixels, pixels + w * h);
+  if (h < 3 || w < 3) return;
+
+  std::vector<uint32_t> prev_row(w);
+  std::vector<uint32_t> curr_row(w);
+
+  std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
+
   for (int y = 1; y < h - 1; y++) {
+    std::memcpy(curr_row.data(), pixels + y * w, w * sizeof(uint32_t));
+
     for (int x = 1; x < w - 1; x++) {
-      int idx = y * w + x;
+      uint32_t cE = curr_row[x];
+      uint32_t cB = prev_row[x];
+      uint32_t cD = curr_row[x - 1];
+      uint32_t cF = curr_row[x + 1];
+      uint32_t cH = pixels[(y + 1) * w + x];
+
       auto getR = [&](uint32_t p) { return p & 0xFF; };
       auto getG = [&](uint32_t p) { return (p >> 8) & 0xFF; };
       auto getB = [&](uint32_t p) { return (p >> 16) & 0xFF; };
 
-      int r = 5 * getR(src[idx]) - getR(src[idx - 1]) - getR(src[idx + 1]) -
-              getR(src[idx - w]) - getR(src[idx + w]);
-      int g = 5 * getG(src[idx]) - getG(src[idx - 1]) - getG(src[idx + 1]) -
-              getG(src[idx - w]) - getG(src[idx + w]);
-      int b = 5 * getB(src[idx]) - getB(src[idx - 1]) - getB(src[idx + 1]) -
-              getB(src[idx - w]) - getB(src[idx + w]);
+      int r = 5 * getR(cE) - getR(cD) - getR(cF) - getR(cB) - getR(cH);
+      int g = 5 * getG(cE) - getG(cD) - getG(cF) - getG(cB) - getG(cH);
+      int b = 5 * getB(cE) - getB(cD) - getB(cF) - getB(cB) - getB(cH);
 
-      uint32_t a = (src[idx] >> 24) & 0xFF;
-      pixels[idx] = (a << 24) | ((uint32_t)clamp(b, 0, 255) << 16) |
-                    ((uint32_t)clamp(g, 0, 255) << 8) |
-                    (uint32_t)clamp(r, 0, 255);
+      uint32_t a = (cE >> 24) & 0xFF;
+      pixels[y * w + x] = (a << 24) | ((uint32_t)clamp(b, 0, 255) << 16) |
+                          ((uint32_t)clamp(g, 0, 255) << 8) |
+                          (uint32_t)clamp(r, 0, 255);
     }
+
+    std::memcpy(prev_row.data(), curr_row.data(), w * sizeof(uint32_t));
   }
 }
 
 void denoise(uint32_t *pixels, int w, int h) {
-  std::vector<uint32_t> src(pixels, pixels + w * h);
+  if (h < 3 || w < 3) return;
+
+  std::vector<uint32_t> prev_row(w);
+  std::vector<uint32_t> curr_row(w);
+
+  std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
+
   for (int y = 1; y < h - 1; y++) {
+    std::memcpy(curr_row.data(), pixels + y * w, w * sizeof(uint32_t));
+
     for (int x = 1; x < w - 1; x++) {
       int r = 0, g = 0, b = 0, a = 0;
-      for (int ky = -1; ky <= 1; ky++) {
-        for (int kx = -1; kx <= 1; kx++) {
-          uint32_t p = src[(y + ky) * w + (x + kx)];
-          r += p & 0xFF;
-          g += (p >> 8) & 0xFF;
-          b += (p >> 16) & 0xFF;
-          a += (p >> 24) & 0xFF;
-        }
+      
+      for (int kx = -1; kx <= 1; kx++) {
+        uint32_t p = prev_row[x + kx];
+        r += p & 0xFF;
+        g += (p >> 8) & 0xFF;
+        b += (p >> 16) & 0xFF;
+        a += (p >> 24) & 0xFF;
       }
+      
+      for (int kx = -1; kx <= 1; kx++) {
+        uint32_t p = curr_row[x + kx];
+        r += p & 0xFF;
+        g += (p >> 8) & 0xFF;
+        b += (p >> 16) & 0xFF;
+        a += (p >> 24) & 0xFF;
+      }
+      
+      for (int kx = -1; kx <= 1; kx++) {
+        uint32_t p = pixels[(y + 1) * w + (x + kx)];
+        r += p & 0xFF;
+        g += (p >> 8) & 0xFF;
+        b += (p >> 16) & 0xFF;
+        a += (p >> 24) & 0xFF;
+      }
+
       pixels[y * w + x] = ((uint32_t)(a / 9) << 24) |
                           ((uint32_t)(b / 9) << 16) | ((uint32_t)(g / 9) << 8) |
                           (uint32_t)(r / 9);
     }
+
+    std::memcpy(prev_row.data(), curr_row.data(), w * sizeof(uint32_t));
   }
 }
 
 } // namespace hikari
+
 
 extern "C" {
 
@@ -483,11 +531,22 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     return JNI_FALSE;
   }
 
-  jbyte *data = env->GetByteArrayElements(jData, nullptr);
+  void *pixels;
+  if (AndroidBitmap_lockPixels(env, bitmap, &pixels) != 0) {
+    return JNI_FALSE;
+  }
+
+  jbyte *data = (jbyte *)env->GetPrimitiveArrayCritical(jData, nullptr);
+  if (!data) {
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return JNI_FALSE;
+  }
+
   AImageDecoder *decoder = nullptr;
   int ret = gDecoder.createFromBuffer(data, length, &decoder);
   if (ret != 0) {
-    env->ReleaseByteArrayElements(jData, data, JNI_ABORT);
+    env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
+    AndroidBitmap_unlockPixels(env, bitmap);
     return JNI_FALSE;
   }
 
@@ -496,9 +555,6 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
   } else {
     gDecoder.setAndroidBitmapFormat(decoder, ANDROID_BITMAP_FORMAT_RGBA_8888);
   }
-
-  void *pixels;
-  AndroidBitmap_lockPixels(env, bitmap, &pixels);
 
   if (filters & 4) {
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
@@ -514,6 +570,9 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
                          info.stride * info.height);
   }
 
+  gDecoder.deleteDecoder(decoder);
+  env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
+
   if (filters & 2) {
     hikari::denoise((uint32_t *)pixels, info.width, info.height);
   }
@@ -527,9 +586,6 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
   }
 
   AndroidBitmap_unlockPixels(env, bitmap);
-  gDecoder.deleteDecoder(decoder);
-  env->ReleaseByteArrayElements(jData, data, JNI_ABORT);
-
   return JNI_TRUE;
 }
 
@@ -553,11 +609,22 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
     return JNI_FALSE;
   }
 
-  jbyte *data = env->GetByteArrayElements(jData, nullptr);
+  void *pixels;
+  if (AndroidBitmap_lockPixels(env, bitmap, &pixels) != 0) {
+    return JNI_FALSE;
+  }
+
+  jbyte *data = (jbyte *)env->GetPrimitiveArrayCritical(jData, nullptr);
+  if (!data) {
+    AndroidBitmap_unlockPixels(env, bitmap);
+    return JNI_FALSE;
+  }
+
   AImageDecoder *decoder = nullptr;
   int ret = gDecoder.createFromBuffer(data, length, &decoder);
   if (ret != 0) {
-    env->ReleaseByteArrayElements(jData, data, JNI_ABORT);
+    env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
+    AndroidBitmap_unlockPixels(env, bitmap);
     return JNI_FALSE;
   }
 
@@ -566,9 +633,6 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   } else {
     gDecoder.setAndroidBitmapFormat(decoder, ANDROID_BITMAP_FORMAT_RGBA_8888);
   }
-
-  void *pixels;
-  AndroidBitmap_lockPixels(env, bitmap, &pixels);
 
   if (gDecoder.setTargetRect) {
     gDecoder.setTargetRect(decoder, {left, top, right, bottom});
@@ -581,6 +645,9 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   }
 
   gDecoder.decodeImage(decoder, pixels, info.stride, info.stride * info.height);
+
+  gDecoder.deleteDecoder(decoder);
+  env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
 
   if (filters & 2) {
     hikari::denoise((uint32_t *)pixels, info.width, info.height);
@@ -595,9 +662,6 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   }
 
   AndroidBitmap_unlockPixels(env, bitmap);
-  gDecoder.deleteDecoder(decoder);
-  env->ReleaseByteArrayElements(jData, data, JNI_ABORT);
-
   return JNI_TRUE;
 }
 
