@@ -98,6 +98,10 @@ class ChapterLoader(
                     is Format.Directory -> DirectoryPageLoader(format.file)
                     is Format.Archive -> ArchivePageLoader(format.file.archiveReader(context))
                     is Format.Epub -> EpubPageLoader(format.file.epubReader(context))
+                    is Format.Bbf -> {
+                        val path = format.file.filePath ?: throw Exception("Invalid path for BBF file: ${format.file.uri}")
+                        BbfPageLoader(io.github.ahmadnaruto.libbbf.BbfReader(path))
+                    }
                 }
             }
             source is HttpSource -> HttpPageLoader(chapter, source)

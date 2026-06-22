@@ -230,7 +230,7 @@ actual class LocalSource(
         val chapters = fileSystem.getFilesInMangaDirectory(manga.url)
             // Only keep supported formats
             .filterNot { it.name.orEmpty().startsWith('.') }
-            .filter { it.isDirectory || Archive.isSupported(it) || it.extension.equals("epub", true) }
+            .filter { it.isDirectory || Archive.isSupported(it) || it.extension.equals("epub", true) || it.extension.equals("bbf", true) }
             .map { chapterFile ->
                 SChapter.create().apply {
                     url = "${manga.url}/${chapterFile.name}"
@@ -248,6 +248,20 @@ actual class LocalSource(
                     if (format is Format.Epub) {
                         format.file.epubReader(context).use { epub ->
                             epub.fillMetadata(manga, this)
+                        }
+                    } else if (format is Format.Bbf) {
+                        val path = format.file.filePath ?: throw Exception("Invalid path for BBF file: ${format.file.uri}")
+                        io.github.ahmadnaruto.libbbf.BbfReader(path).use { bbf ->
+                            for (i in 0 until bbf.metaCount) {
+                                val meta = bbf.getMetadata(i) ?: continue
+                                when (meta.key.lowercase()) {
+                                    "title" -> this.name = meta.value
+                                    "author" -> manga.author = meta.value
+                                    "artist" -> manga.artist = meta.value
+                                    "genre" -> manga.genre = meta.value
+                                    "description" -> manga.description = meta.value
+                                }
+                            }
                         }
                     } else {
                         getComicInfoForChapter(chapterFile) { stream ->
@@ -323,6 +337,30 @@ actual class LocalSource(
                         val entry = epub.getImagesFromPages().firstOrNull()
 
                         entry?.let { coverManager.update(manga, epub.getInputStream(it)!!) }
+                    }
+                }
+                is Format.Bbf -> {
+                    val path = format.file.filePath ?: throw Exception("Invalid path for BBF file: ${format.file.uri}")
+                    io.github.ahmadnaruto.libbbf.BbfReader(path).use { reader ->
+                        var coverStream: java.io.InputStream? = null
+                        for (i in 0 until reader.pageCount) {
+                            val assetIndex = reader.getPageAssetIndex(i)
+                            val type = reader.getAssetType(assetIndex)
+                            if (type == io.github.ahmadnaruto.libbbf.BbfMediaType.WEBP ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.PNG ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.JPG ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.AVIF ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.JXL ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.BMP ||
+                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.GIF) {
+                                val bytes = reader.getAssetBytes(assetIndex)
+                                if (bytes != null) {
+                                    coverStream = java.io.ByteArrayInputStream(bytes)
+                                    break
+                                }
+                            }
+                        }
+                        coverStream?.let { coverManager.update(manga, it) }
                     }
                 }
             }
