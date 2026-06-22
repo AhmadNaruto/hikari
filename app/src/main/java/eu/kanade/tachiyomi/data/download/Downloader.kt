@@ -657,7 +657,7 @@ class Downloader(
                         val data = file.openInputStream().use { it.readBytes() }
                         if (fileName == COMIC_INFO_FILE) {
                             builder.addAssetFromMemoryWithPath(data, fileName, fileName)
-                        } else if (ImageUtil.isImage(fileName) { file.openInputStream() }) {
+                        } else if (ImageUtil.isImage(fileName) { data.inputStream() }) {
                             val assetIndex = builder.addAssetFromMemoryWithPath(data, fileName, fileName)
                             if (assetIndex >= 0L) {
                                 builder.addPageByAssetIndex(assetIndex)
