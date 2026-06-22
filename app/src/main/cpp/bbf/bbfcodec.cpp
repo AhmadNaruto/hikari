@@ -51,13 +51,14 @@ BBFBuilder::BBFBuilder(const char* oFile, uint32_t alignment, uint32_t reamSize,
 {
     // Open the file for writing
     this->file = fopen(oFile, "wb");
-    setvbuf(this->file, nullptr, _IOFBF, 64 * 1024);
 
     if ( !this->file )
     {
         fprintf(stderr, "[BBFCODEC] Could not open file: %s\n", oFile);
         throw std::runtime_error("Could not open file for writing");
     }
+
+    setvbuf(this->file, nullptr, _IOFBF, 64 * 1024);
 
     this->guardValue = alignment;
     this->reamValue = reamSize;

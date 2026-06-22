@@ -12,6 +12,7 @@ import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.util.storage.DiskUtil
 import eu.kanade.tachiyomi.util.storage.DiskUtil.NOMEDIA_FILE
 import eu.kanade.tachiyomi.util.storage.saveTo
+import java.io.File
 import hikari.core.archive.ZipWriter
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -645,25 +646,45 @@ class Downloader(
         tmpDir: UniFile,
     ) {
         val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
-        val bbfPath = bbfFile.filePath ?: throw Exception("Failed to get local path for BBF file")
+        val tempBbfFile = File(context.cacheDir, "${dirname}_${System.currentTimeMillis()}.bbf.tmp")
         
-        io.github.ahmadnaruto.libbbf.BbfBuilder(bbfPath).use { builder ->
-            tmpDir.listFiles()
-                ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
-                ?.forEach { file ->
-                    val filePath = file.filePath ?: return@forEach
-                    if (file.name == tachiyomi.core.metadata.comicinfo.COMIC_INFO_FILE) {
-                        builder.addAssetWithPath(filePath, file.name)
-                    } else if (tachiyomi.core.common.util.system.ImageUtil.isImage(file.name) { file.openInputStream() }) {
-                        builder.addPageWithPath(filePath, file.name)
-                    } else {
-                        builder.addAssetWithPath(filePath, file.name)
+        try {
+            io.github.ahmadnaruto.libbbf.BbfBuilder(tempBbfFile.absolutePath).use { builder ->
+                tmpDir.listFiles()
+                    ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
+                    ?.forEach { file ->
+                        val fileName = file.name ?: return@forEach
+                        val data = file.openInputStream().use { it.readBytes() }
+                        if (fileName == COMIC_INFO_FILE) {
+                            builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                        } else if (ImageUtil.isImage(fileName) { file.openInputStream() }) {
+                            val assetIndex = builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                            if (assetIndex >= 0L) {
+                                builder.addPageByAssetIndex(assetIndex)
+                            }
+                        } else {
+                            builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                        }
                     }
+                builder.finalizeBuilder()
+            }
+            
+            tempBbfFile.inputStream().use { input ->
+                bbfFile.openOutputStream().use { output ->
+                    input.copyTo(output)
                 }
-            builder.finalizeBuilder()
+            }
+            bbfFile.renameTo("$dirname.bbf")
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e) { "Failed to archive chapter to BBF" }
+            bbfFile.delete()
+            throw e
+        } finally {
+            if (tempBbfFile.exists()) {
+                tempBbfFile.delete()
+            }
+            tmpDir.delete()
         }
-        bbfFile.renameTo("$dirname.bbf")
-        tmpDir.delete()
     }
 
     /**
