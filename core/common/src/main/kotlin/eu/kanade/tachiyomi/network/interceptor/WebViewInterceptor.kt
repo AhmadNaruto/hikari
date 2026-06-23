@@ -13,7 +13,7 @@ import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Request
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.OptIn
+import kotlin.OptIn
 import okhttp3.Response
 import tachiyomi.core.common.util.lang.launchUI
 import tachiyomi.i18n.MR
