@@ -250,8 +250,7 @@ actual class LocalSource(
                             epub.fillMetadata(manga, this)
                         }
                     } else if (format is Format.Bbf) {
-                        val path = format.file.filePath ?: throw Exception("Invalid path for BBF file: ${format.file.uri}")
-                        io.github.ahmadnaruto.libbbf.BbfReader(path).use { bbf ->
+                        io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, format.file).use { bbf ->
                             for (i in 0 until bbf.metaCount) {
                                 val meta = bbf.getMetadata(i) ?: continue
                                 when (meta.key.lowercase()) {
@@ -340,8 +339,7 @@ actual class LocalSource(
                     }
                 }
                 is Format.Bbf -> {
-                    val path = format.file.filePath ?: throw Exception("Invalid path for BBF file: ${format.file.uri}")
-                    io.github.ahmadnaruto.libbbf.BbfReader(path).use { reader ->
+                    io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, format.file).use { reader ->
                         var coverStream: java.io.InputStream? = null
                         for (i in 0 until reader.pageCount) {
                             val assetIndex = reader.getPageAssetIndex(i)

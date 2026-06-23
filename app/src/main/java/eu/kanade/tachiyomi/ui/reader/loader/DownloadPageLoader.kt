@@ -27,7 +27,7 @@ internal class DownloadPageLoader(
 
     private val context: Application by injectLazy()
 
-    private var archivePageLoader: ArchivePageLoader? = null
+    private var archivePageLoader: PageLoader? = null
 
     override var isLocal: Boolean = true
 
@@ -41,7 +41,13 @@ internal class DownloadPageLoader(
             source,
         )
         return if (chapterPath?.isFile == true) {
-            getPagesFromArchive(chapterPath)
+            val extension = chapterPath.name.orEmpty().substringAfterLast('.', "")
+            if (extension.equals("bbf", ignoreCase = true)) {
+                val loader = BbfPageLoader(io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, chapterPath)).also { archivePageLoader = it }
+                loader.getPages()
+            } else {
+                getPagesFromArchive(chapterPath)
+            }
         } else {
             getPagesFromDirectory()
         }

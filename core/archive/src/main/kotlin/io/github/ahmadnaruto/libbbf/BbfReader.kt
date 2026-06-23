@@ -1,14 +1,20 @@
 package io.github.ahmadnaruto.libbbf
 
+import android.content.Context
+import com.hippo.unifile.UniFile
 import java.io.Closeable
 import java.nio.ByteBuffer
 
-class BbfReader(val filePath: String) : Closeable {
+class BbfReader(
+    val filePath: String,
+    private val tempFileToDelete: java.io.File? = null
+) : Closeable {
     private var nativeReaderPtr: Long = 0
 
     init {
         nativeReaderPtr = openReader(filePath)
         if (nativeReaderPtr == 0L) {
+            tempFileToDelete?.delete()
             throw IllegalArgumentException("Failed to open BBF file: $filePath")
         }
     }
@@ -18,6 +24,7 @@ class BbfReader(val filePath: String) : Closeable {
             closeReader(nativeReaderPtr)
             nativeReaderPtr = 0L
         }
+        tempFileToDelete?.delete()
     }
 
     val pageCount: Int
@@ -137,6 +144,26 @@ class BbfReader(val filePath: String) : Closeable {
     companion object {
         init {
             System.loadLibrary("bbfjni")
+        }
+
+        @JvmStatic
+        fun fromUniFile(context: Context, file: UniFile): BbfReader {
+            val localPath = file.filePath
+            if (localPath != null) {
+                return BbfReader(localPath)
+            }
+            val tempFile = java.io.File(context.cacheDir, "bbf_temp_${System.currentTimeMillis()}.bbf")
+            try {
+                file.openInputStream().use { input ->
+                    tempFile.outputStream().use { output ->
+                        input.copyTo(output)
+                    }
+                }
+                return BbfReader(tempFile.absolutePath, tempFile)
+            } catch (e: Exception) {
+                tempFile.delete()
+                throw e
+            }
         }
 
         @JvmStatic private external fun openReader(filePath: String): Long
