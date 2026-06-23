@@ -364,8 +364,10 @@ inline float computeRcasLobe(float e, float b, float d, float f, float h,
 void rcas(uint32_t *pixels, int w, int h, float sharpness) {
   if (h < 3 || w < 3) return;
 
-  std::vector<uint32_t> prev_row(w);
-  std::vector<uint32_t> curr_row(w);
+  static thread_local std::vector<uint32_t> prev_row;
+  static thread_local std::vector<uint32_t> curr_row;
+  prev_row.resize(w);
+  curr_row.resize(w);
 
   std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
 
@@ -422,8 +424,10 @@ void rcas(uint32_t *pixels, int w, int h, float sharpness) {
 void sharpen(uint32_t *pixels, int w, int h, float strength) {
   if (h < 3 || w < 3) return;
 
-  std::vector<uint32_t> prev_row(w);
-  std::vector<uint32_t> curr_row(w);
+  static thread_local std::vector<uint32_t> prev_row;
+  static thread_local std::vector<uint32_t> curr_row;
+  prev_row.resize(w);
+  curr_row.resize(w);
 
   std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
 
@@ -466,8 +470,10 @@ void sharpen(uint32_t *pixels, int w, int h, float strength) {
 void denoise(uint32_t *pixels, int w, int h, float strength) {
   if (h < 3 || w < 3) return;
 
-  std::vector<uint32_t> prev_row(w);
-  std::vector<uint32_t> curr_row(w);
+  static thread_local std::vector<uint32_t> prev_row;
+  static thread_local std::vector<uint32_t> curr_row;
+  prev_row.resize(w);
+  curr_row.resize(w);
 
   std::memcpy(prev_row.data(), pixels, w * sizeof(uint32_t));
 
