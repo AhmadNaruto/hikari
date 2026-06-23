@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+private const val MIN_FREE_HEAP_BYTES = 64L * 1024 * 1024
+
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
 class ReaderPageCache(
     private val application: Application,
@@ -42,7 +44,6 @@ class ReaderPageCache(
         }
     }
 
-    private const val MIN_FREE_HEAP_BYTES = 64L * 1024 * 1024
 
     private val maxMemory = Runtime.getRuntime().maxMemory()
     private val cacheSize = (maxMemory / 8).toInt()
