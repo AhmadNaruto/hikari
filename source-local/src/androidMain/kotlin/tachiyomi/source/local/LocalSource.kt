@@ -13,6 +13,7 @@ import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.util.lang.compareToCaseInsensitiveNaturalOrder
 import hikari.core.archive.archiveReader
 import hikari.core.archive.epubReader
+import io.github.ahmadnaruto.libbbf.isImage
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import logcat.LogPriority
@@ -343,14 +344,7 @@ actual class LocalSource(
                         var coverStream: java.io.InputStream? = null
                         for (i in 0 until reader.pageCount) {
                             val assetIndex = reader.getPageAssetIndex(i)
-                            val type = reader.getAssetType(assetIndex)
-                            if (type == io.github.ahmadnaruto.libbbf.BbfMediaType.WEBP ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.PNG ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.JPG ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.AVIF ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.JXL ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.BMP ||
-                                type == io.github.ahmadnaruto.libbbf.BbfMediaType.GIF) {
+                            if (reader.getAssetType(assetIndex).isImage()) {
                                 val stream = reader.getAssetInputStream(assetIndex)
                                 if (stream != null) {
                                     coverStream = stream

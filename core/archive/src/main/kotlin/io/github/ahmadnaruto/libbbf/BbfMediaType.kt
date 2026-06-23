@@ -25,8 +25,14 @@ enum class BbfMediaType(val value: Int) {
     JS(0x16);
 
     companion object {
+        /** Single source of truth for raster/vector image types in a BBF container. */
+        val IMAGE_TYPES: Set<BbfMediaType> = setOf(AVIF, PNG, WEBP, JXL, BMP, GIF, TIFF, JPG)
+
         fun fromValue(value: Int): BbfMediaType {
             return values().firstOrNull { it.value == value } ?: UNKNOWN
         }
     }
 }
+
+/** Returns true if this media type represents a renderable image format. */
+fun BbfMediaType.isImage(): Boolean = this in BbfMediaType.IMAGE_TYPES
