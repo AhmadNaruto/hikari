@@ -92,13 +92,19 @@ class HikariImageDecoder(
             preferences.readerDenoisingStrength.get() / 10.0f,
         )
 
-        if (!success) {
+        val finalBitmap = if (success) {
+            bitmap
+        } else {
             bitmap.recycle()
-            return null
-        }
+            val decodeOptions = android.graphics.BitmapFactory.Options().apply {
+                inSampleSize = sampleSize
+                inPreferredConfig = if (options.allowRgb565 && filters == 0) Bitmap.Config.RGB_565 else Bitmap.Config.ARGB_8888
+            }
+            android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size, decodeOptions)
+        } ?: return null
 
         return DecodeResult(
-            image = bitmap.asImage(),
+            image = finalBitmap.asImage(),
             isSampled = sampleSize > 1,
         )
     }

@@ -47,8 +47,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import soup.compose.material.motion.animation.materialFadeThroughIn
-import soup.compose.material.motion.animation.materialFadeThroughOut
+import soup.compose.material.motion.animation.materialSharedAxisX
+import soup.compose.material.motion.animation.rememberSlideDistance
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.AnimatedNavigationBarItem
@@ -123,11 +123,20 @@ object HomeScreen : Screen() {
                             .padding(contentPadding)
                             .consumeWindowInsets(contentPadding),
                     ) {
+                        val slideDistance = rememberSlideDistance()
                         AnimatedContent(
                             targetState = tabNavigator.current,
                             transitionSpec = {
-                                materialFadeThroughIn(initialScale = 1f, durationMillis = TabFadeDuration) togetherWith
-                                    materialFadeThroughOut(durationMillis = TabFadeDuration)
+                                val initialTab = initialState
+                                val targetTab = targetState
+                                val initialIndex = TABS.indexOf(initialTab)
+                                val targetIndex = TABS.indexOf(targetTab)
+                                val forward = targetIndex > initialIndex
+                                materialSharedAxisX(
+                                    forward = forward,
+                                    slideDistance = slideDistance,
+                                    durationMillis = TabFadeDuration,
+                                )
                             },
                             label = "tabContent",
                         ) {

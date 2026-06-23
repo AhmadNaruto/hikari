@@ -479,6 +479,14 @@ class ReaderActivity : BaseActivity() {
             onOpenInBrowser = ::openChapterInBrowser.takeIf { isHttpSource },
             onShare = ::shareChapter.takeIf { isHttpSource },
 
+            chapters = state.chapters,
+            currentChapter = state.currentChapter,
+            onChapterSelected = { chapter ->
+                lifecycleScope.launch {
+                    viewModel.loadChapter(chapter)
+                }
+            },
+
             viewer = state.viewer,
             onNextChapter = ::loadNextChapter,
             enabledNext = state.viewerChapters?.nextChapter != null,

@@ -330,10 +330,15 @@ class ReaderViewModel @JvmOverloads constructor(
                 it.copy(
                     viewerChapters = newChapters,
                     bookmarked = newChapters.currChapter.chapter.bookmark,
+                    chapters = chapterList,
                 )
             }
         }
         return newChapters
+    }
+
+    suspend fun loadChapter(chapter: ReaderChapter) {
+        loadAdjacent(chapter)
     }
 
     /**
@@ -951,6 +956,7 @@ class ReaderViewModel @JvmOverloads constructor(
         val bookmarked: Boolean = false,
         val isLoadingAdjacentChapter: Boolean = false,
         val currentPage: Int = -1,
+        val chapters: List<ReaderChapter> = emptyList(),
 
         /**
          * Viewer used to display the pages (pager, webtoon, ...).

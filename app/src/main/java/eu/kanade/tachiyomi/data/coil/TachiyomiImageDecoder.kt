@@ -20,48 +20,84 @@ import tachiyomi.decoder.ImageDecoder
  */
 class TachiyomiImageDecoder(private val resources: ImageSource, private val options: Options) : Decoder {
 
-    override suspend fun decode(): DecodeResult {
-        val decoder = resources.sourceOrNull()?.use {
-            ImageDecoder.newInstance(it.inputStream(), options.cropBorders, displayProfile)
+    override suspend fun decode(): DecodeResult? {
+        val bytes = try {
+            resources.source().use { it.readByteArray() }
+        } catch (e: Exception) {
+            return null
         }
 
-        check(decoder != null && decoder.width > 0 && decoder.height > 0) { "Failed to initialize decoder" }
+        val decoder = ImageDecoder.newInstance(java.io.ByteArrayInputStream(bytes), options.cropBorders, displayProfile)
 
-        val srcWidth = decoder.width
-        val srcHeight = decoder.height
+        var sampleSize = 1
+        val bitmap = if (decoder != null && decoder.width > 0 && decoder.height > 0) {
+            val srcWidth = decoder.width
+            val srcHeight = decoder.height
 
-        val dstWidth = options.size.widthPx(options.scale) { srcWidth }
-        val dstHeight = options.size.heightPx(options.scale) { srcHeight }
+            val dstWidth = options.size.widthPx(options.scale) { srcWidth }
+            val dstHeight = options.size.heightPx(options.scale) { srcHeight }
 
-        val sampleSize = DecodeUtils.calculateInSampleSize(
-            srcWidth = srcWidth,
-            srcHeight = srcHeight,
-            dstWidth = dstWidth,
-            dstHeight = dstHeight,
-            scale = options.scale,
-        )
+            sampleSize = DecodeUtils.calculateInSampleSize(
+                srcWidth = srcWidth,
+                srcHeight = srcHeight,
+                dstWidth = dstWidth,
+                dstHeight = dstHeight,
+                scale = options.scale,
+            )
 
-        var bitmap = decoder.decode(sampleSize = sampleSize)
-        decoder.recycle()
+            val decoded = decoder.decode(sampleSize = sampleSize)
+            decoder.recycle()
+            decoded
+        } else {
+            null
+        }
 
-        check(bitmap != null) { "Failed to decode image" }
+        val finalBitmap = if (bitmap != null) {
+            bitmap
+        } else {
+            val bitmapOptions = android.graphics.BitmapFactory.Options().apply {
+                inJustDecodeBounds = true
+            }
+            android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bitmapOptions)
+
+            val srcWidth = bitmapOptions.outWidth
+            val srcHeight = bitmapOptions.outHeight
+
+            val dstWidth = options.size.widthPx(options.scale) { srcWidth }
+            val dstHeight = options.size.heightPx(options.scale) { srcHeight }
+
+            sampleSize = DecodeUtils.calculateInSampleSize(
+                srcWidth = srcWidth,
+                srcHeight = srcHeight,
+                dstWidth = dstWidth,
+                dstHeight = dstHeight,
+                scale = options.scale,
+            )
+
+            val decodeOptions = android.graphics.BitmapFactory.Options().apply {
+                inSampleSize = sampleSize
+                inPreferredConfig = if (options.allowRgb565) Bitmap.Config.RGB_565 else Bitmap.Config.ARGB_8888
+            }
+            android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size, decodeOptions)
+        } ?: return null
 
         val targetConfig = when {
-            options.bitmapConfig == Bitmap.Config.HARDWARE && ImageUtil.canUseHardwareBitmap(bitmap) -> Bitmap.Config.HARDWARE
+            options.bitmapConfig == Bitmap.Config.HARDWARE && ImageUtil.canUseHardwareBitmap(finalBitmap) -> Bitmap.Config.HARDWARE
             options.allowRgb565 -> Bitmap.Config.RGB_565
             else -> null
         }
 
-        if (targetConfig != null && targetConfig != bitmap.config) {
-            val newBitmap = bitmap.copy(targetConfig, false)
+        var resultBitmap = finalBitmap
+        if (targetConfig != null && targetConfig != finalBitmap.config) {
+            val newBitmap = finalBitmap.copy(targetConfig, false)
             if (newBitmap != null) {
-                bitmap.recycle()
-                bitmap = newBitmap
+                finalBitmap.recycle()
+                resultBitmap = newBitmap
             }
         }
 
         return DecodeResult(
-            image = bitmap.asImage(),
+            image = resultBitmap.asImage(),
             isSampled = sampleSize > 1,
         )
     }

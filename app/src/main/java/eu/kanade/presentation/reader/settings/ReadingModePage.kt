@@ -1,13 +1,18 @@
 package eu.kanade.presentation.reader.settings
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import eu.kanade.presentation.components.TabbedDialogPaddings
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderOrientation
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderSettingsScreenModel
@@ -16,6 +21,9 @@ import eu.kanade.tachiyomi.ui.reader.viewer.webtoon.WebtoonViewer
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.CheckboxItem
 import tachiyomi.presentation.core.components.HeadingItem
+import tachiyomi.presentation.core.components.HikariCardDefaults
+import tachiyomi.presentation.core.components.HikariCardGroup
+import tachiyomi.presentation.core.components.HikariSectionHeader
 import tachiyomi.presentation.core.components.SettingsChipRow
 import tachiyomi.presentation.core.components.SliderItem
 import tachiyomi.presentation.core.i18n.stringResource
@@ -92,45 +100,72 @@ private fun ColumnScope.PagerViewerSettings(screenModel: ReaderSettingsScreenMod
         }
     }
 
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_crop_borders),
-        pref = screenModel.preferences.cropBorders,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_landscape_zoom),
-        pref = screenModel.preferences.landscapeZoom,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_navigate_pan),
-        pref = screenModel.preferences.navigateToPan,
-    )
-
-    val dualPageSplitPaged by screenModel.preferences.dualPageSplitPaged.collectAsState()
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_dual_page_split),
-        pref = screenModel.preferences.dualPageSplitPaged,
-    )
-
-    if (dualPageSplitPaged) {
+    HikariSectionHeader(text = "Viewer Options")
+    HikariCardGroup {
         CheckboxItem(
-            label = stringResource(MR.strings.pref_dual_page_invert),
-            pref = screenModel.preferences.dualPageInvertPaged,
+            label = stringResource(MR.strings.pref_crop_borders),
+            pref = screenModel.preferences.cropBorders,
         )
-    }
-
-    val dualPageRotateToFit by screenModel.preferences.dualPageRotateToFit.collectAsState()
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_page_rotate),
-        pref = screenModel.preferences.dualPageRotateToFit,
-    )
-
-    if (dualPageRotateToFit) {
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
         CheckboxItem(
-            label = stringResource(MR.strings.pref_page_rotate_invert),
-            pref = screenModel.preferences.dualPageRotateToFitInvert,
+            label = stringResource(MR.strings.pref_landscape_zoom),
+            pref = screenModel.preferences.landscapeZoom,
         )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_navigate_pan),
+            pref = screenModel.preferences.navigateToPan,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_dual_page_split),
+            pref = screenModel.preferences.dualPageSplitPaged,
+        )
+        val dualPageSplitPaged by screenModel.preferences.dualPageSplitPaged.collectAsState()
+        if (dualPageSplitPaged) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            CheckboxItem(
+                label = stringResource(MR.strings.pref_dual_page_invert),
+                pref = screenModel.preferences.dualPageInvertPaged,
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_page_rotate),
+            pref = screenModel.preferences.dualPageRotateToFit,
+        )
+        val dualPageRotateToFit by screenModel.preferences.dualPageRotateToFit.collectAsState()
+        if (dualPageRotateToFit) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            CheckboxItem(
+                label = stringResource(MR.strings.pref_page_rotate_invert),
+                pref = screenModel.preferences.dualPageRotateToFitInvert,
+            )
+        }
     }
 }
 
@@ -149,57 +184,89 @@ private fun ColumnScope.WebtoonViewerSettings(screenModel: ReaderSettingsScreenM
         onSelectInvertMode = screenModel.preferences.webtoonNavInverted::set,
     )
 
-    val webtoonSidePadding by screenModel.preferences.webtoonSidePadding.collectAsState()
-    SliderItem(
-        value = webtoonSidePadding,
-        valueRange = ReaderPreferences.let { it.WEBTOON_PADDING_MIN..it.WEBTOON_PADDING_MAX },
-        label = stringResource(MR.strings.pref_webtoon_side_padding),
-        valueString = numberFormat.format(webtoonSidePadding / 100f),
-        onChange = {
-            screenModel.preferences.webtoonSidePadding.set(it)
-        },
-        pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_crop_borders),
-        pref = screenModel.preferences.cropBordersWebtoon,
-    )
-
-    val dualPageSplitWebtoon by screenModel.preferences.dualPageSplitWebtoon.collectAsState()
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_dual_page_split),
-        pref = screenModel.preferences.dualPageSplitWebtoon,
-    )
-
-    if (dualPageSplitWebtoon) {
+    HikariSectionHeader(text = "Viewer Options")
+    HikariCardGroup {
+        val webtoonSidePadding by screenModel.preferences.webtoonSidePadding.collectAsState()
+        SliderItem(
+            value = webtoonSidePadding,
+            valueRange = ReaderPreferences.let { it.WEBTOON_PADDING_MIN..it.WEBTOON_PADDING_MAX },
+            label = stringResource(MR.strings.pref_webtoon_side_padding),
+            valueString = numberFormat.format(webtoonSidePadding / 100f),
+            onChange = {
+                screenModel.preferences.webtoonSidePadding.set(it)
+            },
+            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
         CheckboxItem(
-            label = stringResource(MR.strings.pref_dual_page_invert),
-            pref = screenModel.preferences.dualPageInvertWebtoon,
+            label = stringResource(MR.strings.pref_crop_borders),
+            pref = screenModel.preferences.cropBordersWebtoon,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_dual_page_split),
+            pref = screenModel.preferences.dualPageSplitWebtoon,
+        )
+        val dualPageSplitWebtoon by screenModel.preferences.dualPageSplitWebtoon.collectAsState()
+        if (dualPageSplitWebtoon) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            CheckboxItem(
+                label = stringResource(MR.strings.pref_dual_page_invert),
+                pref = screenModel.preferences.dualPageInvertWebtoon,
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_page_rotate),
+            pref = screenModel.preferences.dualPageRotateToFitWebtoon,
+        )
+        val dualPageRotateToFitWebtoon by screenModel.preferences.dualPageRotateToFitWebtoon.collectAsState()
+        if (dualPageRotateToFitWebtoon) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            CheckboxItem(
+                label = stringResource(MR.strings.pref_page_rotate_invert),
+                pref = screenModel.preferences.dualPageRotateToFitInvertWebtoon,
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_double_tap_zoom),
+            pref = screenModel.preferences.webtoonDoubleTapZoomEnabled,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_webtoon_disable_zoom_out),
+            pref = screenModel.preferences.webtoonDisableZoomOut,
         )
     }
-
-    val dualPageRotateToFitWebtoon by screenModel.preferences.dualPageRotateToFitWebtoon.collectAsState()
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_page_rotate),
-        pref = screenModel.preferences.dualPageRotateToFitWebtoon,
-    )
-
-    if (dualPageRotateToFitWebtoon) {
-        CheckboxItem(
-            label = stringResource(MR.strings.pref_page_rotate_invert),
-            pref = screenModel.preferences.dualPageRotateToFitInvertWebtoon,
-        )
-    }
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_double_tap_zoom),
-        pref = screenModel.preferences.webtoonDoubleTapZoomEnabled,
-    )
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_webtoon_disable_zoom_out),
-        pref = screenModel.preferences.webtoonDisableZoomOut,
-    )
 }
 
 @Composable

@@ -61,9 +61,12 @@ class WebtoonImageDecoder(private val source: BufferedSource, private val option
             if (options.allowRgb565) Bitmap.Config.RGB_565 else Bitmap.Config.ARGB_8888,
         )
 
-        val success = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            NativeImageDecoder.decode(bitmap, bytes)
-        } else {
+        var success = false
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            success = NativeImageDecoder.decode(bitmap, bytes)
+        }
+
+        if (!success) {
             val decodeOptions = BitmapFactory.Options().apply {
                 this.inSampleSize = inSampleSize
                 this.inPreferredConfig = if (options.allowRgb565) Bitmap.Config.RGB_565 else Bitmap.Config.ARGB_8888
@@ -73,9 +76,7 @@ class WebtoonImageDecoder(private val source: BufferedSource, private val option
                 val canvas = android.graphics.Canvas(bitmap)
                 canvas.drawBitmap(b, 0f, 0f, null)
                 b.recycle()
-                true
-            } else {
-                false
+                success = true
             }
         }
 
