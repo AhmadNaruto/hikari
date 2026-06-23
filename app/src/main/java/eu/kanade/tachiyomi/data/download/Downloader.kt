@@ -645,7 +645,7 @@ class Downloader(
         tmpDir: UniFile,
     ) {
         val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
-        val tempBbfFile = File(context.cacheDir, "${dirname}_${System.currentTimeMillis()}.bbf.tmp")
+        val tempBbfFile = File(context.cacheDir, "${dirname}_${java.util.UUID.randomUUID()}.bbf.tmp")
         
         try {
             io.github.ahmadnaruto.libbbf.BbfBuilder(tempBbfFile.absolutePath).use { builder ->

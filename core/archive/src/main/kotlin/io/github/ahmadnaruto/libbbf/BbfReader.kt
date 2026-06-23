@@ -150,9 +150,16 @@ class BbfReader(
         fun fromUniFile(context: Context, file: UniFile): BbfReader {
             val localPath = file.filePath
             if (localPath != null) {
-                return BbfReader(localPath)
+                try {
+                    val reader = BbfReader(localPath)
+                    if (reader.pageCount >= 0) {
+                        return reader
+                    }
+                } catch (e: Exception) {
+                    // Fall back to copying to cache if direct access is restricted
+                }
             }
-            val tempFile = java.io.File(context.cacheDir, "bbf_temp_${System.currentTimeMillis()}.bbf")
+            val tempFile = java.io.File(context.cacheDir, "bbf_temp_${java.util.UUID.randomUUID()}.bbf")
             try {
                 file.openInputStream().use { input ->
                     tempFile.outputStream().use { output ->
