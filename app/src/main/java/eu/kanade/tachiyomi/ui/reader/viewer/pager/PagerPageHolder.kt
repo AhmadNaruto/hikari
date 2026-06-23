@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import eu.kanade.presentation.util.formattedMessage
 import eu.kanade.tachiyomi.databinding.ReaderErrorBinding
+import android.graphics.drawable.BitmapDrawable
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderProgressIndicator
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
@@ -146,6 +148,25 @@ class PagerPageHolder(
      */
     private suspend fun setImage() {
         progressIndicator?.setProgress(0)
+
+        val cachedBitmap = ReaderPageCache.get(page)
+        if (cachedBitmap != null) {
+            withUIContext {
+                val bitmapDrawable = BitmapDrawable(context.resources, cachedBitmap)
+                setImage(
+                    bitmapDrawable,
+                    Config(
+                        zoomDuration = viewer.config.doubleTapAnimDuration,
+                        minimumScaleType = viewer.config.imageScaleType,
+                        cropBorders = viewer.config.imageCropBorders,
+                        zoomStartPosition = viewer.config.imageZoomType,
+                        landscapeZoom = viewer.config.landscapeZoom,
+                    ),
+                )
+                removeErrorLayout()
+            }
+            return
+        }
 
         val streamFn = page.stream ?: return
 

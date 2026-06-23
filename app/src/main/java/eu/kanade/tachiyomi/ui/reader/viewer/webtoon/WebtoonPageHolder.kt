@@ -12,8 +12,10 @@ import androidx.core.view.updateMargins
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import eu.kanade.presentation.util.formattedMessage
 import eu.kanade.tachiyomi.databinding.ReaderErrorBinding
+import android.graphics.drawable.BitmapDrawable
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderProgressIndicator
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
@@ -186,6 +188,23 @@ class WebtoonPageHolder(
      */
     private suspend fun setImage() {
         progressIndicator.setProgress(0)
+
+        val cachedBitmap = page?.let { ReaderPageCache.get(it) }
+        if (cachedBitmap != null) {
+            withUIContext {
+                val bitmapDrawable = BitmapDrawable(context.resources, cachedBitmap)
+                frame.setImage(
+                    bitmapDrawable,
+                    ReaderPageImageView.Config(
+                        zoomDuration = viewer.config.doubleTapAnimDuration,
+                        minimumScaleType = SubsamplingScaleImageView.SCALE_TYPE_FIT_WIDTH,
+                        cropBorders = viewer.config.imageCropBorders,
+                    ),
+                )
+                removeErrorLayout()
+            }
+            return
+        }
 
         val streamFn = page?.stream ?: return
 

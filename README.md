@@ -3,7 +3,7 @@
 Manga reader for Android based on Mihon with NDK image decoding and sectional UI.
 
 ![License](https://img.shields.io/badge/license-Apache_2.0-blue?style=flat-square)
-![Version](https://img.shields.io/badge/version-0.5.0-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-0.5.2-blue?style=flat-square)
 ![Repo Size](https://img.shields.io/github/repo-size/LeverTeam/hikari?style=flat-square)
 ![Language](https://img.shields.io/badge/language-Kotlin-purple?style=flat-square)
 

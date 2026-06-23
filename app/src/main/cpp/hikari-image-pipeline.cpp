@@ -419,7 +419,7 @@ void rcas(uint32_t *pixels, int w, int h, float sharpness) {
   }
 }
 
-void sharpen(uint32_t *pixels, int w, int h) {
+void sharpen(uint32_t *pixels, int w, int h, float strength) {
   if (h < 3 || w < 3) return;
 
   std::vector<uint32_t> prev_row(w);
@@ -441,21 +441,29 @@ void sharpen(uint32_t *pixels, int w, int h) {
       auto getG = [&](uint32_t p) { return (p >> 8) & 0xFF; };
       auto getB = [&](uint32_t p) { return (p >> 16) & 0xFF; };
 
-      int r = 5 * getR(cE) - getR(cD) - getR(cF) - getR(cB) - getR(cH);
-      int g = 5 * getG(cE) - getG(cD) - getG(cF) - getG(cB) - getG(cH);
-      int b = 5 * getB(cE) - getB(cD) - getB(cF) - getB(cB) - getB(cH);
+      float r_orig = getR(cE);
+      float g_orig = getG(cE);
+      float b_orig = getB(cE);
+
+      float r_sharp = 5 * r_orig - getR(cD) - getR(cF) - getR(cB) - getR(cH);
+      float g_sharp = 5 * g_orig - getG(cD) - getG(cF) - getG(cB) - getG(cH);
+      float b_sharp = 5 * b_orig - getB(cD) - getB(cF) - getB(cB) - getB(cH);
+
+      float r = r_orig + strength * (r_sharp - r_orig);
+      float g = g_orig + strength * (g_sharp - g_orig);
+      float b = b_orig + strength * (b_sharp - b_orig);
 
       uint32_t a = (cE >> 24) & 0xFF;
-      pixels[y * w + x] = (a << 24) | ((uint32_t)clamp(b, 0, 255) << 16) |
-                          ((uint32_t)clamp(g, 0, 255) << 8) |
-                          (uint32_t)clamp(r, 0, 255);
+      pixels[y * w + x] = (a << 24) | ((uint32_t)clamp(b, 0.0f, 255.0f) << 16) |
+                          ((uint32_t)clamp(g, 0.0f, 255.0f) << 8) |
+                          (uint32_t)clamp(r, 0.0f, 255.0f);
     }
 
     std::memcpy(prev_row.data(), curr_row.data(), w * sizeof(uint32_t));
   }
 }
 
-void denoise(uint32_t *pixels, int w, int h) {
+void denoise(uint32_t *pixels, int w, int h, float strength) {
   if (h < 3 || w < 3) return;
 
   std::vector<uint32_t> prev_row(w);
@@ -467,35 +475,47 @@ void denoise(uint32_t *pixels, int w, int h) {
     std::memcpy(curr_row.data(), pixels + y * w, w * sizeof(uint32_t));
 
     for (int x = 1; x < w - 1; x++) {
-      int r = 0, g = 0, b = 0, a = 0;
+      int r_blur = 0, g_blur = 0, b_blur = 0, a_blur = 0;
       
       for (int kx = -1; kx <= 1; kx++) {
         uint32_t p = prev_row[x + kx];
-        r += p & 0xFF;
-        g += (p >> 8) & 0xFF;
-        b += (p >> 16) & 0xFF;
-        a += (p >> 24) & 0xFF;
+        r_blur += p & 0xFF;
+        g_blur += (p >> 8) & 0xFF;
+        b_blur += (p >> 16) & 0xFF;
+        a_blur += (p >> 24) & 0xFF;
       }
       
       for (int kx = -1; kx <= 1; kx++) {
         uint32_t p = curr_row[x + kx];
-        r += p & 0xFF;
-        g += (p >> 8) & 0xFF;
-        b += (p >> 16) & 0xFF;
-        a += (p >> 24) & 0xFF;
+        r_blur += p & 0xFF;
+        g_blur += (p >> 8) & 0xFF;
+        b_blur += (p >> 16) & 0xFF;
+        a_blur += (p >> 24) & 0xFF;
       }
       
       for (int kx = -1; kx <= 1; kx++) {
         uint32_t p = pixels[(y + 1) * w + (x + kx)];
-        r += p & 0xFF;
-        g += (p >> 8) & 0xFF;
-        b += (p >> 16) & 0xFF;
-        a += (p >> 24) & 0xFF;
+        r_blur += p & 0xFF;
+        g_blur += (p >> 8) & 0xFF;
+        b_blur += (p >> 16) & 0xFF;
+        a_blur += (p >> 24) & 0xFF;
       }
 
-      pixels[y * w + x] = ((uint32_t)(a / 9) << 24) |
-                          ((uint32_t)(b / 9) << 16) | ((uint32_t)(g / 9) << 8) |
-                          (uint32_t)(r / 9);
+      uint32_t p_orig = curr_row[x];
+      float r_orig = p_orig & 0xFF;
+      float g_orig = (p_orig >> 8) & 0xFF;
+      float b_orig = (p_orig >> 16) & 0xFF;
+      float a_orig = (p_orig >> 24) & 0xFF;
+
+      float r = r_orig + strength * ((r_blur / 9.0f) - r_orig);
+      float g = g_orig + strength * ((g_blur / 9.0f) - g_orig);
+      float b = b_orig + strength * ((b_blur / 9.0f) - b_orig);
+      float a = a_orig + strength * ((a_blur / 9.0f) - a_orig);
+
+      pixels[y * w + x] = ((uint32_t)clamp(a, 0.0f, 255.0f) << 24) |
+                          ((uint32_t)clamp(b, 0.0f, 255.0f) << 16) |
+                          ((uint32_t)clamp(g, 0.0f, 255.0f) << 8) |
+                          (uint32_t)clamp(r, 0.0f, 255.0f);
     }
 
     std::memcpy(prev_row.data(), curr_row.data(), w * sizeof(uint32_t));
@@ -515,7 +535,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 JNIEXPORT jboolean JNICALL
 Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     JNIEnv *env, jobject thiz, jobject bitmap, jbyteArray jData, jint length,
-    jint filters) {
+    jint filters, jfloat sharpeningStrength, jfloat denoisingStrength) {
   if (bitmap == nullptr || jData == nullptr || !gDecoder.available)
     return JNI_FALSE;
 
@@ -574,14 +594,17 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
   env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
 
   if (filters & 2) {
-    hikari::denoise((uint32_t *)pixels, info.width, info.height);
+    hikari::denoise((uint32_t *)pixels, info.width, info.height,
+                    denoisingStrength);
   }
 
   if (filters & 1) {
     if (filters & 4) {
-      hikari::rcas((uint32_t *)pixels, info.width, info.height, 0.2f);
+      hikari::rcas((uint32_t *)pixels, info.width, info.height,
+                   2.0f - sharpeningStrength);
     } else {
-      hikari::sharpen((uint32_t *)pixels, info.width, info.height);
+      hikari::sharpen((uint32_t *)pixels, info.width, info.height,
+                      sharpeningStrength);
     }
   }
 
@@ -592,8 +615,8 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
 JNIEXPORT jboolean JNICALL
 Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
     JNIEnv *env, jobject thiz, jobject bitmap, jbyteArray jData, jint length,
-    jint left, jint top, jint right, jint bottom, jint sampleSize,
-    jint filters) {
+    jint left, jint top, jint right, jint bottom, jint sampleSize, jint filters,
+    jfloat sharpeningStrength, jfloat denoisingStrength) {
   if (bitmap == nullptr || jData == nullptr || !gDecoder.available)
     return JNI_FALSE;
 
@@ -650,14 +673,17 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   env->ReleasePrimitiveArrayCritical(jData, data, JNI_ABORT);
 
   if (filters & 2) {
-    hikari::denoise((uint32_t *)pixels, info.width, info.height);
+    hikari::denoise((uint32_t *)pixels, info.width, info.height,
+                    denoisingStrength);
   }
 
   if (filters & 1) {
     if (filters & 4) {
-      hikari::rcas((uint32_t *)pixels, info.width, info.height, 0.2f);
+      hikari::rcas((uint32_t *)pixels, info.width, info.height,
+                   2.0f - sharpeningStrength);
     } else {
-      hikari::sharpen((uint32_t *)pixels, info.width, info.height);
+      hikari::sharpen((uint32_t *)pixels, info.width, info.height,
+                      sharpeningStrength);
     }
   }
 
@@ -667,7 +693,8 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
 
 JNIEXPORT jboolean JNICALL
 Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeProcess(
-    JNIEnv *env, jobject thiz, jobject bitmap, jint filters) {
+    JNIEnv *env, jobject thiz, jobject bitmap, jint filters,
+    jfloat sharpeningStrength, jfloat denoisingStrength) {
   if (bitmap == nullptr)
     return JNI_FALSE;
 
@@ -687,14 +714,17 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeProcess(
   }
 
   if (filters & 2) {
-    hikari::denoise((uint32_t *)pixels, info.width, info.height);
+    hikari::denoise((uint32_t *)pixels, info.width, info.height,
+                    denoisingStrength);
   }
 
   if (filters & 1) {
     if (filters & 4) {
-      hikari::rcas((uint32_t *)pixels, info.width, info.height, 0.2f);
+      hikari::rcas((uint32_t *)pixels, info.width, info.height,
+                   2.0f - sharpeningStrength);
     } else {
-      hikari::sharpen((uint32_t *)pixels, info.width, info.height);
+      hikari::sharpen((uint32_t *)pixels, info.width, info.height,
+                      sharpeningStrength);
     }
   }
 

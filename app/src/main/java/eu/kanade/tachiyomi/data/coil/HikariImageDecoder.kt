@@ -84,7 +84,13 @@ class HikariImageDecoder(
             if (useRgb565) Bitmap.Config.RGB_565 else Bitmap.Config.ARGB_8888,
         )
 
-        val success = NativeImageDecoder.decode(bitmap, bytes, filters)
+        val success = NativeImageDecoder.decode(
+            bitmap,
+            bytes,
+            filters,
+            preferences.readerSharpeningStrength.get() / 10.0f,
+            preferences.readerDenoisingStrength.get() / 10.0f,
+        )
 
         if (!success) {
             bitmap.recycle()

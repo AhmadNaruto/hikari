@@ -20,7 +20,7 @@ class GetApplicationRelease(
         val now = Instant.now()
 
         if (!arguments.forceCheck && now.isBefore(
-                Instant.ofEpochMilli(lastChecked.get()).plus(12, ChronoUnit.HOURS),
+                Instant.ofEpochMilli(lastChecked.get()).plus(3, ChronoUnit.DAYS),
             )
         ) {
             return Result.NoNewUpdate

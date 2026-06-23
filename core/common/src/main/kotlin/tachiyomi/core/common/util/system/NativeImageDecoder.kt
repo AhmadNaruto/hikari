@@ -35,14 +35,20 @@ object NativeImageDecoder {
      * @param filters Bitmask of [FILTER] values to apply during decoding.
      * @return True if decoding was successful.
      */
-    fun decode(bitmap: Bitmap, data: ByteArray, filters: Int = 0): Boolean {
+    fun decode(
+        bitmap: Bitmap,
+        data: ByteArray,
+        filters: Int = 0,
+        sharpeningStrength: Float = 1.0f,
+        denoisingStrength: Float = 1.0f,
+    ): Boolean {
         if (bitmap.config != Bitmap.Config.ARGB_8888 && bitmap.config != Bitmap.Config.RGB_565) {
             return false
         }
         if (bitmap.config == Bitmap.Config.RGB_565 && filters != 0) {
             return false
         }
-        return nativeDecode(bitmap, data, data.size, filters)
+        return nativeDecode(bitmap, data, data.size, filters, sharpeningStrength, denoisingStrength)
     }
 
     /**
@@ -65,6 +71,8 @@ object NativeImageDecoder {
         bottom: Int,
         sampleSize: Int,
         filters: Int = 0,
+        sharpeningStrength: Float = 1.0f,
+        denoisingStrength: Float = 1.0f,
     ): Boolean {
         if (bitmap.config != Bitmap.Config.ARGB_8888 && bitmap.config != Bitmap.Config.RGB_565) {
             return false
@@ -72,7 +80,7 @@ object NativeImageDecoder {
         if (bitmap.config == Bitmap.Config.RGB_565 && filters != 0) {
             return false
         }
-        return nativeDecodeRegion(bitmap, data, data.size, left, top, right, bottom, sampleSize, filters)
+        return nativeDecodeRegion(bitmap, data, data.size, left, top, right, bottom, sampleSize, filters, sharpeningStrength, denoisingStrength)
     }
 
     /**
@@ -82,9 +90,14 @@ object NativeImageDecoder {
      * @param filters Bitmask of [FILTER] values to apply.
      * @return True if processing was successful.
      */
-    fun process(bitmap: Bitmap, filters: Int): Boolean {
+    fun process(
+        bitmap: Bitmap,
+        filters: Int,
+        sharpeningStrength: Float = 1.0f,
+        denoisingStrength: Float = 1.0f,
+    ): Boolean {
         if (bitmap.config != Bitmap.Config.ARGB_8888) return false
-        return nativeProcess(bitmap, filters)
+        return nativeProcess(bitmap, filters, sharpeningStrength, denoisingStrength)
     }
 
     /**
@@ -103,7 +116,14 @@ object NativeImageDecoder {
         }
     }
 
-    private external fun nativeDecode(bitmap: Bitmap, data: ByteArray, length: Int, filters: Int): Boolean
+    private external fun nativeDecode(
+        bitmap: Bitmap,
+        data: ByteArray,
+        length: Int,
+        filters: Int,
+        sharpeningStrength: Float,
+        denoisingStrength: Float,
+    ): Boolean
 
     private external fun nativeDecodeRegion(
         bitmap: Bitmap,
@@ -115,9 +135,16 @@ object NativeImageDecoder {
         bottom: Int,
         sampleSize: Int,
         filters: Int,
+        sharpeningStrength: Float,
+        denoisingStrength: Float,
     ): Boolean
 
-    private external fun nativeProcess(bitmap: Bitmap, filters: Int): Boolean
+    private external fun nativeProcess(
+        bitmap: Bitmap,
+        filters: Int,
+        sharpeningStrength: Float,
+        denoisingStrength: Float,
+    ): Boolean
 
     private external fun nativeDecodeToHardwareBuffer(width: Int, height: Int): HardwareBuffer?
 }

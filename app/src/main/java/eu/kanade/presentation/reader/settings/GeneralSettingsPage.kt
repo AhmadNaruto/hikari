@@ -46,6 +46,14 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
     val flashColorPref = screenModel.preferences.flashColor
     val flashColor by flashColorPref.collectAsState()
 
+    val readerSharpening by screenModel.preferences.readerSharpening.collectAsState()
+    val readerSharpeningStrengthPref = screenModel.preferences.readerSharpeningStrength
+    val readerSharpeningStrength by readerSharpeningStrengthPref.collectAsState()
+
+    val readerDenoising by screenModel.preferences.readerDenoising.collectAsState()
+    val readerDenoisingStrengthPref = screenModel.preferences.readerDenoisingStrength
+    val readerDenoisingStrength by readerDenoisingStrengthPref.collectAsState()
+
     SettingsChipRow(MR.strings.pref_reader_theme) {
         themes.map { (labelRes, value) ->
             FilterChip(
@@ -99,13 +107,37 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
         pref = screenModel.preferences.readerUpscaling,
     )
     CheckboxItem(
+        label = stringResource(MR.strings.pref_reader_page_cache),
+        pref = screenModel.preferences.readerPageCache,
+    )
+    CheckboxItem(
         label = stringResource(MR.strings.pref_reader_sharpening),
         pref = screenModel.preferences.readerSharpening,
     )
+    if (readerSharpening) {
+        SliderItem(
+            value = readerSharpeningStrength,
+            valueRange = 0..20,
+            label = stringResource(MR.strings.pref_reader_sharpening_strength),
+            valueString = (readerSharpeningStrength / 10.0f).toString(),
+            onChange = { readerSharpeningStrengthPref.set(it) },
+            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        )
+    }
     CheckboxItem(
         label = stringResource(MR.strings.pref_reader_denoising),
         pref = screenModel.preferences.readerDenoising,
     )
+    if (readerDenoising) {
+        SliderItem(
+            value = readerDenoisingStrength,
+            valueRange = 0..10,
+            label = stringResource(MR.strings.pref_reader_denoising_strength),
+            valueString = "${readerDenoisingStrength * 10}%",
+            onChange = { readerDenoisingStrengthPref.set(it) },
+            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        )
+    }
 
     CheckboxItem(
         label = stringResource(MR.strings.pref_flash_page),

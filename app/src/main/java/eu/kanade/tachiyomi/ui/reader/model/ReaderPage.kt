@@ -10,5 +10,28 @@ open class ReaderPage(
     var stream: (() -> InputStream)? = null,
 ) : Page(index, url, imageUrl, null) {
 
-    open lateinit var chapter: ReaderChapter
+    private var _chapter: ReaderChapter? = null
+    open var chapter: ReaderChapter
+        get() = _chapter ?: throw UninitializedPropertyAccessException("chapter has not been initialized")
+        set(value) {
+            _chapter = value
+            if (status == State.Ready) {
+                ReaderPageCache.preload(this)
+            }
+        }
+
+    open val chapterOrNull: ReaderChapter?
+        get() = _chapter
+
+    override var status: State
+        get() = super.status
+        set(value) {
+            val old = super.status
+            super.status = value
+            if (value == State.Ready && old != State.Ready) {
+                if (_chapter != null) {
+                    ReaderPageCache.preload(this)
+                }
+            }
+        }
 }
