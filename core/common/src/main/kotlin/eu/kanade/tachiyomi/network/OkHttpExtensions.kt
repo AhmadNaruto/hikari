@@ -126,7 +126,7 @@ fun OkHttpClient.newCachelessCallWithProgress(request: Request, listener: Progre
         .addNetworkInterceptor { chain ->
             val originalResponse = chain.proceed(chain.request())
             val responseBody = originalResponse.body
-            if (responseBody == null || originalResponse.code == 204 || originalResponse.code == 205) {
+            if (originalResponse.code == 204 || originalResponse.code == 205) {
                 return@addNetworkInterceptor originalResponse
             }
             originalResponse.newBuilder()
@@ -148,7 +148,7 @@ fun <T> decodeFromJsonResponse(
     deserializer: DeserializationStrategy<T>,
     response: Response,
 ): T {
-    val body = response.body ?: throw IOException("Empty response body")
+    val body = response.body
     return body.source().use {
         json.decodeFromBufferedSource(deserializer, it)
     }

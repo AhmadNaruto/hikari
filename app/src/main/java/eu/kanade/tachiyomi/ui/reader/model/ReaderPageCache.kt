@@ -42,9 +42,16 @@ object ReaderPageCache : ComponentCallbacks2 {
     private val maxMemory = Runtime.getRuntime().maxMemory()
     private val cacheSize = (maxMemory / 8).toInt()
 
-    private val cache = object : LruCache<String, Bitmap>(cacheSize) {
-        override fun sizeOf(key: String, value: Bitmap): Int {
-            return value.allocationByteCount
+    private class CachedBitmap(
+        val bitmap: Bitmap,
+        val size: Int = bitmap.allocationByteCount,
+    )
+
+    private val cache = object : LruCache<String, CachedBitmap>(cacheSize) {
+        override fun sizeOf(key: String, value: CachedBitmap): Int {
+            // LruCache requires sizeOf() to return consistent values for the lifetime of an entry.
+            // Returning different values causes IllegalStateException during trimToSize()/evictAll().
+            return value.size
         }
     }
 
@@ -52,7 +59,7 @@ object ReaderPageCache : ComponentCallbacks2 {
         val preferences = Injekt.get<ReaderPreferences>()
         if (!preferences.readerPageCache.get()) return null
         val key = getKey(page) ?: return null
-        return cache.get(key)
+        return cache.get(key)?.bitmap
     }
 
     fun preload(page: ReaderPage) {
@@ -117,7 +124,7 @@ object ReaderPageCache : ComponentCallbacks2 {
                     denoisingStrength = preferences.readerDenoisingStrength.get() / 10.0f,
                 )
                 if (success) {
-                    cache.put(key, bitmap)
+                    cache.put(key, CachedBitmap(bitmap))
                 } else {
                     bitmap.recycle()
                 }
