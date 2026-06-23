@@ -662,13 +662,22 @@ class Downloader(
                             // via fread without allocating a JVM ByteArray. This avoids loading
                             // all images into heap simultaneously (up to 200-500 MB on large chapters).
                             if (ImageUtil.isImage(fileName) { file.openInputStream() }) {
-                                val assetIndex = builder.addAssetWithPath(localPath, fileName)
+                                var assetIndex = builder.addAssetWithPath(localPath, fileName)
+                                if (assetIndex < 0L) {
+                                    // Fallback: if native open fails (e.g. Scoped Storage restriction), read via JVM stream
+                                    val data = file.openInputStream().use { it.readBytes() }
+                                    assetIndex = builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                                }
                                 if (assetIndex >= 0L) {
                                     builder.addPageByAssetIndex(assetIndex)
                                 }
                             } else {
                                 // ComicInfo.xml and other metadata: native path is fine here too.
-                                builder.addAssetWithPath(localPath, fileName)
+                                var assetIndex = builder.addAssetWithPath(localPath, fileName)
+                                if (assetIndex < 0L) {
+                                    val data = file.openInputStream().use { it.readBytes() }
+                                    builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                                }
                             }
                         } else {
                             // Fallback for SAF-only files (no local path). Load into heap and
