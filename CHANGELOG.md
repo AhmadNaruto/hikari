@@ -21,12 +21,19 @@
 - Removed the legacy AlertDialog component from presentation-core; AdaptiveSheet is now the single dialog primitive
 - Expanded NDK image pipeline capabilities in the native decoder
 - Redesigned Backup and Restore screens
+- Refactored `ReaderPageCache` from a global object singleton to a constructor-injected `@Singleton` class for improved testability and lifecycle control
+- Unified image-type detection for Bound Book Format (BBF) media assets using a centralized `BbfMediaType.isImage()` helper
+- Cleaned up package FQN references for `BbfReader` and `BbfBuilder` in page loaders, downloader, and local source
 
 ### Fixed
 
 - Data URI loading in the HTTP page loader
 - Tracking redirect handling after adding a tracker
 - History tab and continue-reading card now correctly hide content while incognito mode is active
+- Fixed potential use-after-free JVM crash in `BbfPageLoader` by copying asset bytes eagerly before reader is closed
+- Fixed out-of-memory (OOM) crashes in `Downloader.archiveChapterAsBbf` on large chapters by reading files directly from disk via native BBF API
+- Fixed silent exceptions in `BbfReader.fromUniFile()` fallback path by adding proper warning logs
+- Optimized memory usage in C++ image filters (`sharpen`, `denoise`, `rcas`) by using `static thread_local` row buffers to eliminate repeated heap allocations
 
 ### Removed
 
