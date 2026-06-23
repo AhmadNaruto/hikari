@@ -8,6 +8,7 @@ import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import hikari.core.archive.archiveReader
 import hikari.core.archive.epubReader
+import io.github.ahmadnaruto.libbbf.BbfReader
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.lang.withIOContext
 import tachiyomi.core.common.util.system.logcat
@@ -99,7 +100,7 @@ class ChapterLoader(
                     is Format.Archive -> ArchivePageLoader(format.file.archiveReader(context))
                     is Format.Epub -> EpubPageLoader(format.file.epubReader(context))
                     is Format.Bbf -> {
-                        BbfPageLoader(io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, format.file))
+                        BbfPageLoader(BbfReader.fromUniFile(context, format.file))
                     }
                 }
             }

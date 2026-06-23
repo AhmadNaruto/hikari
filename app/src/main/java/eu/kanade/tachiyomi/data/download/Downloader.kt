@@ -13,6 +13,7 @@ import eu.kanade.tachiyomi.util.storage.DiskUtil
 import eu.kanade.tachiyomi.util.storage.DiskUtil.NOMEDIA_FILE
 import eu.kanade.tachiyomi.util.storage.saveTo
 import hikari.core.archive.ZipWriter
+import io.github.ahmadnaruto.libbbf.BbfBuilder
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -649,7 +650,7 @@ class Downloader(
             ?: throw java.io.IOException("Failed to open file descriptor for writing: ${bbfFile.uri}")
 
         try {
-            io.github.ahmadnaruto.libbbf.BbfBuilder(pfd).use { builder ->
+            BbfBuilder(pfd).use { builder ->
                 tmpDir.listFiles()
                     ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
                     ?.forEach { file ->

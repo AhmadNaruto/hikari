@@ -11,6 +11,7 @@ import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import hikari.core.archive.archiveReader
+import io.github.ahmadnaruto.libbbf.BbfReader
 import tachiyomi.domain.manga.model.Manga
 import uy.kohesive.injekt.injectLazy
 
@@ -43,7 +44,7 @@ internal class DownloadPageLoader(
         return if (chapterPath?.isFile == true) {
             val extension = chapterPath.name.orEmpty().substringAfterLast('.', "")
             if (extension.equals("bbf", ignoreCase = true)) {
-                val loader = BbfPageLoader(io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, chapterPath)).also { archivePageLoader = it }
+                val loader = BbfPageLoader(BbfReader.fromUniFile(context, chapterPath)).also { archivePageLoader = it }
                 loader.getPages()
             } else {
                 getPagesFromArchive(chapterPath)

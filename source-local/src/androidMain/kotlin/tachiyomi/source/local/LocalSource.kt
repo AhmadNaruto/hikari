@@ -14,6 +14,7 @@ import eu.kanade.tachiyomi.util.lang.compareToCaseInsensitiveNaturalOrder
 import hikari.core.archive.archiveReader
 import hikari.core.archive.epubReader
 import io.github.ahmadnaruto.libbbf.isImage
+import io.github.ahmadnaruto.libbbf.BbfReader
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import logcat.LogPriority
@@ -251,7 +252,7 @@ actual class LocalSource(
                             epub.fillMetadata(manga, this)
                         }
                     } else if (format is Format.Bbf) {
-                        io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, format.file).use { bbf ->
+                        BbfReader.fromUniFile(context, format.file).use { bbf ->
                             for (i in 0 until bbf.metaCount) {
                                 val meta = bbf.getMetadata(i) ?: continue
                                 when (meta.key.lowercase()) {
@@ -340,7 +341,7 @@ actual class LocalSource(
                     }
                 }
                 is Format.Bbf -> {
-                    io.github.ahmadnaruto.libbbf.BbfReader.fromUniFile(context, format.file).use { reader ->
+                    BbfReader.fromUniFile(context, format.file).use { reader ->
                         var coverStream: java.io.InputStream? = null
                         for (i in 0 until reader.pageCount) {
                             val assetIndex = reader.getPageAssetIndex(i)
