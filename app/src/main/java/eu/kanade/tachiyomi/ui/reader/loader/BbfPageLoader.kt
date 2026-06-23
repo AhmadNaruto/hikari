@@ -18,7 +18,12 @@ internal class BbfPageLoader(private val reader: BbfReader) : PageLoader() {
             pages.add(
                 ReaderPage(i).apply {
                     stream = {
-                        reader.getAssetInputStream(assetIndex)
+                        // Use getAssetBytes() instead of getAssetInputStream() to copy data into
+                        // JVM heap eagerly. getAssetInputStream() returns a zero-copy InputStream
+                        // backed directly by the mmap region — accessing it after reader.close()
+                        // (which calls munmap) would crash the JVM. The copied ByteArray is safe
+                        // to read even after the BbfReader is closed.
+                        reader.getAssetBytes(assetIndex)?.inputStream()
                             ?: throw Exception("Failed to get asset stream")
                     }
                     status = Page.State.Ready
