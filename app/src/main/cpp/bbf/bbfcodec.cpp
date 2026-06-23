@@ -94,6 +94,54 @@ BBFBuilder::BBFBuilder(const char* oFile, uint32_t alignment, uint32_t reamSize,
     this->currentOffset = sizeof(BBFHeader);
 }
 
+BBFBuilder::BBFBuilder(int fd, uint32_t alignment, uint32_t reamSize, uint32_t hFlags) : stringPool(4096), assetLookupTable(4096)
+{
+    // Open the file descriptor for writing
+    // Ownership: fdopen wraps the file descriptor. A subsequent fclose() on this->file will automatically close the fd.
+    this->file = fdopen(fd, "wb");
+
+    if ( !this->file )
+    {
+        fprintf(stderr, "[BBFCODEC] Could not open file descriptor: %d\n", fd);
+        throw std::runtime_error("Could not open file descriptor for writing");
+    }
+
+    setvbuf(this->file, nullptr, _IOFBF, 64 * 1024);
+
+    this->guardValue = alignment;
+    this->reamValue = reamSize;
+    this->headerFlags = hFlags;
+
+    this->assetCount = 0;
+    this->assetCap = 64;
+    this->assets = (BBFAsset*)calloc(this->assetCap, sizeof(BBFAsset));
+
+    this->pageCount = 0;
+    this->pageCap = 128; // Assume 50% deduplication
+    this->pages = (BBFPage*)calloc(this->pageCap, sizeof(BBFPage));
+
+    this->sectionCount = 0;
+    this->sectionCap = 16; // Assume very little sections
+    this->sections = (BBFSection*)calloc(this->sectionCap, sizeof(BBFSection));
+
+    this->keyCount = 0;
+    this->keyCap = 16; // Assume similar metadata
+    this->metadata = (BBFMeta*)calloc(this->keyCap, sizeof(BBFMeta));
+
+    // Create blank header
+    uint8_t blankHeader[sizeof(BBFHeader)] = {0};
+    size_t written = fwrite(blankHeader, 1, sizeof(BBFHeader), this->file);
+
+    if (written != sizeof(BBFHeader))
+    {
+        fprintf(stderr, "[BBFCODEC] Failed to write blank header to fd %d\n", fd);
+        throw std::runtime_error("Failed to write blank header");
+    }
+
+    // set current offset after writing header
+    this->currentOffset = sizeof(BBFHeader);
+}
+
 BBFBuilder::~BBFBuilder()
 {
     // Close file
@@ -1094,11 +1142,51 @@ BBFReader::BBFReader(const char* iFile)
     // fclose(this->file);
 }
 
+BBFReader::BBFReader(int fd)
+{
+    this->fileBuffer = nullptr;
+    this->fileSize = 0;
+    this->footerCache = nullptr;
+    this->pathCacheBuilt = false;
+
+    #ifdef _WIN32
+        this->hFile = INVALID_HANDLE_VALUE;
+        this->hMap = NULL;
+    #else
+        this->fileDescriptor = fd;
+        if (this->fileDescriptor == -1)
+        {
+            fprintf(stderr, "[BBFCODEC] Invalid file descriptor %d\n", fd);
+            return;
+        }
+
+        struct stat fileStat;
+        if (fstat(this->fileDescriptor, &fileStat) == -1)
+        {
+            fprintf(stderr, "[BBFCODEC] Unable to stat file descriptor\n");
+            close(this->fileDescriptor);
+            this->fileDescriptor = -1;
+            return;
+        }
+        this->fileSize = fileStat.st_size;
+
+        void* fMap = mmap(NULL, this->fileSize, PROT_READ, MAP_PRIVATE, this->fileDescriptor, 0);
+        if (fMap == MAP_FAILED)
+        {
+            fprintf(stderr, "[BBFCODEC] mmap failed on file descriptor\n");
+            close(this->fileDescriptor);
+            this->fileDescriptor = -1;
+            this->fileBuffer = nullptr;
+            return;
+        }
+        this->fileBuffer = (uint8_t*)fMap;
+    #endif
+}
+
 BBFReader::~BBFReader()
 {
     if (this->fileBuffer)
     {
-
         #ifdef _WIN32
             UnmapViewOfFile(this->fileBuffer);
             CloseHandle(this->hMap);
@@ -1107,8 +1195,18 @@ BBFReader::~BBFReader()
             munmap(this->fileBuffer, this->fileSize);
             close(this->fileDescriptor);
         #endif
-
         this->fileBuffer = nullptr;
+    }
+    else
+    {
+        #ifndef _WIN32
+            // If mapping failed, but we still have an open fd, close it to prevent leaks.
+            if (this->fileDescriptor != -1)
+            {
+                close(this->fileDescriptor);
+                this->fileDescriptor = -1;
+            }
+        #endif
     }
 
     this->footerCache = nullptr;

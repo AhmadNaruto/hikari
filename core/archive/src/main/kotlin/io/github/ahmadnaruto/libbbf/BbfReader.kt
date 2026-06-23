@@ -5,17 +5,32 @@ import com.hippo.unifile.UniFile
 import java.io.Closeable
 import java.nio.ByteBuffer
 
-class BbfReader(
-    val filePath: String,
+class BbfReader private constructor(
+    private var pfd: android.os.ParcelFileDescriptor?,
+    val filePath: String?,
     private val tempFileToDelete: java.io.File? = null
 ) : Closeable {
     private var nativeReaderPtr: Long = 0
 
+    // Backward-compatible path constructor
+    constructor(filePath: String) : this(null, filePath)
+
+    // Internal path constructor with tempFileToDelete
+    constructor(filePath: String, tempFileToDelete: java.io.File?) : this(null, filePath, tempFileToDelete)
+
+    // New constructor taking ParcelFileDescriptor
+    constructor(pfd: android.os.ParcelFileDescriptor) : this(pfd, null)
+
     init {
-        nativeReaderPtr = openReader(filePath)
+        nativeReaderPtr = if (pfd != null) {
+            val fd = pfd!!.detachFd()
+            openReaderFromFd(fd)
+        } else {
+            openReader(filePath!!)
+        }
         if (nativeReaderPtr == 0L) {
             tempFileToDelete?.delete()
-            throw IllegalArgumentException("Failed to open BBF file: $filePath")
+            throw IllegalArgumentException("Failed to open BBF file")
         }
     }
 
@@ -24,6 +39,8 @@ class BbfReader(
             closeReader(nativeReaderPtr)
             nativeReaderPtr = 0L
         }
+        pfd?.close()
+        pfd = null
         tempFileToDelete?.delete()
     }
 
@@ -156,8 +173,16 @@ class BbfReader(
                         return reader
                     }
                 } catch (e: Exception) {
-                    // Fall back to copying to cache if direct access is restricted
+                    // Fall back to trying file descriptor or temp file copy if direct access is restricted
                 }
+            }
+            try {
+                val pfd = context.contentResolver.openFileDescriptor(file.uri, "r")
+                if (pfd != null) {
+                    return BbfReader(pfd)
+                }
+            } catch (e: Exception) {
+                // Fall back to copying to cache if file descriptor is not available
             }
             val tempFile = java.io.File(context.cacheDir, "bbf_temp_${java.util.UUID.randomUUID()}.bbf")
             try {
@@ -174,6 +199,7 @@ class BbfReader(
         }
 
         @JvmStatic private external fun openReader(filePath: String): Long
+        @JvmStatic private external fun openReaderFromFd(fd: Int): Long
         @JvmStatic private external fun closeReader(readerPtr: Long)
         @JvmStatic private external fun getPageCount(readerPtr: Long): Int
         @JvmStatic private external fun getAssetCount(readerPtr: Long): Int

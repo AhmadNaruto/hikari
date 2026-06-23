@@ -645,10 +645,11 @@ class Downloader(
         tmpDir: UniFile,
     ) {
         val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
-        val tempBbfFile = File(context.cacheDir, "${dirname}_${java.util.UUID.randomUUID()}.bbf.tmp")
+        val pfd = context.contentResolver.openFileDescriptor(bbfFile.uri, "w")
+            ?: throw java.io.IOException("Failed to open file descriptor for writing: ${bbfFile.uri}")
         
         try {
-            io.github.ahmadnaruto.libbbf.BbfBuilder(tempBbfFile.absolutePath).use { builder ->
+            io.github.ahmadnaruto.libbbf.BbfBuilder(pfd).use { builder ->
                 tmpDir.listFiles()
                     ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
                     ?.forEach { file ->
@@ -667,21 +668,12 @@ class Downloader(
                     }
                 builder.finalizeBuilder()
             }
-            
-            tempBbfFile.inputStream().use { input ->
-                bbfFile.openOutputStream().use { output ->
-                    input.copyTo(output)
-                }
-            }
             bbfFile.renameTo("$dirname.bbf")
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e) { "Failed to archive chapter to BBF" }
             bbfFile.delete()
             throw e
         } finally {
-            if (tempBbfFile.exists()) {
-                tempBbfFile.delete()
-            }
             tmpDir.delete()
         }
     }

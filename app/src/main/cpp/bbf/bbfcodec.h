@@ -30,6 +30,7 @@ class BBFBuilder
 {
     public:
         BBFBuilder(const char* oFile, uint32_t alignment = BBF::DEFAULT_GUARD_ALIGNMENT, uint32_t reamSize = BBF::DEFAULT_SMALL_REAM_THRESHOLD, uint32_t hFlags = BBF::BBF_VARIABLE_REAM_SIZE_FLAG);
+        BBFBuilder(int fd, uint32_t alignment = BBF::DEFAULT_GUARD_ALIGNMENT, uint32_t reamSize = BBF::DEFAULT_SMALL_REAM_THRESHOLD, uint32_t hFlags = BBF::BBF_VARIABLE_REAM_SIZE_FLAG);
         ~BBFBuilder(); // Deconstructor.
         // TODO: Copy constructor.
 
@@ -99,6 +100,7 @@ class BBFReader
 {
     public:
         BBFReader(const char* iFile);
+        BBFReader(int fd);
         ~BBFReader();
         // TODO: Copy constructor.
 

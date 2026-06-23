@@ -60,6 +60,43 @@ Java_io_github_ahmadnaruto_libbbf_BbfReader_openReader(JNIEnv* env, jclass clazz
     return reinterpret_cast<jlong>(reader);
 }
 
+JNIEXPORT jlong JNICALL
+Java_io_github_ahmadnaruto_libbbf_BbfReader_openReaderFromFd(JNIEnv* env, jclass clazz, jint fd) {
+    if (fd < 0) {
+        throwIllegalArgument(env, "Invalid file descriptor");
+        return 0;
+    }
+    
+    BBFReader* reader = nullptr;
+    try {
+        reader = new BBFReader(fd);
+        if (!reader->getHeaderView()) {
+            delete reader;
+            reader = nullptr;
+        } else {
+            BBFHeader* header = reader->getHeaderView();
+            if (!reader->checkMagic(header)) {
+                delete reader;
+                reader = nullptr;
+            } else {
+                BBFFooter* footer = reader->getFooterView(header->footerOffset);
+                if (!footer) {
+                    delete reader;
+                    reader = nullptr;
+                }
+            }
+        }
+    } catch (const std::exception& e) {
+        if (reader) {
+            delete reader;
+            reader = nullptr;
+        }
+        handleCppException(env, e);
+    }
+    
+    return reinterpret_cast<jlong>(reader);
+}
+
 JNIEXPORT void JNICALL
 Java_io_github_ahmadnaruto_libbbf_BbfReader_closeReader(JNIEnv* env, jclass clazz, jlong readerPtr) {
     BBFReader* reader = reinterpret_cast<BBFReader*>(readerPtr);
@@ -355,6 +392,23 @@ Java_io_github_ahmadnaruto_libbbf_BbfBuilder_openBuilder(JNIEnv* env, jclass cla
     }
     
     env->ReleaseStringUTFChars(outputFile, pathChars);
+    return reinterpret_cast<jlong>(builder);
+}
+
+JNIEXPORT jlong JNICALL
+Java_io_github_ahmadnaruto_libbbf_BbfBuilder_openBuilderFromFd(JNIEnv* env, jclass clazz, jint fd, jint alignment, jint reamSize, jint flags) {
+    if (fd < 0) {
+        throwIllegalArgument(env, "Invalid file descriptor");
+        return 0;
+    }
+    
+    BBFBuilder* builder = nullptr;
+    try {
+        builder = new BBFBuilder(fd, static_cast<uint32_t>(alignment), static_cast<uint32_t>(reamSize), static_cast<uint32_t>(flags));
+    } catch (const std::exception& e) {
+        throwIllegalArgument(env, e.what());
+    }
+    
     return reinterpret_cast<jlong>(builder);
 }
 

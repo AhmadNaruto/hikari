@@ -2,18 +2,40 @@ package io.github.ahmadnaruto.libbbf
 
 import java.io.Closeable
 
-class BbfBuilder(
-    val outputFile: String,
+class BbfBuilder private constructor(
+    private var pfd: android.os.ParcelFileDescriptor?,
+    val outputFile: String?,
     val alignmentExponent: Int = 12, // 2^12 = 4096 bytes
     val reamSizeExponent: Int = 16,  // 2^16 = 65536 bytes
     val flags: Int = 2               // BBF_VARIABLE_REAM_SIZE_FLAG (from BBF::BBF_VARIABLE_REAM_SIZE_FLAG)
 ) : Closeable {
     private var nativeBuilderPtr: Long = 0
 
+    // Backward-compatible path constructor
+    constructor(
+        outputFile: String,
+        alignmentExponent: Int = 12,
+        reamSizeExponent: Int = 16,
+        flags: Int = 2
+    ) : this(null, outputFile, alignmentExponent, reamSizeExponent, flags)
+
+    // New constructor taking ParcelFileDescriptor
+    constructor(
+        pfd: android.os.ParcelFileDescriptor,
+        alignmentExponent: Int = 12,
+        reamSizeExponent: Int = 16,
+        flags: Int = 2
+    ) : this(pfd, null, alignmentExponent, reamSizeExponent, flags)
+
     init {
-        nativeBuilderPtr = openBuilder(outputFile, alignmentExponent, reamSizeExponent, flags)
+        nativeBuilderPtr = if (pfd != null) {
+            val fd = pfd!!.detachFd()
+            openBuilderFromFd(fd, alignmentExponent, reamSizeExponent, flags)
+        } else {
+            openBuilder(outputFile!!, alignmentExponent, reamSizeExponent, flags)
+        }
         if (nativeBuilderPtr == 0L) {
-            throw IllegalArgumentException("Failed to create BBF builder for: $outputFile")
+            throw IllegalArgumentException("Failed to create BBF builder")
         }
     }
 
@@ -22,6 +44,8 @@ class BbfBuilder(
             closeBuilder(nativeBuilderPtr)
             nativeBuilderPtr = 0L
         }
+        pfd?.close()
+        pfd = null
     }
 
     fun addPage(filePath: String, pageFlags: Int = 0, assetFlags: Int = 0): Boolean {
@@ -86,6 +110,7 @@ class BbfBuilder(
         }
 
         @JvmStatic private external fun openBuilder(outputFile: String, alignment: Int, reamSize: Int, flags: Int): Long
+        @JvmStatic private external fun openBuilderFromFd(fd: Int, alignment: Int, reamSize: Int, flags: Int): Long
         @JvmStatic private external fun closeBuilder(builderPtr: Long)
         @JvmStatic private external fun addPage(builderPtr: Long, filePath: String, pageFlags: Int, assetFlags: Int): Boolean
         @JvmStatic private external fun addAsset(builderPtr: Long, filePath: String, assetFlags: Int): Long
