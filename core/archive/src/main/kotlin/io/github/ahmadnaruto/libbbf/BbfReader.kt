@@ -166,24 +166,34 @@ class BbfReader private constructor(
         @JvmStatic
         fun fromUniFile(context: Context, file: UniFile): BbfReader {
             val localPath = file.filePath
+
+            // Strategy 1: open directly via local file path (fastest, no JVM heap allocation).
             if (localPath != null) {
                 try {
-                    val reader = BbfReader(localPath)
-                    if (reader.pageCount >= 0) {
-                        return reader
-                    }
+                    return BbfReader(localPath)
                 } catch (e: Exception) {
-                    // Fall back to trying file descriptor or temp file copy if direct access is restricted
+                    // Path exists but native open failed (e.g. SELinux restriction on the path).
+                    // Log and fall through to the next strategy.
+                    android.util.Log.w("BbfReader",
+                        "fromUniFile: direct path open failed for '$localPath', falling back to PFD. Cause: ${e.message}")
                 }
             }
+
+            // Strategy 2: open via ParcelFileDescriptor from ContentResolver (SAF / MediaStore).
             try {
                 val pfd = context.contentResolver.openFileDescriptor(file.uri, "r")
                 if (pfd != null) {
                     return BbfReader(pfd)
                 }
+                android.util.Log.w("BbfReader",
+                    "fromUniFile: ContentResolver returned null PFD for '${file.uri}', falling back to cache copy.")
             } catch (e: Exception) {
-                // Fall back to copying to cache if file descriptor is not available
+                android.util.Log.w("BbfReader",
+                    "fromUniFile: PFD open failed for '${file.uri}', falling back to cache copy. Cause: ${e.message}")
             }
+
+            // Strategy 3 (last resort): copy to a temp file in cacheDir and open by path.
+            // The temp file is owned by the returned BbfReader and deleted when it is closed.
             val tempFile = java.io.File(context.cacheDir, "bbf_temp_${java.util.UUID.randomUUID()}.bbf")
             try {
                 file.openInputStream().use { input ->
