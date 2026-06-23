@@ -647,23 +647,40 @@ class Downloader(
         val bbfFile = mangaDir.createFile("$dirname.bbf$TMP_DIR_SUFFIX")!!
         val pfd = context.contentResolver.openFileDescriptor(bbfFile.uri, "w")
             ?: throw java.io.IOException("Failed to open file descriptor for writing: ${bbfFile.uri}")
-        
+
         try {
             io.github.ahmadnaruto.libbbf.BbfBuilder(pfd).use { builder ->
                 tmpDir.listFiles()
                     ?.sortedWith { f1, f2 -> f1.name.orEmpty().compareTo(f2.name.orEmpty()) }
                     ?.forEach { file ->
                         val fileName = file.name ?: return@forEach
-                        val data = file.openInputStream().use { it.readBytes() }
-                        if (fileName == COMIC_INFO_FILE) {
-                            builder.addAssetFromMemoryWithPath(data, fileName, fileName)
-                        } else if (ImageUtil.isImage(fileName) { data.inputStream() }) {
-                            val assetIndex = builder.addAssetFromMemoryWithPath(data, fileName, fileName)
-                            if (assetIndex >= 0L) {
-                                builder.addPageByAssetIndex(assetIndex)
+                        val localPath = file.filePath
+
+                        if (localPath != null) {
+                            // Fast path: pass the file path directly to native so it can read
+                            // via fread without allocating a JVM ByteArray. This avoids loading
+                            // all images into heap simultaneously (up to 200-500 MB on large chapters).
+                            if (ImageUtil.isImage(fileName) { file.openInputStream() }) {
+                                val assetIndex = builder.addAssetWithPath(localPath, fileName)
+                                if (assetIndex >= 0L) {
+                                    builder.addPageByAssetIndex(assetIndex)
+                                }
+                            } else {
+                                // ComicInfo.xml and other metadata: native path is fine here too.
+                                builder.addAssetWithPath(localPath, fileName)
                             }
                         } else {
-                            builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                            // Fallback for SAF-only files (no local path). Load into heap and
+                            // pass as in-memory buffer. Rare for tmpDir but kept for safety.
+                            val data = file.openInputStream().use { it.readBytes() }
+                            if (ImageUtil.isImage(fileName) { data.inputStream() }) {
+                                val assetIndex = builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                                if (assetIndex >= 0L) {
+                                    builder.addPageByAssetIndex(assetIndex)
+                                }
+                            } else {
+                                builder.addAssetFromMemoryWithPath(data, fileName, fileName)
+                            }
                         }
                     }
                 builder.finalizeBuilder()
