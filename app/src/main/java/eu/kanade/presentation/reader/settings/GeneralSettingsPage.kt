@@ -2,16 +2,24 @@ package eu.kanade.presentation.reader.settings
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import eu.kanade.presentation.components.TabbedDialogPaddings
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderSettingsScreenModel
 import eu.kanade.tachiyomi.util.system.hasDisplayCutout
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.CheckboxItem
+import tachiyomi.presentation.core.components.HikariCardDefaults
+import tachiyomi.presentation.core.components.HikariCardGroup
+import tachiyomi.presentation.core.components.HikariSectionHeader
 import tachiyomi.presentation.core.components.SettingsChipRow
 import tachiyomi.presentation.core.components.SliderItem
 import tachiyomi.presentation.core.i18n.pluralStringResource
@@ -64,104 +72,106 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
         }
     }
 
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_show_page_number),
-        pref = screenModel.preferences.showPageNumber,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_fullscreen),
-        pref = screenModel.preferences.fullscreen,
-    )
-
-    val isFullscreen by screenModel.preferences.fullscreen.collectAsState()
-    if (LocalActivity.current?.hasDisplayCutout() == true && isFullscreen) {
+    HikariSectionHeader(text = "Display")
+    HikariCardGroup {
         CheckboxItem(
-            label = stringResource(MR.strings.pref_cutout_short),
-            pref = screenModel.preferences.drawUnderCutout,
+            label = stringResource(MR.strings.pref_show_page_number),
+            pref = screenModel.preferences.showPageNumber,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_fullscreen),
+            pref = screenModel.preferences.fullscreen,
+        )
+        val isFullscreen by screenModel.preferences.fullscreen.collectAsState()
+        if (LocalActivity.current?.hasDisplayCutout() == true && isFullscreen) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            CheckboxItem(
+                label = stringResource(MR.strings.pref_cutout_short),
+                pref = screenModel.preferences.drawUnderCutout,
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_keep_screen_on),
+            pref = screenModel.preferences.keepScreenOn,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_read_with_long_tap),
+            pref = screenModel.preferences.readWithLongTap,
         )
     }
 
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_keep_screen_on),
-        pref = screenModel.preferences.keepScreenOn,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_read_with_long_tap),
-        pref = screenModel.preferences.readWithLongTap,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_always_show_chapter_transition),
-        pref = screenModel.preferences.alwaysShowChapterTransition,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_page_transitions),
-        pref = screenModel.preferences.pageTransitions,
-    )
-
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_reader_upscaling),
-        pref = screenModel.preferences.readerUpscaling,
-    )
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_reader_page_cache),
-        pref = screenModel.preferences.readerPageCache,
-    )
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_reader_sharpening),
-        pref = screenModel.preferences.readerSharpening,
-    )
-    if (readerSharpening) {
-        SliderItem(
-            value = readerSharpeningStrength,
-            valueRange = 0..20,
-            label = stringResource(MR.strings.pref_reader_sharpening_strength),
-            valueString = (readerSharpeningStrength / 10.0f).toString(),
-            onChange = { readerSharpeningStrengthPref.set(it) },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+    HikariSectionHeader(text = "Transitions")
+    HikariCardGroup {
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_page_transitions),
+            pref = screenModel.preferences.pageTransitions,
         )
-    }
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_reader_denoising),
-        pref = screenModel.preferences.readerDenoising,
-    )
-    if (readerDenoising) {
-        SliderItem(
-            value = readerDenoisingStrength,
-            valueRange = 0..10,
-            label = stringResource(MR.strings.pref_reader_denoising_strength),
-            valueString = "${readerDenoisingStrength * 10}%",
-            onChange = { readerDenoisingStrengthPref.set(it) },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_always_show_chapter_transition),
+            pref = screenModel.preferences.alwaysShowChapterTransition,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_flash_page),
+            pref = screenModel.preferences.flashOnPageChange,
         )
     }
 
-    CheckboxItem(
-        label = stringResource(MR.strings.pref_flash_page),
-        pref = screenModel.preferences.flashOnPageChange,
-    )
     if (flashPageState) {
-        SliderItem(
-            value = flashMillis / ReaderPreferences.MILLI_CONVERSION,
-            valueRange = 1..15,
-            label = stringResource(MR.strings.pref_flash_duration),
-            valueString = stringResource(MR.strings.pref_flash_duration_summary, flashMillis),
-            onChange = { flashMillisPref.set(it * ReaderPreferences.MILLI_CONVERSION) },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-        )
-        SliderItem(
-            value = flashInterval,
-            valueRange = 1..10,
-            label = stringResource(MR.strings.pref_flash_page_interval),
-            valueString = pluralStringResource(MR.plurals.pref_pages, flashInterval, flashInterval),
-            onChange = {
-                flashIntervalPref.set(it)
-            },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
-        )
+        HikariSectionHeader(text = "Flash settings")
+        HikariCardGroup {
+            SliderItem(
+                value = flashMillis / ReaderPreferences.MILLI_CONVERSION,
+                valueRange = 1..15,
+                label = stringResource(MR.strings.pref_flash_duration),
+                valueString = stringResource(MR.strings.pref_flash_duration_summary, flashMillis),
+                onChange = { flashMillisPref.set(it * ReaderPreferences.MILLI_CONVERSION) },
+                pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            )
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            SliderItem(
+                value = flashInterval,
+                valueRange = 1..10,
+                label = stringResource(MR.strings.pref_flash_page_interval),
+                valueString = pluralStringResource(MR.plurals.pref_pages, flashInterval, flashInterval),
+                onChange = {
+                    flashIntervalPref.set(it)
+                },
+                pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            )
+        }
         SettingsChipRow(MR.strings.pref_flash_with) {
             flashColors.map { (labelRes, value) ->
                 FilterChip(
@@ -170,6 +180,71 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
                     label = { Text(stringResource(labelRes)) },
                 )
             }
+        }
+    }
+
+    HikariSectionHeader(text = "Image Processing & Preloading")
+    HikariCardGroup {
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_reader_page_cache),
+            pref = screenModel.preferences.readerPageCache,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_reader_upscaling),
+            pref = screenModel.preferences.readerUpscaling,
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_reader_sharpening),
+            pref = screenModel.preferences.readerSharpening,
+        )
+        if (readerSharpening) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            SliderItem(
+                value = readerSharpeningStrength,
+                valueRange = 0..20,
+                label = stringResource(MR.strings.pref_reader_sharpening_strength),
+                valueString = (readerSharpeningStrength / 10.0f).toString(),
+                onChange = { readerSharpeningStrengthPref.set(it) },
+                pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+            thickness = 0.5.dp,
+            color = HikariCardDefaults.dividerColor(),
+        )
+        CheckboxItem(
+            label = stringResource(MR.strings.pref_reader_denoising),
+            pref = screenModel.preferences.readerDenoising,
+        )
+        if (readerDenoising) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = TabbedDialogPaddings.Horizontal),
+                thickness = 0.5.dp,
+                color = HikariCardDefaults.dividerColor(),
+            )
+            SliderItem(
+                value = readerDenoisingStrength,
+                valueRange = 0..10,
+                label = stringResource(MR.strings.pref_reader_denoising_strength),
+                valueString = "${readerDenoisingStrength * 10}%",
+                onChange = { readerDenoisingStrengthPref.set(it) },
+                pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            )
         }
     }
 }

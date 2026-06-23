@@ -29,6 +29,7 @@ import eu.kanade.tachiyomi.ui.reader.setting.ReadingMode
 import eu.kanade.tachiyomi.ui.reader.viewer.Viewer
 import eu.kanade.tachiyomi.ui.reader.viewer.pager.R2LPagerViewer
 import tachiyomi.presentation.core.components.material.padding
+import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 
 private val readerBarsSlideAnimationSpec = tween<IntOffset>(200)
 private val readerBarsFadeAnimationSpec = tween<Float>(150)
@@ -46,6 +47,10 @@ fun ReaderAppBars(
     onOpenInWebView: (() -> Unit)?,
     onOpenInBrowser: (() -> Unit)?,
     onShare: (() -> Unit)?,
+
+    chapters: List<ReaderChapter>,
+    currentChapter: ReaderChapter?,
+    onChapterSelected: (ReaderChapter) -> Unit,
 
     viewer: Viewer?,
     onNextChapter: () -> Unit,
@@ -65,7 +70,7 @@ fun ReaderAppBars(
     onClickSettings: () -> Unit,
 ) {
     val isRtl = viewer is R2LPagerViewer
-    val backgroundColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
+    val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
 
     Column(modifier = Modifier.fillMaxHeight()) {
         AnimatedVisibility(
@@ -87,6 +92,9 @@ fun ReaderAppBars(
                 onOpenInWebView = onOpenInWebView,
                 onOpenInBrowser = onOpenInBrowser,
                 onShare = onShare,
+                chapters = chapters,
+                currentChapter = currentChapter,
+                onChapterSelected = onChapterSelected,
             )
         }
 

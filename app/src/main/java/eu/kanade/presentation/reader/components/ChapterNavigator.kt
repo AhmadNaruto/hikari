@@ -9,9 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SkipNext
 import androidx.compose.material.icons.outlined.SkipPrevious
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -53,12 +52,6 @@ fun ChapterNavigator(
     val layoutDirection = if (isRtl) LayoutDirection.Rtl else LayoutDirection.Ltr
     val haptic = LocalHapticFeedback.current
 
-    val backgroundColor = Color.Transparent
-    val buttonColor = IconButtonDefaults.filledIconButtonColors(
-        containerColor = backgroundColor,
-        disabledContainerColor = backgroundColor,
-    )
-
     // We explicitly handle direction based on the reader viewer rather than the system direction
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Row(
@@ -67,10 +60,9 @@ fun ChapterNavigator(
                 .padding(horizontal = horizontalPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FilledIconButton(
+            IconButton(
                 enabled = if (isRtl) enabledNext else enabledPrevious,
                 onClick = if (isRtl) onNextChapter else onPreviousChapter,
-                colors = buttonColor,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.SkipPrevious,
@@ -126,10 +118,9 @@ fun ChapterNavigator(
                 Spacer(Modifier.weight(1f))
             }
 
-            FilledIconButton(
+            IconButton(
                 enabled = if (isRtl) enabledPrevious else enabledNext,
                 onClick = if (isRtl) onPreviousChapter else onNextChapter,
-                colors = buttonColor,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.SkipNext,
