@@ -123,6 +123,7 @@ class ReaderActivity : BaseActivity() {
 
     private val readerPreferences = Injekt.get<ReaderPreferences>()
     private val preferences = Injekt.get<BasePreferences>()
+    private val readerPageCache = Injekt.get<ReaderPageCache>()
 
     lateinit var binding: ReaderActivityBinding
 
@@ -344,7 +345,7 @@ class ReaderActivity : BaseActivity() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        ReaderPageCache.clear()
+        readerPageCache.clear()
         viewModel.state.value.viewer?.destroy()
         config = null
         menuToggleToast?.cancel()

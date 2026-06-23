@@ -27,6 +27,7 @@ import eu.kanade.tachiyomi.ui.reader.loader.DownloadPageLoader
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
 import eu.kanade.tachiyomi.ui.reader.model.ViewerChapters
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderOrientation
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
@@ -99,6 +100,7 @@ class ReaderViewModel @JvmOverloads constructor(
     private val setMangaViewerFlags: SetMangaViewerFlags = Injekt.get(),
     private val getIncognitoState: GetIncognitoState = Injekt.get(),
     private val libraryPreferences: LibraryPreferences = Injekt.get(),
+    val readerPageCache: ReaderPageCache = Injekt.get(),
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow(State())

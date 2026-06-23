@@ -16,23 +16,22 @@ import kotlinx.coroutines.isActive
 import okio.Buffer
 import tachiyomi.core.common.util.system.ImageUtil
 import tachiyomi.core.common.util.system.NativeImageDecoder
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-object ReaderPageCache : ComponentCallbacks2 {
+class ReaderPageCache(
+    private val application: Application,
+    private val preferences: ReaderPreferences,
+) : ComponentCallbacks2 {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     init {
-        val application = Injekt.get<Application>()
         application.registerComponentCallbacks(this)
 
-        val preferences = Injekt.get<ReaderPreferences>()
         scope.launch {
             preferences.readerPageCache.changes()
                 .collect { enabled ->
@@ -106,14 +105,12 @@ object ReaderPageCache : ComponentCallbacks2 {
     }
 
     fun get(page: ReaderPage): Bitmap? {
-        val preferences = Injekt.get<ReaderPreferences>()
         if (!preferences.readerPageCache.get()) return null
         val key = getKey(page) ?: return null
         return cache.get(key)?.bitmap
     }
 
     fun preload(page: ReaderPage) {
-        val preferences = Injekt.get<ReaderPreferences>()
         if (!preferences.readerPageCache.get()) return
         val streamFn = page.stream ?: return
         val key = getKey(page) ?: return
@@ -140,8 +137,7 @@ object ReaderPageCache : ComponentCallbacks2 {
                     srcWidth > ImageUtil.hardwareBitmapThreshold
                 if (isExtremelyTall || exceedsTextureLimit) return@launch
 
-                val preferences = Injekt.get<ReaderPreferences>()
-                val displayMetrics = Injekt.get<Application>().resources.displayMetrics
+                val displayMetrics = application.resources.displayMetrics
                 val reqWidth = displayMetrics.widthPixels
                 val reqHeight = displayMetrics.heightPixels
 

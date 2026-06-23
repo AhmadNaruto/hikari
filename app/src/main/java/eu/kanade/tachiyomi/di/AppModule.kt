@@ -16,6 +16,7 @@ import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.data.download.DownloadProvider
 import eu.kanade.tachiyomi.data.saver.ImageSaver
 import eu.kanade.tachiyomi.data.track.TrackerManager
+import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
 import eu.kanade.tachiyomi.extension.ExtensionManager
 import eu.kanade.tachiyomi.network.JavaScriptEngine
 import eu.kanade.tachiyomi.network.NetworkHelper
@@ -122,6 +123,7 @@ class AppModule(val app: Application) : InjektModule {
         addSingletonFactory { DelayedTrackingStore(app) }
 
         addSingletonFactory { ImageSaver(app) }
+        addSingletonFactory { ReaderPageCache(app, get()) }
 
         addSingletonFactory { AndroidStorageFolderProvider(app) }
         addSingletonFactory { LocalSourceFileSystem(get()) }

@@ -11,6 +11,8 @@ import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderProgressIndicator
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
@@ -40,6 +42,8 @@ class PagerPageHolder(
     val viewer: PagerViewer,
     val page: ReaderPage,
 ) : ReaderPageImageView(readerThemedContext), ViewPagerAdapter.PositionableView {
+
+    private val readerPageCache: ReaderPageCache = Injekt.get()
 
     /**
      * Item that identifies this view. Needed by the adapter to not recreate views.
@@ -149,7 +153,7 @@ class PagerPageHolder(
     private suspend fun setImage() {
         progressIndicator?.setProgress(0)
 
-        val cachedBitmap = ReaderPageCache.get(page)
+        val cachedBitmap = readerPageCache.get(page)
         if (cachedBitmap != null) {
             withUIContext {
                 val bitmapDrawable = BitmapDrawable(context.resources, cachedBitmap)

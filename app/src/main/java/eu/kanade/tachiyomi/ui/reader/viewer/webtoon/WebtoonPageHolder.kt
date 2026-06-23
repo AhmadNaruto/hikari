@@ -16,6 +16,8 @@ import android.graphics.drawable.BitmapDrawable
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPageCache
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderProgressIndicator
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
@@ -47,6 +49,8 @@ class WebtoonPageHolder(
     private val frame: ReaderPageImageView,
     viewer: WebtoonViewer,
 ) : WebtoonBaseHolder(frame, viewer) {
+
+    private val readerPageCache: ReaderPageCache = Injekt.get()
 
     /**
      * Loading progress bar to indicate the current progress.
@@ -189,7 +193,7 @@ class WebtoonPageHolder(
     private suspend fun setImage() {
         progressIndicator.setProgress(0)
 
-        val cachedBitmap = page?.let { ReaderPageCache.get(it) }
+        val cachedBitmap = page?.let { readerPageCache.get(it) }
         if (cachedBitmap != null) {
             withUIContext {
                 val bitmapDrawable = BitmapDrawable(context.resources, cachedBitmap)

@@ -1,6 +1,8 @@
 package eu.kanade.tachiyomi.ui.reader.model
 
 import eu.kanade.tachiyomi.source.model.Page
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import java.io.InputStream
 
 open class ReaderPage(
@@ -10,13 +12,15 @@ open class ReaderPage(
     var stream: (() -> InputStream)? = null,
 ) : Page(index, url, imageUrl, null) {
 
+    private val readerPageCache: ReaderPageCache by lazy { Injekt.get() }
+
     private var _chapter: ReaderChapter? = null
     open var chapter: ReaderChapter
         get() = _chapter ?: throw UninitializedPropertyAccessException("chapter has not been initialized")
         set(value) {
             _chapter = value
             if (status == State.Ready) {
-                ReaderPageCache.preload(this)
+                readerPageCache.preload(this)
             }
         }
 
@@ -30,7 +34,7 @@ open class ReaderPage(
             super.status = value
             if (value == State.Ready && old != State.Ready) {
                 if (_chapter != null) {
-                    ReaderPageCache.preload(this)
+                    readerPageCache.preload(this)
                 }
             }
         }
