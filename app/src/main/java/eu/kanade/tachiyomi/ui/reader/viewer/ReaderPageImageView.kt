@@ -108,6 +108,7 @@ open class ReaderPageImageView @JvmOverloads constructor(
                 setOnImageEventListener(
                     object : SubsamplingScaleImageView.DefaultOnImageEventListener() {
                         override fun onReady() {
+                            injectFilteringDecoder()
                             setupZoom(config)
                             landscapeZoom(forward)
                             this@ReaderPageImageView.onImageLoaded()
@@ -273,6 +274,20 @@ open class ReaderPageImageView @JvmOverloads constructor(
         }
     }
 
+    private fun SubsamplingScaleImageView.injectFilteringDecoder() {
+        try {
+            val field = SubsamplingScaleImageView::class.java.getDeclaredField("decoder")
+            field.isAccessible = true
+            val existing = field.get(this) as? com.davemorrissey.labs.subscaleview.decoder.ImageRegionDecoder
+                ?: return
+            if (existing !is FilteringImageRegionDecoder) {
+                field.set(this, FilteringImageRegionDecoder(existing))
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+
     private fun setNonAnimatedImage(
         data: Any,
         config: Config,
@@ -284,6 +299,7 @@ open class ReaderPageImageView @JvmOverloads constructor(
         setOnImageEventListener(
             object : SubsamplingScaleImageView.DefaultOnImageEventListener() {
                 override fun onReady() {
+                    injectFilteringDecoder()
                     setupZoom(config)
                     if (isVisibleOnScreen()) landscapeZoom(true)
                     this@ReaderPageImageView.onImageLoaded()

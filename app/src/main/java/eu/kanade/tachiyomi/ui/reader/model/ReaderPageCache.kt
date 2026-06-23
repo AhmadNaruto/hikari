@@ -1,6 +1,8 @@
 package eu.kanade.tachiyomi.ui.reader.model
 
 import android.app.Application
+import android.content.ComponentCallbacks2
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.util.LruCache
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
@@ -8,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import okio.Buffer
 import tachiyomi.core.common.util.system.ImageUtil
 import tachiyomi.core.common.util.system.NativeImageDecoder
@@ -16,7 +19,25 @@ import uy.kohesive.injekt.api.get
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-object ReaderPageCache {
+@Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+object ReaderPageCache : ComponentCallbacks2 {
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    init {
+        val application = Injekt.get<Application>()
+        application.registerComponentCallbacks(this)
+
+        val preferences = Injekt.get<ReaderPreferences>()
+        scope.launch {
+            preferences.readerPageCache.changes()
+                .collect { enabled ->
+                    if (!enabled) {
+                        clear()
+                    }
+                }
+        }
+    }
 
     private val maxMemory = Runtime.getRuntime().maxMemory()
     private val cacheSize = (maxMemory / 8).toInt()
@@ -27,14 +48,16 @@ object ReaderPageCache {
         }
     }
 
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-
     fun get(page: ReaderPage): Bitmap? {
+        val preferences = Injekt.get<ReaderPreferences>()
+        if (!preferences.readerPageCache.get()) return null
         val key = getKey(page) ?: return null
         return cache.get(key)
     }
 
     fun preload(page: ReaderPage) {
+        val preferences = Injekt.get<ReaderPreferences>()
+        if (!preferences.readerPageCache.get()) return
         val streamFn = page.stream ?: return
         val key = getKey(page) ?: return
         if (cache.get(key) != null) return
@@ -105,6 +128,21 @@ object ReaderPageCache {
 
     fun clear() {
         cache.evictAll()
+    }
+
+    override fun onTrimMemory(level: Int) {
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW ||
+            level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN
+        ) {
+            clear()
+        }
+    }
+
+    override fun onLowMemory() {
+        clear()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
     }
 
     private fun getKey(page: ReaderPage): String? {

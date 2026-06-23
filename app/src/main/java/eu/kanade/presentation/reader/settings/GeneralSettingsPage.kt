@@ -107,6 +107,10 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
         pref = screenModel.preferences.readerUpscaling,
     )
     CheckboxItem(
+        label = stringResource(MR.strings.pref_reader_page_cache),
+        pref = screenModel.preferences.readerPageCache,
+    )
+    CheckboxItem(
         label = stringResource(MR.strings.pref_reader_sharpening),
         pref = screenModel.preferences.readerSharpening,
     )
