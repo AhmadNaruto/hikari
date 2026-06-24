@@ -174,7 +174,6 @@ class ExtensionsScreenModel(
 
     fun updateExtension(extension: Extension.Installed) {
         screenModelScope.launchIO {
-            extensionManager.findAvailableExtensions()
             extensionManager.updateExtension(extension).collectToInstallUpdate(extension)
         }
     }

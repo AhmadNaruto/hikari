@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import dev.icerock.moko.resources.StringResource
+import eu.kanade.domain.source.service.SourcePreferences
 import eu.kanade.tachiyomi.extension.ExtensionManager
 import hikari.domain.extensionrepo.interactor.CreateExtensionRepo
 import hikari.domain.extensionrepo.interactor.DeleteExtensionRepo
@@ -15,6 +16,7 @@ import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import tachiyomi.core.common.util.lang.launchIO
@@ -29,6 +31,7 @@ class ExtensionReposScreenModel(
     private val replaceExtensionRepo: ReplaceExtensionRepo = Injekt.get(),
     private val updateExtensionRepo: UpdateExtensionRepo = Injekt.get(),
     private val extensionManager: ExtensionManager = Injekt.get(),
+    private val sourcePreferences: SourcePreferences = Injekt.get(),
 ) : StateScreenModel<RepoScreenState>(RepoScreenState.Loading) {
 
     private val _events: Channel<RepoEvent> = Channel(Int.MAX_VALUE)
@@ -36,14 +39,19 @@ class ExtensionReposScreenModel(
 
     init {
         screenModelScope.launchIO {
-            getExtensionRepo.subscribeAll()
-                .collectLatest { repos ->
-                    mutableState.update {
-                        RepoScreenState.Success(
-                            repos = repos.toImmutableSet(),
-                        )
-                    }
+            combine(
+                getExtensionRepo.subscribeAll(),
+                sourcePreferences.disabledExtensionRepos.changes(),
+            ) { repos, disabledRepos ->
+                repos to disabledRepos
+            }.collectLatest { (repos, disabledRepos) ->
+                mutableState.update {
+                    RepoScreenState.Success(
+                        repos = repos.toImmutableSet(),
+                        disabledRepos = disabledRepos.toImmutableSet(),
+                    )
                 }
+            }
         }
     }
 
@@ -96,6 +104,28 @@ class ExtensionReposScreenModel(
     fun deleteRepo(baseUrl: String) {
         screenModelScope.launchIO {
             deleteExtensionRepo.await(baseUrl)
+            // Also remove from disabled list if it was disabled
+            val current = sourcePreferences.disabledExtensionRepos.get().toMutableSet()
+            if (current.remove(baseUrl)) {
+                sourcePreferences.disabledExtensionRepos.set(current)
+            }
+            extensionManager.findAvailableExtensions()
+        }
+    }
+
+    /**
+     * Toggles the enabled/disabled state of the given repo.
+     * Disabled repos are excluded from extension fetching without being deleted.
+     */
+    fun toggleRepo(baseUrl: String) {
+        screenModelScope.launchIO {
+            val current = sourcePreferences.disabledExtensionRepos.get().toMutableSet()
+            if (current.contains(baseUrl)) {
+                current.remove(baseUrl)
+            } else {
+                current.add(baseUrl)
+            }
+            sourcePreferences.disabledExtensionRepos.set(current)
             extensionManager.findAvailableExtensions()
         }
     }
@@ -140,6 +170,7 @@ sealed class RepoScreenState {
     @Immutable
     data class Success(
         val repos: ImmutableSet<ExtensionRepo>,
+        val disabledRepos: ImmutableSet<String> = emptySet<String>().toImmutableSet(),
         val oldRepos: ImmutableSet<String>? = null,
         val dialog: RepoDialog? = null,
     ) : RepoScreenState() {

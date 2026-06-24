@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,10 +36,12 @@ import tachiyomi.presentation.core.i18n.stringResource
 @Composable
 fun ExtensionReposContent(
     repos: ImmutableSet<ExtensionRepo>,
+    disabledRepos: ImmutableSet<String>,
     lazyListState: LazyListState,
     paddingValues: PaddingValues,
     onOpenWebsite: (ExtensionRepo) -> Unit,
     onClickDelete: (String) -> Unit,
+    onClickToggle: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val reposList = remember(repos) { repos.toList() }
@@ -61,8 +64,10 @@ fun ExtensionReposContent(
                 modifier = Modifier.animateItem(),
                 repo = repo,
                 position = position,
+                isEnabled = repo.baseUrl !in disabledRepos,
                 onOpenWebsite = { onOpenWebsite(repo) },
                 onDelete = { onClickDelete(repo.baseUrl) },
+                onToggle = { onClickToggle(repo.baseUrl) },
             )
         }
     }
@@ -72,8 +77,10 @@ fun ExtensionReposContent(
 private fun ExtensionRepoListItem(
     repo: ExtensionRepo,
     position: HikariListItemPosition,
+    isEnabled: Boolean,
     onOpenWebsite: () -> Unit,
     onDelete: () -> Unit,
+    onToggle: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -96,8 +103,19 @@ private fun ExtensionRepoListItem(
             Icon(imageVector = Icons.AutoMirrored.Outlined.Label, contentDescription = null)
             Text(
                 text = repo.name,
-                modifier = Modifier.padding(start = MaterialTheme.padding.medium),
+                modifier = Modifier
+                    .padding(start = MaterialTheme.padding.medium)
+                    .weight(1f),
                 style = MaterialTheme.typography.titleMedium,
+                color = if (isEnabled) {
+                    MaterialTheme.colorScheme.onSurface
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                },
+            )
+            Switch(
+                checked = isEnabled,
+                onCheckedChange = { onToggle() },
             )
         }
 

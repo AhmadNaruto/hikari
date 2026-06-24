@@ -1,6 +1,7 @@
 package eu.kanade.tachiyomi.extension.api
 
 import android.content.Context
+import eu.kanade.domain.source.service.SourcePreferences
 import eu.kanade.tachiyomi.extension.ExtensionManager
 import eu.kanade.tachiyomi.extension.model.Extension
 import eu.kanade.tachiyomi.extension.model.LoadResult
@@ -30,6 +31,7 @@ internal class ExtensionApi {
 
     private val networkService: NetworkHelper by injectLazy()
     private val preferenceStore: PreferenceStore by injectLazy()
+    private val sourcePreferences: SourcePreferences by injectLazy()
     private val getExtensionRepo: GetExtensionRepo by injectLazy()
     private val createExtensionRepo: CreateExtensionRepo by injectLazy()
     private val updateExtensionRepo: UpdateExtensionRepo by injectLazy()
@@ -49,7 +51,9 @@ internal class ExtensionApi {
                 )
                 repos = getExtensionRepo.getAll()
             }
+            val disabledRepos = sourcePreferences.disabledExtensionRepos.get()
             repos
+                .filter { it.baseUrl !in disabledRepos }
                 .map { async { getExtensions(it) } }
                 .awaitAll()
                 .flatten()
