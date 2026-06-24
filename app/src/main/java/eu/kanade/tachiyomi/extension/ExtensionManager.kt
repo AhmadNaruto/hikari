@@ -205,22 +205,24 @@ class ExtensionManager(
         for ((pkgName, extension) in installedExtensionsMap) {
             val availableExt = availableExtensions.find { it.pkgName == pkgName }
 
-            if (availableExt == null && !extension.isObsolete) {
-                installedExtensionsMap[pkgName] = extension.copy(isObsolete = true)
-                changed = true
-            } else if (availableExt != null) {
+            if (availableExt == null) {
+                // Not found in any active repo: mark obsolete and clear any pending update flag
+                if (!extension.isObsolete || extension.hasUpdate) {
+                    installedExtensionsMap[pkgName] = extension.copy(
+                        isObsolete = true,
+                        hasUpdate = false,
+                    )
+                    changed = true
+                }
+            } else {
                 val hasUpdate = extension.updateExists(availableExt)
-                if (extension.hasUpdate != hasUpdate) {
+                if (extension.hasUpdate != hasUpdate || extension.repoUrl != availableExt.repoUrl) {
                     installedExtensionsMap[pkgName] = extension.copy(
                         hasUpdate = hasUpdate,
                         repoUrl = availableExt.repoUrl,
                     )
-                } else {
-                    installedExtensionsMap[pkgName] = extension.copy(
-                        repoUrl = availableExt.repoUrl,
-                    )
+                    changed = true
                 }
-                changed = true
             }
         }
         if (changed) {

@@ -54,6 +54,8 @@ class SourcePreferences(
 
     val extensionRepos: Preference<Set<String>> = preferenceStore.getStringSet("extension_repos", emptySet())
 
+    val disabledExtensionRepos: Preference<Set<String>> = preferenceStore.getStringSet("disabled_extension_repos", emptySet())
+
     val extensionUpdatesCount: Preference<Int> = preferenceStore.getInt("ext_updates_count", 0)
     val autoUpdateExtensions: Preference<Boolean> = preferenceStore.getBoolean("auto_update_extensions", false)
 
