@@ -18,9 +18,11 @@ import eu.kanade.tachiyomi.data.download.DownloadManager
 import eu.kanade.tachiyomi.data.download.model.Download
 import eu.kanade.tachiyomi.data.library.LibraryUpdateJob
 import eu.kanade.tachiyomi.util.lang.toLocalDate
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.mutate
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -469,10 +471,10 @@ class UpdatesScreenModel(
         val items: PersistentList<UpdatesItem> = persistentListOf(),
         val dialog: Dialog? = null,
     ) {
-        val selected = items.filter { it.selected }
-        val selectionMode = selected.isNotEmpty()
+        val selected: ImmutableList<UpdatesItem> = items.filter { it.selected }.toImmutableList()
+        val selectionMode: Boolean = selected.isNotEmpty()
 
-        fun getUiModel(): List<UpdatesUiModel> {
+        fun getUiModel(): ImmutableList<UpdatesUiModel> {
             return items
                 .map { UpdatesUiModel.Item(it) }
                 .insertSeparators { before, after ->
@@ -484,6 +486,7 @@ class UpdatesScreenModel(
                         else -> null
                     }
                 }
+                .toImmutableList()
         }
     }
 

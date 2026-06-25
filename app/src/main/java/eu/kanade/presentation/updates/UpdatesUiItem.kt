@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.collections.immutable.ImmutableList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -95,7 +96,7 @@ internal fun LazyListScope.updatesLastUpdatedItem(
 }
 
 internal fun LazyListScope.updatesUiItems(
-    uiModels: List<UpdatesUiModel>,
+    uiModels: ImmutableList<UpdatesUiModel>,
     selectionMode: Boolean,
     onUpdateSelected: (UpdatesItem, Boolean, Boolean) -> Unit,
     onClickCover: (UpdatesItem) -> Unit,

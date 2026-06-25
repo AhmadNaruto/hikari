@@ -72,7 +72,7 @@ class HistoryScreenModel(
                     basePreferences.incognitoMode.changes()
                         .flatMapLatest { incognito ->
                             if (incognito) {
-                                flowOf(emptyList())
+                                flowOf(emptyList<HistoryUiModel>().toImmutableList())
                             } else {
                                 getHistory.subscribe(query ?: "")
                                     .distinctUntilChanged()
@@ -89,7 +89,7 @@ class HistoryScreenModel(
         }
     }
 
-    private fun List<HistoryWithRelations>.toHistoryUiModels(): List<HistoryUiModel> {
+    private fun List<HistoryWithRelations>.toHistoryUiModels(): ImmutableList<HistoryUiModel> {
         return map { HistoryUiModel.Item(it) }
             .insertSeparators { before, after ->
                 val beforeDate = before?.item?.readAt?.time?.toLocalDate()
@@ -100,6 +100,7 @@ class HistoryScreenModel(
                     else -> null
                 }
             }
+            .toImmutableList()
     }
 
     suspend fun getNextChapter(): Chapter? {
@@ -245,7 +246,7 @@ class HistoryScreenModel(
     @Immutable
     data class State(
         val searchQuery: String? = null,
-        val list: List<HistoryUiModel>? = null,
+        val list: ImmutableList<HistoryUiModel>? = null,
         val dialog: Dialog? = null,
     )
 

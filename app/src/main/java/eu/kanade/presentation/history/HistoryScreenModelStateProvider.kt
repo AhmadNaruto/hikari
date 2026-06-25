@@ -9,6 +9,7 @@ import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.Date
 import kotlin.random.Random
+import kotlinx.collections.immutable.toImmutableList
 
 class HistoryScreenModelStateProvider : PreviewParameterProvider<HistoryScreenModel.State> {
 
@@ -22,7 +23,8 @@ class HistoryScreenModelStateProvider : PreviewParameterProvider<HistoryScreenMo
             .plus(HistoryUiModelExamples.items().take(1))
             .plus(HistoryUiModelExamples.header { it.minus(2, ChronoUnit.DAYS) })
             .plus(HistoryUiModelExamples.items().take(7))
-            .toList(),
+            .toList()
+            .toImmutableList(),
         dialog = null,
     )
 
@@ -31,7 +33,7 @@ class HistoryScreenModelStateProvider : PreviewParameterProvider<HistoryScreenMo
         list = listOf(
             HistoryUiModelExamples.headerToday,
             HistoryUiModelExamples.items().first(),
-        ),
+        ).toImmutableList(),
         dialog = null,
     )
 
@@ -40,13 +42,13 @@ class HistoryScreenModelStateProvider : PreviewParameterProvider<HistoryScreenMo
         list = listOf(
             HistoryUiModelExamples.headerTomorrow,
             HistoryUiModelExamples.items().first(),
-        ),
+        ).toImmutableList(),
         dialog = null,
     )
 
     private val empty = HistoryScreenModel.State(
         searchQuery = null,
-        list = listOf(),
+        list = listOf<HistoryUiModel>().toImmutableList(),
         dialog = null,
     )
 
