@@ -377,10 +377,13 @@ class ExtensionManager(
     }
 
     private fun updatePendingUpdatesCount() {
-        val pendingUpdateCount = installedExtensionMapFlow.value.values.count { it.hasUpdate }
+        val pendingUpdates = installedExtensionMapFlow.value.values.filter { it.hasUpdate }
+        val pendingUpdateCount = pendingUpdates.size
         preferences.extensionUpdatesCount.set(pendingUpdateCount)
         if (pendingUpdateCount == 0) {
             ExtensionUpdateNotifier(context).dismiss()
+        } else {
+            ExtensionUpdateNotifier(context).promptUpdates(pendingUpdates.map { it.name })
         }
     }
 
