@@ -42,7 +42,7 @@ internal class ExtensionApi {
         preferenceStore.getLong(Preference.appStateKey("last_ext_check"), 0)
     }
 
-    suspend fun findExtensions(): List<Extension.Available> {
+    suspend fun findExtensions(): ExtensionsResult {
         return withIOContext {
             var repos = getExtensionRepo.getAll()
             if (repos.isEmpty()) {
@@ -52,15 +52,30 @@ internal class ExtensionApi {
                 repos = getExtensionRepo.getAll()
             }
             val disabledRepos = sourcePreferences.disabledExtensionRepos.get()
-            repos
-                .filter { it.baseUrl !in disabledRepos }
-                .map { async { getExtensions(it) } }
-                .awaitAll()
+            val activeRepos = repos.filter { it.baseUrl !in disabledRepos }
+
+            val fetchedResults = activeRepos
+                .map { repo ->
+                    repo to async { getExtensions(repo) }
+                }
+                .map { (repo, deferred) ->
+                    repo.baseUrl to deferred.await()
+                }
+
+            val successfulRepoUrls = fetchedResults
+                .filter { it.second != null }
+                .map { it.first }
+                .toSet()
+
+            val extensions = fetchedResults
+                .mapNotNull { it.second }
                 .flatten()
+
+            ExtensionsResult(extensions, successfulRepoUrls)
         }
     }
 
-    private suspend fun getExtensions(extRepo: ExtensionRepo): List<Extension.Available> {
+    private suspend fun getExtensions(extRepo: ExtensionRepo): List<Extension.Available>? {
         val repoBaseUrl = extRepo.baseUrl
         return try {
             val response = networkService.client
@@ -74,7 +89,7 @@ internal class ExtensionApi {
             }
         } catch (e: Throwable) {
             logcat(LogPriority.ERROR, e) { "Failed to get extensions from $repoBaseUrl" }
-            emptyList()
+            null
         }
     }
 
@@ -95,7 +110,7 @@ internal class ExtensionApi {
         val extensions = if (fromAvailableExtensionList) {
             extensionManager.availableExtensionsFlow.value
         } else {
-            findExtensions().also { lastExtCheck.set(Instant.now().toEpochMilli()) }
+            findExtensions().extensions.also { lastExtCheck.set(Instant.now().toEpochMilli()) }
         }
 
         val installedExtensions = ExtensionLoader.loadExtensions(context)
@@ -106,6 +121,9 @@ internal class ExtensionApi {
         for (installedExt in installedExtensions) {
             val pkgName = installedExt.pkgName
             val availableExt = extensions.find { it.pkgName == pkgName } ?: continue
+            if (availableExt.versionName == installedExt.versionName) {
+                continue
+            }
             val hasUpdatedVer = availableExt.versionCode > installedExt.versionCode
             val hasUpdatedLib = availableExt.libVersion > installedExt.libVersion
             val hasUpdate = hasUpdatedVer || hasUpdatedLib
@@ -181,3 +199,9 @@ private val extensionSourceMapper: (ExtensionSourceJsonObject) -> Extension.Avai
         baseUrl = it.baseUrl,
     )
 }
+
+data class ExtensionsResult(
+    val extensions: List<Extension.Available>,
+    val successfulRepoUrls: Set<String>,
+)
+

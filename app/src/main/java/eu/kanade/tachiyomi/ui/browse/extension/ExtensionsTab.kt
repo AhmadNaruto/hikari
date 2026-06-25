@@ -49,7 +49,7 @@ fun extensionsTab(
 
     return TabContent(
         titleRes = MR.strings.label_extensions,
-        badgeNumber = null,
+        badgeNumber = state.updates.takeIf { it > 0 },
         searchEnabled = true,
         actions = persistentListOf(
             AppBar.OverflowAction(

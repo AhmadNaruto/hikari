@@ -141,7 +141,7 @@ class ExtensionManager(
     suspend fun findAvailableExtensions() {
         _isRefreshing.value = true
         try {
-            val extensions: List<Extension.Available> = try {
+            val (extensions, successfulRepoUrls) = try {
                 api.findExtensions()
             } catch (e: Exception) {
                 logcat(LogPriority.ERROR, e)
@@ -152,7 +152,7 @@ class ExtensionManager(
             enableAdditionalSubLanguages(extensions)
 
             availableExtensionMapFlow.value = extensions.associateBy { it.pkgName }
-            updatedInstalledExtensionsStatuses(extensions)
+            updatedInstalledExtensionsStatuses(extensions, successfulRepoUrls)
             setupAvailableExtensionsSourcesDataMap(extensions)
         } finally {
             _isRefreshing.value = false
@@ -194,30 +194,41 @@ class ExtensionManager(
      *
      * @param availableExtensions The list of extensions given by the [api].
      */
-    private fun updatedInstalledExtensionsStatuses(availableExtensions: List<Extension.Available>) {
-        if (availableExtensions.isEmpty()) {
+    private fun updatedInstalledExtensionsStatuses(
+        availableExtensions: List<Extension.Available>,
+        successfulRepoUrls: Set<String>,
+    ) {
+        if (availableExtensions.isEmpty() && successfulRepoUrls.isEmpty()) {
             preferences.extensionUpdatesCount.set(0)
             return
         }
 
         val installedExtensionsMap = installedExtensionMapFlow.value.toMutableMap()
+        val disabledRepos = preferences.disabledExtensionRepos.get()
         var changed = false
         for ((pkgName, extension) in installedExtensionsMap) {
             val availableExt = availableExtensions.find { it.pkgName == pkgName }
 
             if (availableExt == null) {
-                // Not found in any active repo: mark obsolete and clear any pending update flag
-                if (!extension.isObsolete || extension.hasUpdate) {
-                    installedExtensionsMap[pkgName] = extension.copy(
-                        isObsolete = true,
-                        hasUpdate = false,
-                    )
-                    changed = true
+                // Not found in any active repo: only mark obsolete if it belongs to a repo that was successfully fetched
+                val repoUrl = extension.repoUrl
+                val isRepoActive = repoUrl != null && repoUrl !in disabledRepos
+                val isRepoFetched = repoUrl != null && repoUrl in successfulRepoUrls
+
+                if ((isRepoActive && isRepoFetched) || repoUrl == null || repoUrl in disabledRepos) {
+                    if (!extension.isObsolete || extension.hasUpdate) {
+                        installedExtensionsMap[pkgName] = extension.copy(
+                            isObsolete = true,
+                            hasUpdate = false,
+                        )
+                        changed = true
+                    }
                 }
             } else {
                 val hasUpdate = extension.updateExists(availableExt)
-                if (extension.hasUpdate != hasUpdate || extension.repoUrl != availableExt.repoUrl) {
+                if (extension.isObsolete || extension.hasUpdate != hasUpdate || extension.repoUrl != availableExt.repoUrl) {
                     installedExtensionsMap[pkgName] = extension.copy(
+                        isObsolete = false,
                         hasUpdate = hasUpdate,
                         repoUrl = availableExt.repoUrl,
                     )
@@ -372,6 +383,10 @@ class ExtensionManager(
         val availableExt = availableExtension
             ?: availableExtensionMapFlow.value[pkgName]
             ?: return false
+
+        if (availableExt.versionName == versionName) {
+            return false
+        }
 
         return (availableExt.versionCode > versionCode || availableExt.libVersion > libVersion)
     }
