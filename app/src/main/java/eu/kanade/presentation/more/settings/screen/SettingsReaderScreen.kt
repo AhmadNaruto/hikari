@@ -407,6 +407,7 @@ object SettingsReaderScreen : SearchableSettings {
         val imageScaleType by imageScaleTypePref.collectAsState()
         val dualPageSplit by dualPageSplitPref.collectAsState()
         val rotateToFit by rotateToFitPref.collectAsState()
+        val readerUpscaling by readerPreferences.readerUpscaling.collectAsState()
 
         return Preference.PreferenceGroup(
             title = stringResource(MR.strings.pager_viewer),
@@ -509,6 +510,26 @@ object SettingsReaderScreen : SearchableSettings {
                                 ),
                                 highlightKey = null,
                             )
+
+                            if (readerUpscaling) {
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                    color = HikariCardDefaults.dividerColor(),
+                                )
+
+                                PreferenceItem(
+                                    item = Preference.PreferenceItem.ListPreference(
+                                        preference = readerPreferences.readerUpscalerType,
+                                        entries = mapOf(
+                                            0 to "AMD FSR EASU",
+                                            1 to "AVIR (High Quality)",
+                                            2 to "LANCIR (Fast High Quality)"
+                                        ).toImmutableMap(),
+                                        title = "Upscaler Type",
+                                    ),
+                                    highlightKey = null,
+                                )
+                            }
 
                             HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),

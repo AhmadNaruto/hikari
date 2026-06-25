@@ -212,6 +212,57 @@ object ImageUtil {
         )
     }
 
+    fun resizeImage(imageFile: UniFile, targetWidth: Int, filters: Int = NativeImageDecoder.FILTER_LANCIR): Boolean {
+        try {
+            val bytes = imageFile.openInputStream().use { it.readBytes() }
+            val imageSource = Buffer().write(bytes)
+            if (isAnimatedAndSupported(imageSource)) {
+                return true
+            }
+
+            val options = extractImageOptions(imageSource)
+            val srcWidth = options.outWidth
+            val srcHeight = options.outHeight
+
+            if (srcWidth <= 0 || srcHeight <= 0 || srcWidth <= targetWidth) {
+                // No need to resize if already smaller than or equal to target width
+                return true
+            }
+
+            val scale = targetWidth.toFloat() / srcWidth
+            val targetHeight = (srcHeight * scale).toInt().coerceAtLeast(1)
+
+            val bitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+            val success = NativeImageDecoder.decode(
+                bitmap,
+                bytes,
+                filters = filters
+            )
+
+            if (!success) {
+                bitmap.recycle()
+                return false
+            }
+
+            val format = findImageType(bytes.inputStream())?.let {
+                when (it) {
+                    ImageType.WEBP -> Bitmap.CompressFormat.WEBP_LOSSLESS
+                    ImageType.PNG -> Bitmap.CompressFormat.PNG
+                    else -> Bitmap.CompressFormat.JPEG
+                }
+            } ?: Bitmap.CompressFormat.JPEG
+
+            imageFile.openOutputStream().use { output ->
+                bitmap.compress(format, 90, output)
+            }
+            bitmap.recycle()
+            return true
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e) { "Failed to resize downloaded image" }
+            return false
+        }
+    }
+
     /**
      * Splits tall images to improve performance of reader
      */

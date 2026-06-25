@@ -24,7 +24,13 @@ class FilteringImageRegionDecoder(
         val bitmap = wrapped.decodeRegion(sRect, sampleSize)
 
         var filters = 0
-        if (preferences.readerUpscaling.get()) filters = filters or NativeImageDecoder.FILTER_UPSCALING
+        if (preferences.readerUpscaling.get()) {
+            when (preferences.readerUpscalerType.get()) {
+                1 -> filters = filters or NativeImageDecoder.FILTER_AVIR
+                2 -> filters = filters or NativeImageDecoder.FILTER_LANCIR
+                else -> filters = filters or NativeImageDecoder.FILTER_UPSCALING
+            }
+        }
         if (preferences.readerSharpening.get()) filters = filters or NativeImageDecoder.FILTER_SHARPEN
         if (preferences.readerDenoising.get()) filters = filters or NativeImageDecoder.FILTER_DENOISE
 

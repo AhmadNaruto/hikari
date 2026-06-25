@@ -62,6 +62,9 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
     val readerDenoisingStrengthPref = screenModel.preferences.readerDenoisingStrength
     val readerDenoisingStrength by readerDenoisingStrengthPref.collectAsState()
 
+    val readerUpscaling by screenModel.preferences.readerUpscaling.collectAsState()
+    val readerUpscalerType by screenModel.preferences.readerUpscalerType.collectAsState()
+
     SettingsChipRow(MR.strings.pref_reader_theme) {
         themes.map { (labelRes, value) ->
             FilterChip(
@@ -245,6 +248,22 @@ internal fun ColumnScope.GeneralPage(screenModel: ReaderSettingsScreenModel) {
                 onChange = { readerDenoisingStrengthPref.set(it) },
                 pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             )
+        }
+    }
+
+    if (readerUpscaling) {
+        SettingsChipRow(MR.strings.pref_reader_upscaling) {
+            listOf(
+                "EASU" to 0,
+                "AVIR" to 1,
+                "LANCIR" to 2,
+            ).map { (label, value) ->
+                FilterChip(
+                    selected = readerUpscalerType == value,
+                    onClick = { screenModel.preferences.readerUpscalerType.set(value) },
+                    label = { Text(label) },
+                )
+            }
         }
     }
 }

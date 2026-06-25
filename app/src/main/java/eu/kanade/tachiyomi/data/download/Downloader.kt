@@ -490,6 +490,7 @@ class Downloader(
             }
 
             // When the page is ready, set page path, progress (just in case) and status
+            resizeImageIfNeeded(file)
             splitTallImageIfNeeded(page, tmpDir)
 
             page.uri = file.uri
@@ -532,12 +533,14 @@ class Downloader(
             // Retry 3 times, waiting 2, 4 and 8 seconds between attempts.
             .retryWhen { _, attempt ->
                 if (attempt < 3) {
-                    delay((2L shl attempt.toInt()) * 1000)
+                    val delayTime = (2L shl attempt.toInt()) * 1000L
+                    delay(delayTime)
                     true
                 } else {
                     false
                 }
-            }.first()
+            }
+            .first()
     }
 
     /**
@@ -587,6 +590,24 @@ class Downloader(
             ImageUtil.splitTallImage(tmpDir, imageFile, filenamePrefix)
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e) { "Failed to split downloaded image" }
+        }
+    }
+
+    private fun resizeImageIfNeeded(file: UniFile) {
+        val targetWidth = downloadPreferences.downloadImageResize.get()
+        if (targetWidth <= 0) return
+
+        try {
+            val filterVal = downloadPreferences.downloadImageResizeFilter.get()
+            val filters = if (filterVal == 1) {
+                tachiyomi.core.common.util.system.NativeImageDecoder.FILTER_AVIR
+            } else {
+                tachiyomi.core.common.util.system.NativeImageDecoder.FILTER_LANCIR
+            }
+
+            ImageUtil.resizeImage(file, targetWidth, filters)
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e) { "Failed to resize downloaded image" }
         }
     }
 

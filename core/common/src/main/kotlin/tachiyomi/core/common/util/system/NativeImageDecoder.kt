@@ -19,6 +19,12 @@ object NativeImageDecoder {
     /** Bitmask for AI-based upscaling */
     const val FILTER_UPSCALING = 1 shl 2
 
+    /** Bitmask for AVIR high quality resizing */
+    const val FILTER_AVIR = 1 shl 3
+
+    /** Bitmask for LANCIR fast high quality resizing */
+    const val FILTER_LANCIR = 1 shl 4
+
     init {
         try {
             System.loadLibrary("hikari-image")

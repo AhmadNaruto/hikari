@@ -22,6 +22,9 @@ class DownloadPreferences(
 
     val splitTallImages: Preference<Boolean> = preferenceStore.getBoolean("split_tall_images", true)
 
+    val downloadImageResize: Preference<Int> = preferenceStore.getInt("download_image_resize", 0)
+    val downloadImageResizeFilter: Preference<Int> = preferenceStore.getInt("download_image_resize_filter", 0) // 0 = CLancIR, 1 = CImageResizer (AVIR)
+
     val autoDownloadWhileReading: Preference<Int> = preferenceStore.getInt("auto_download_while_reading", 0)
 
     val removeAfterReadSlots: Preference<Int> = preferenceStore.getInt("remove_after_read_slots", -1)

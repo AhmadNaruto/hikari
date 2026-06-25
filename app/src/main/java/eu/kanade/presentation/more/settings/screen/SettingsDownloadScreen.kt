@@ -67,6 +67,7 @@ object SettingsDownloadScreen : SearchableSettings {
 
     @Composable
     private fun getGeneralGroup(downloadPreferences: DownloadPreferences): Preference.PreferenceGroup {
+        val downloadImageResize by downloadPreferences.downloadImageResize.collectAsState()
         return Preference.PreferenceGroup(
             title = stringResource(MR.strings.pref_category_downloads),
             preferenceItems = persistentListOf(
@@ -114,6 +115,47 @@ object SettingsDownloadScreen : SearchableSettings {
                                 ),
                                 highlightKey = null,
                             )
+
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                color = HikariCardDefaults.dividerColor(),
+                            )
+
+                            PreferenceItem(
+                                item = Preference.PreferenceItem.ListPreference(
+                                    preference = downloadPreferences.downloadImageResize,
+                                    entries = persistentMapOf(
+                                        0 to "None (Original)",
+                                        720 to "720px width",
+                                        1080 to "1080px width",
+                                        1440 to "1440px width",
+                                        1600 to "1600px width",
+                                    ),
+                                    title = "Resize Downloaded Images",
+                                    subtitle = "Resize images before saving to CBZ, BBF, etc.",
+                                ),
+                                highlightKey = null,
+                            )
+
+                            if (downloadImageResize > 0) {
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                    color = HikariCardDefaults.dividerColor(),
+                                )
+
+                                PreferenceItem(
+                                    item = Preference.PreferenceItem.ListPreference(
+                                        preference = downloadPreferences.downloadImageResizeFilter,
+                                        entries = persistentMapOf(
+                                            0 to "LANCIR (Fast High Quality)",
+                                            1 to "AVIR (High Quality)",
+                                        ),
+                                        title = "Download Resize Algorithm",
+                                        subtitle = "LANCIR is recommended for speed during background downloads.",
+                                    ),
+                                    highlightKey = null,
+                                )
+                            }
 
                             HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),

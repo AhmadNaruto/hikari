@@ -10,6 +10,8 @@
 #include <vector>
 #include <cstring>
 #include <arm_neon.h>
+#include "avir.h"
+#include "lancir.h"
 
 #define TAG "HikariImagePipeline"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
@@ -929,6 +931,16 @@ void denoise(uint32_t *pixels, int w, int h, float strength) {
   }
 }
 
+void avir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
+  avir::CImageResizer<> ImageResizer(8);
+  ImageResizer.resizeImage((uint8_t*)src, sw, sh, 0, (uint8_t*)dst, dw, dh, 4, 0);
+}
+
+void lancir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
+  avir::CLancIR ImageResizer;
+  ImageResizer.resizeImage((uint8_t*)src, sw, sh, (uint8_t*)dst, dw, dh, 4);
+}
+
 } // namespace hikari
 
 extern "C" {
@@ -990,6 +1002,22 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
     hikari::easu(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
                  info.height);
+  } else if (filters & 8) {
+    const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
+    int sw = gDecoder.getWidth(header);
+    int sh = gDecoder.getHeight(header);
+    std::vector<uint32_t> temp(sw * sh);
+    gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
+    hikari::avir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
+                        info.height);
+  } else if (filters & 16) {
+    const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
+    int sw = gDecoder.getWidth(header);
+    int sh = gDecoder.getHeight(header);
+    std::vector<uint32_t> temp(sw * sh);
+    gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
+    hikari::lancir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
+                         info.height);
   } else {
     gDecoder.setTargetSize(decoder, info.width, info.height);
     gDecoder.decodeImage(decoder, pixels, info.stride,
@@ -1005,7 +1033,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
   }
 
   if (filters & 1) {
-    if (filters & 4) {
+    if ((filters & 4) || (filters & 8) || (filters & 16)) {
       hikari::rcas((uint32_t *)pixels, info.width, info.height,
                    2.0f - sharpeningStrength);
     } else {
@@ -1084,7 +1112,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecodeRegion(
   }
 
   if (filters & 1) {
-    if (filters & 4) {
+    if ((filters & 4) || (filters & 8) || (filters & 16)) {
       hikari::rcas((uint32_t *)pixels, info.width, info.height,
                    2.0f - sharpeningStrength);
     } else {
@@ -1117,6 +1145,10 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeProcess(
 
   if (filters & 4) {
     LOGD("Native post-processing filter applied: UPSCALING");
+  } else if (filters & 8) {
+    LOGD("Native post-processing filter applied: AVIR");
+  } else if (filters & 16) {
+    LOGD("Native post-processing filter applied: LANCIR");
   }
 
   if (filters & 2) {
@@ -1125,7 +1157,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeProcess(
   }
 
   if (filters & 1) {
-    if (filters & 4) {
+    if ((filters & 4) || (filters & 8) || (filters & 16)) {
       hikari::rcas((uint32_t *)pixels, info.width, info.height,
                    2.0f - sharpeningStrength);
     } else {

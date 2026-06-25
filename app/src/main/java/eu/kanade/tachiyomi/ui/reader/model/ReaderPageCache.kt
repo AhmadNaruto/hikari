@@ -159,7 +159,11 @@ class ReaderPageCache(
 
                 var filters = 0
                 if (isUpscaling) {
-                    filters = filters or NativeImageDecoder.FILTER_UPSCALING
+                    when (preferences.readerUpscalerType.get()) {
+                        1 -> filters = filters or NativeImageDecoder.FILTER_AVIR
+                        2 -> filters = filters or NativeImageDecoder.FILTER_LANCIR
+                        else -> filters = filters or NativeImageDecoder.FILTER_UPSCALING
+                    }
                 }
                 if (preferences.readerSharpening.get()) {
                     filters = filters or NativeImageDecoder.FILTER_SHARPEN
