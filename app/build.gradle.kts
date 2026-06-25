@@ -326,4 +326,7 @@ composeCompiler {
     includeComposeMappingFile = false
     metricsDestination = layout.buildDirectory.dir("compose_metrics")
     reportsDestination = layout.buildDirectory.dir("compose_reports")
+    stabilityConfigurationFiles.addAll(
+        project.layout.projectDirectory.file("stability_config.conf")
+    )
 }
