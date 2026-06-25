@@ -26,6 +26,8 @@ import eu.kanade.tachiyomi.util.chapter.getNextUnread
 import eu.kanade.tachiyomi.util.removeCovers
 import hikari.core.common.utils.mutate
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -632,7 +634,7 @@ class LibraryScreenModel(
 
     fun clearSelection() {
         lastSelectionCategory = null
-        mutableState.update { it.copy(selection = setOf()) }
+        mutableState.update { it.copy(selection = persistentSetOf()) }
     }
 
     fun toggleSelection(category: Category, manga: LibraryManga) {
@@ -786,7 +788,7 @@ class LibraryScreenModel(
         val isInitialized: Boolean = false,
         val isLoading: Boolean = true,
         val searchQuery: String? = null,
-        val selection: Set</* Manga */ Long> = setOf(),
+        val selection: PersistentSet<Long> = persistentSetOf(),
         val hasActiveFilters: Boolean = false,
         val showCategoryTabs: Boolean = false,
         val showMangaCount: Boolean = false,
@@ -798,7 +800,7 @@ class LibraryScreenModel(
         val groupedFavorites: Map<Category, List</* LibraryItem */ Long>> = emptyMap(),
         val continueReadingManga: HistoryWithRelations? = null,
     ) {
-        val displayedCategories: List<Category> = groupedFavorites.keys.toList()
+        val displayedCategories: ImmutableList<Category> = groupedFavorites.keys.toList().toImmutableList()
 
         val coercedActiveCategoryIndex = activeCategoryIndex.coerceIn(
             minimumValue = 0,
@@ -813,14 +815,14 @@ class LibraryScreenModel(
 
         val selectedManga by lazy { selection.mapNotNull { libraryData.favoritesById[it]?.libraryManga?.manga } }
 
-        fun getItemsForCategoryId(categoryId: Long?): List<LibraryItem> {
-            if (categoryId == null) return emptyList()
-            val category = displayedCategories.find { it.id == categoryId } ?: return emptyList()
+        fun getItemsForCategoryId(categoryId: Long?): ImmutableList<LibraryItem> {
+            if (categoryId == null) return emptyList<LibraryItem>().toImmutableList()
+            val category = displayedCategories.find { it.id == categoryId } ?: return emptyList<LibraryItem>().toImmutableList()
             return getItemsForCategory(category)
         }
 
-        fun getItemsForCategory(category: Category): List<LibraryItem> {
-            return groupedFavorites[category].orEmpty().mapNotNull { libraryData.favoritesById[it] }
+        fun getItemsForCategory(category: Category): ImmutableList<LibraryItem> {
+            return groupedFavorites[category].orEmpty().mapNotNull { libraryData.favoritesById[it] }.toImmutableList()
         }
 
         fun getItemCountForCategory(category: Category): Int? {

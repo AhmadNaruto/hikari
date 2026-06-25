@@ -13,6 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentListOf
 import eu.kanade.core.preference.PreferenceMutableState
 import eu.kanade.tachiyomi.ui.library.LibraryItem
 import kotlinx.coroutines.launch
@@ -23,8 +26,8 @@ import tachiyomi.presentation.core.components.material.PullRefresh
 
 @Composable
 fun LibraryContent(
-    categories: List<Category>,
-    selection: Set<Long>,
+    categories: ImmutableList<Category>,
+    selection: PersistentSet<Long>,
     contentPadding: PaddingValues,
     currentPage: Int,
     isRefreshing: Boolean,
@@ -37,7 +40,7 @@ fun LibraryContent(
     onRefresh: () -> Unit,
     getItemCountForCategory: (Category) -> Int?,
     getColumnsForOrientation: (Boolean) -> PreferenceMutableState<Int>,
-    getItemsForCategory: (Category) -> List<LibraryItem>,
+    getItemsForCategory: (Category) -> ImmutableList<LibraryItem>,
     continueReadingManga: HistoryWithRelations? = null,
     modifier: Modifier = Modifier,
 ) {
@@ -89,7 +92,7 @@ fun LibraryContent(
                 onRefresh = onRefresh,
             ) {
                 val category = categories.getOrNull(page)
-                val items = if (category != null) getItemsForCategory(category) else emptyList()
+                val items = if (category != null) getItemsForCategory(category) else persistentListOf()
                 val columns by getColumnsForOrientation(false)
 
                 LibraryDashboard(

@@ -94,7 +94,7 @@ data object LibraryTab : Tab {
         var showCategorySelector by remember { mutableStateOf(false) }
         val visibleCategories = remember(state.displayedCategories, state.searchQuery, state.activeCategory) {
             if (!state.searchQuery.isNullOrEmpty()) {
-                state.activeCategory?.let(::listOf).orEmpty()
+                state.activeCategory?.let(::listOf).orEmpty().toImmutableList()
             } else {
                 state.displayedCategories
             }
