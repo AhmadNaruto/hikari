@@ -126,6 +126,8 @@ object SettingsDownloadScreen : SearchableSettings {
                                     preference = downloadPreferences.downloadImageResize,
                                     entries = persistentMapOf(
                                         0 to "None (Original)",
+                                        360 to "360px width",
+                                        480 to "480px width",
                                         720 to "720px width",
                                         1080 to "1080px width",
                                         1440 to "1440px width",
