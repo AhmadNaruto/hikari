@@ -321,3 +321,7 @@ buildscript {
         classpath(libs.kotlin.gradle)
     }
 }
+
+composeCompiler {
+    includeComposeMappingFile = false
+}
