@@ -385,14 +385,17 @@ void easu(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
       float gL_r = vgetq_lane_f32(cR2, 1);
       float gL_g = vgetq_lane_f32(cG2, 1);
       float gL_b = vgetq_lane_f32(cB2, 1);
+      float gL_a = vgetq_lane_f32(cA2, 1);
 
       float jL_r = vgetq_lane_f32(cR0, 3);
       float jL_g = vgetq_lane_f32(cG0, 3);
       float jL_b = vgetq_lane_f32(cB0, 3);
+      float jL_a = vgetq_lane_f32(cA0, 3);
 
       float kL_r = vgetq_lane_f32(cR1, 2);
       float kL_g = vgetq_lane_f32(cG1, 2);
       float kL_b = vgetq_lane_f32(cB1, 2);
+      float kL_a = vgetq_lane_f32(cA1, 2);
 
       float minR = std::min(std::min(fL_r, gL_r), std::min(jL_r, kL_r));
       float maxR = std::max(std::max(fL_r, gL_r), std::max(jL_r, kL_r));
