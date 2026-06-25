@@ -234,6 +234,7 @@ private fun ExtensionContent(
                     modifier = Modifier.animateItemFastScroll(),
                     item = item,
                     position = position,
+                    repoName = state.repoNames[item.extension.repoUrl],
                     onClickItem = {
                         when (it) {
                             is Extension.Available -> onInstallExtension(it)
@@ -297,6 +298,7 @@ private fun ExtensionItem(
     onClickItemCancel: (Extension) -> Unit,
     onClickItemAction: (Extension) -> Unit,
     onClickItemSecondaryAction: (Extension) -> Unit,
+    repoName: String?,
     modifier: Modifier = Modifier,
 ) {
     val (extension, installStep) = item
@@ -344,6 +346,7 @@ private fun ExtensionItem(
         ExtensionItemContent(
             extension = extension,
             installStep = installStep,
+            repoName = repoName,
             modifier = Modifier.weight(1f),
         )
     }
@@ -353,6 +356,7 @@ private fun ExtensionItem(
 private fun ExtensionItemContent(
     extension: Extension,
     installStep: InstallStep,
+    repoName: String?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -370,7 +374,15 @@ private fun ExtensionItemContent(
         ) {
             ProvideTextStyle(value = MaterialTheme.typography.bodySmall) {
                 var hasAlreadyShownAnElement by remember { mutableStateOf(false) }
+                if (!repoName.isNullOrEmpty()) {
+                    hasAlreadyShownAnElement = true
+                    Text(
+                        text = repoName,
+                    )
+                }
+
                 if (extension is Extension.Installed && extension.lang.isNotEmpty()) {
+                    if (hasAlreadyShownAnElement) DotSeparatorNoSpaceText()
                     hasAlreadyShownAnElement = true
                     Text(
                         text = LocaleHelper.getSourceDisplayName(extension.lang, LocalContext.current),

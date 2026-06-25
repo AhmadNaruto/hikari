@@ -8,6 +8,7 @@ import dev.icerock.moko.resources.StringResource
 import eu.kanade.domain.base.BasePreferences
 import eu.kanade.domain.extension.interactor.GetExtensionsByType
 import eu.kanade.domain.source.service.SourcePreferences
+import hikari.domain.extensionrepo.interactor.GetExtensionRepo
 import eu.kanade.presentation.components.SEARCH_DEBOUNCE_MILLIS
 import eu.kanade.tachiyomi.extension.ExtensionManager
 import eu.kanade.tachiyomi.extension.model.Extension
@@ -50,6 +51,7 @@ class ExtensionsScreenModel(
 
     init {
         val context = Injekt.get<Application>()
+        val getExtensionRepo = Injekt.get<GetExtensionRepo>()
         val extensionMapper: (Map<String, InstallStep>) -> ((Extension) -> ExtensionUiModel.Item) = { map ->
             {
                 ExtensionUiModel.Item(it, map[it.pkgName] ?: InstallStep.Idle)
@@ -64,8 +66,10 @@ class ExtensionsScreenModel(
                     .map { searchQueryPredicate(it ?: "") },
                 currentDownloads,
                 getExtensions.subscribe(),
-            ) { predicate, downloads, (_updates, _installed, _available, _untrusted) ->
-                buildMap {
+                getExtensionRepo.subscribeAll(),
+            ) { predicate, downloads, (_updates, _installed, _available, _untrusted), repos ->
+                val repoNames = repos.associate { it.baseUrl to it.name }
+                val items = buildMap {
                     val updates = _updates.filter(predicate).map(extensionMapper(downloads))
                     if (updates.isNotEmpty()) {
                         put(ExtensionUiModel.Header.Resource(MR.strings.ext_updates_pending), updates)
@@ -89,12 +93,14 @@ class ExtensionsScreenModel(
                         putAll(languagesWithExtensions)
                     }
                 }
+                items to repoNames
             }
-                .collectLatest { items ->
+                .collectLatest { (items, repoNames) ->
                     mutableState.update { state ->
                         state.copy(
                             isLoading = false,
                             items = items,
+                            repoNames = repoNames,
                         )
                     }
                 }
@@ -229,6 +235,7 @@ class ExtensionsScreenModel(
         val updates: Int = 0,
         val installer: BasePreferences.ExtensionInstaller? = null,
         val searchQuery: String? = null,
+        val repoNames: Map<String, String> = emptyMap(),
     ) {
         val isEmpty = items.isEmpty()
     }

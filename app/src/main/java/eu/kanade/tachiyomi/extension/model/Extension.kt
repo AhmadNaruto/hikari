@@ -13,6 +13,7 @@ sealed class Extension {
     abstract val libVersion: Double
     abstract val lang: String?
     abstract val isNsfw: Boolean
+    open val repoUrl: String? = null
 
     data class Installed(
         override val name: String,
@@ -28,7 +29,7 @@ sealed class Extension {
         val hasUpdate: Boolean = false,
         val isObsolete: Boolean = false,
         val isShared: Boolean,
-        val repoUrl: String? = null,
+        override val repoUrl: String? = null,
     ) : Extension()
 
     data class Available(
@@ -42,7 +43,7 @@ sealed class Extension {
         val sources: List<Source>,
         val apkName: String,
         val iconUrl: String,
-        val repoUrl: String,
+        override val repoUrl: String,
     ) : Extension() {
 
         data class Source(
