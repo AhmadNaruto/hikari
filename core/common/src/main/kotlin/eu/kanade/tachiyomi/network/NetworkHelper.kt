@@ -8,6 +8,8 @@ import eu.kanade.tachiyomi.network.interceptor.IgnoreGzipInterceptor
 import eu.kanade.tachiyomi.network.interceptor.UncaughtExceptionInterceptor
 import eu.kanade.tachiyomi.network.interceptor.UserAgentInterceptor
 import okhttp3.Cache
+import okhttp3.ConnectionPool
+import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.brotli.BrotliInterceptor
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,20 +30,28 @@ class NetworkHelper(
             .enableHttp2(true)
             .enableBrotli(true)
             .setStoragePath(File(context.cacheDir, "cronet_cache").apply { mkdirs() }.absolutePath)
-            .enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 10 * 1024 * 1024)
+            .enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 100 * 1024 * 1024)
             .build()
     }
 
     private fun baseClientBuilder(): OkHttpClient.Builder {
+        val dispatcher = Dispatcher().apply {
+            maxRequests = 64
+            maxRequestsPerHost = 16
+        }
+        val connectionPool = ConnectionPool(16, 3, TimeUnit.MINUTES)
+
         val builder = OkHttpClient.Builder()
             .cookieJar(cookieJar)
+            .dispatcher(dispatcher)
+            .connectionPool(connectionPool)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .callTimeout(2, TimeUnit.MINUTES)
             .cache(
                 Cache(
                     directory = File(context.cacheDir, "network_cache"),
-                    maxSize = 10L * 1024 * 1024,
+                    maxSize = 100L * 1024 * 1024,
                 ),
             )
             .addInterceptor(UncaughtExceptionInterceptor())
