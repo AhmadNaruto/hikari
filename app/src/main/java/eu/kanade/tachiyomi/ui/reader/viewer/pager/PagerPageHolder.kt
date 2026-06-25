@@ -80,6 +80,7 @@ class PagerPageHolder(
         super.onDetachedFromWindow()
         loadJob?.cancel()
         loadJob = null
+        readerPageCache.release(page)
     }
 
     private fun initProgressIndicator() {

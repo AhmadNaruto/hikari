@@ -90,6 +90,9 @@ class ReaderPageCache(
     private val bitmapPool = BitmapPool()
     private val jobs = ConcurrentHashMap<String, Job>()
 
+    private val activePages = ConcurrentHashMap.newKeySet<String>()
+    private val evictedButActive = ConcurrentHashMap<String, CachedBitmap>()
+
     private data class CachedBitmap(val bitmap: Bitmap, val byteCount: Int)
 
     private val cache = object : LruCache<String, CachedBitmap>(cacheSize) {
@@ -99,8 +102,12 @@ class ReaderPageCache(
 
         override fun entryRemoved(evicted: Boolean, key: String, oldValue: CachedBitmap, newValue: CachedBitmap?) {
             jobs.remove(key)?.cancel()
-            if (newValue == null && !oldValue.bitmap.isRecycled) {
-                bitmapPool.offer(oldValue.bitmap)
+            if (newValue == null) {
+                if (activePages.contains(key)) {
+                    evictedButActive[key] = oldValue
+                } else if (!oldValue.bitmap.isRecycled) {
+                    bitmapPool.offer(oldValue.bitmap)
+                }
             }
         }
     }
@@ -108,7 +115,20 @@ class ReaderPageCache(
     fun get(page: ReaderPage): Bitmap? {
         if (!preferences.readerPageCache.get()) return null
         val key = getKey(page) ?: return null
-        return cache.get(key)?.bitmap
+        val cached = cache.get(key)
+        if (cached != null) {
+            activePages.add(key)
+        }
+        return cached?.bitmap
+    }
+
+    fun release(page: ReaderPage) {
+        val key = getKey(page) ?: return
+        activePages.remove(key)
+        val evicted = evictedButActive.remove(key)
+        if (evicted != null && !evicted.bitmap.isRecycled) {
+            bitmapPool.offer(evicted.bitmap)
+        }
     }
 
     fun preload(page: ReaderPage) {
@@ -206,6 +226,14 @@ class ReaderPageCache(
     fun clear() {
         jobs.values.forEach { it.cancel() }
         jobs.clear()
+        val toRelease = evictedButActive.values.toList()
+        evictedButActive.clear()
+        toRelease.forEach {
+            if (!it.bitmap.isRecycled) {
+                bitmapPool.offer(it.bitmap)
+            }
+        }
+        activePages.clear()
         cache.trimToSize(-1)
         bitmapPool.flush()
     }

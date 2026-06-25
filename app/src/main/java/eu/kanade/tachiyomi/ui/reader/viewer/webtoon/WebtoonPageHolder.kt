@@ -98,6 +98,10 @@ class WebtoonPageHolder(
      * Binds the given [page] with this view holder, subscribing to its state.
      */
     fun bind(page: ReaderPage) {
+        val oldPage = this.page
+        if (oldPage != null && oldPage != page) {
+            readerPageCache.release(oldPage)
+        }
         this.page = page
         loadJob?.cancel()
         loadJob = scope.launch { loadPageAndProcessStatus() }
@@ -127,6 +131,9 @@ class WebtoonPageHolder(
         frame.recycle()
         progressIndicator.setProgress(0)
         progressContainer.isVisible = true
+
+        page?.let { readerPageCache.release(it) }
+        page = null
     }
 
     /**
