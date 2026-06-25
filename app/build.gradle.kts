@@ -324,4 +324,6 @@ buildscript {
 
 composeCompiler {
     includeComposeMappingFile = false
+    metricsDestination = layout.buildDirectory.dir("compose_metrics")
+    reportsDestination = layout.buildDirectory.dir("compose_reports")
 }
