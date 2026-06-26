@@ -40,6 +40,8 @@ import tachiyomi.domain.source.service.SourceManager
 import tachiyomi.domain.storage.service.StorageManager
 import tachiyomi.source.local.image.LocalCoverManager
 import tachiyomi.source.local.io.LocalSourceFileSystem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asCoroutineDispatcher
 import uy.kohesive.injekt.api.InjektModule
 import uy.kohesive.injekt.api.InjektRegistrar
 import uy.kohesive.injekt.api.addSingleton
@@ -48,6 +50,8 @@ import uy.kohesive.injekt.api.get
 import java.lang.ref.WeakReference
 
 private val lock = Any()
+
+private val txDispatcher = java.util.concurrent.Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
 class AppModule(val app: Application) : InjektModule {
 
@@ -87,7 +91,14 @@ class AppModule(val app: Application) : InjektModule {
                 ),
             )
         }
-        addSingletonFactory<DatabaseHandler> { AndroidDatabaseHandler(get(), get()) }
+        addSingletonFactory<DatabaseHandler> {
+            AndroidDatabaseHandler(
+                db = get(),
+                driver = get(),
+                queryDispatcher = Dispatchers.IO,
+                transactionDispatcher = txDispatcher,
+            )
+        }
 
         addSingletonFactory {
             Json {
