@@ -7,6 +7,16 @@
 
 extern "C" {
 
+static jclass gStringClass = nullptr;
+static jmethodID gStringCtor = nullptr;
+static jstring gUtf8Charset = nullptr;
+
+static jclass gMetadataEntryClass = nullptr;
+static jmethodID gMetadataEntryCtor = nullptr;
+
+static jclass gSectionEntryClass = nullptr;
+static jmethodID gSectionEntryCtor = nullptr;
+
 static void handleCppException(JNIEnv* env, const std::exception& e) {
     jclass exClass = env->FindClass("java/lang/RuntimeException");
     if (exClass) {
@@ -326,13 +336,9 @@ Java_io_github_ahmadnaruto_libbbf_BbfReader_getMetadata(JNIEnv* env, jclass claz
         jstring valStr = valChars ? env->NewStringUTF(valChars) : nullptr;
         jstring parentStr = parentChars ? env->NewStringUTF(parentChars) : nullptr;
         
-        jclass metaClass = env->FindClass("io/github/ahmadnaruto/libbbf/MetadataEntry");
-        if (!metaClass) return nullptr;
+        if (!gMetadataEntryClass || !gMetadataEntryCtor) return nullptr;
         
-        jmethodID ctor = env->GetMethodID(metaClass, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
-        if (!ctor) return nullptr;
-        
-        return env->NewObject(metaClass, ctor, keyStr, valStr, parentStr);
+        return env->NewObject(gMetadataEntryClass, gMetadataEntryCtor, keyStr, valStr, parentStr);
     } catch (const std::exception& e) {
         handleCppException(env, e);
         return nullptr;
@@ -365,13 +371,9 @@ Java_io_github_ahmadnaruto_libbbf_BbfReader_getSection(JNIEnv* env, jclass clazz
         jstring titleStr = titleChars ? env->NewStringUTF(titleChars) : nullptr;
         jstring parentStr = parentChars ? env->NewStringUTF(parentChars) : nullptr;
         
-        jclass secClass = env->FindClass("io/github/ahmadnaruto/libbbf/SectionEntry");
-        if (!secClass) return nullptr;
+        if (!gSectionEntryClass || !gSectionEntryCtor) return nullptr;
         
-        jmethodID ctor = env->GetMethodID(secClass, "<init>", "(Ljava/lang/String;JLjava/lang/String;)V");
-        if (!ctor) return nullptr;
-        
-        return env->NewObject(secClass, ctor, titleStr, static_cast<jlong>(sec->sectionStartIndex), parentStr);
+        return env->NewObject(gSectionEntryClass, gSectionEntryCtor, titleStr, static_cast<jlong>(sec->sectionStartIndex), parentStr);
     } catch (const std::exception& e) {
         handleCppException(env, e);
         return nullptr;
@@ -546,31 +548,14 @@ Java_io_github_ahmadnaruto_libbbf_BbfReader_getAssetString(JNIEnv* env, jclass c
         if (!array) return nullptr;
         env->SetByteArrayRegion(array, 0, asset->fileSize, reinterpret_cast<const jbyte*>(data));
         
-        jclass stringClass = env->FindClass("java/lang/String");
-        if (!stringClass) {
+        if (!gStringClass || !gStringCtor || !gUtf8Charset) {
             env->DeleteLocalRef(array);
             return nullptr;
         }
         
-        jmethodID ctor = env->GetMethodID(stringClass, "<init>", "([BLjava/lang/String;)V");
-        if (!ctor) {
-            env->DeleteLocalRef(array);
-            env->DeleteLocalRef(stringClass);
-            return nullptr;
-        }
-        
-        jstring utf8Charset = env->NewStringUTF("UTF-8");
-        if (!utf8Charset) {
-            env->DeleteLocalRef(array);
-            env->DeleteLocalRef(stringClass);
-            return nullptr;
-        }
-        
-        jstring result = static_cast<jstring>(env->NewObject(stringClass, ctor, array, utf8Charset));
+        jstring result = static_cast<jstring>(env->NewObject(gStringClass, gStringCtor, array, gUtf8Charset));
         
         env->DeleteLocalRef(array);
-        env->DeleteLocalRef(utf8Charset);
-        env->DeleteLocalRef(stringClass);
         
         return result;
     } catch (const std::exception& e) {
@@ -748,6 +733,55 @@ Java_io_github_ahmadnaruto_libbbf_BbfBuilder_addPageWithPath(JNIEnv* env, jclass
     }
     
     return result;
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+    JNIEnv* env;
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return JNI_ERR;
+    }
+
+    jclass localStringClass = env->FindClass("java/lang/String");
+    if (localStringClass) {
+        gStringClass = (jclass)env->NewGlobalRef(localStringClass);
+        gStringCtor = env->GetMethodID(gStringClass, "<init>", "([BLjava/lang/String;)V");
+        env->DeleteLocalRef(localStringClass);
+    }
+
+    jstring localUtf8 = env->NewStringUTF("UTF-8");
+    if (localUtf8) {
+        gUtf8Charset = (jstring)env->NewGlobalRef(localUtf8);
+        env->DeleteLocalRef(localUtf8);
+    }
+
+    jclass localMetaClass = env->FindClass("io/github/ahmadnaruto/libbbf/MetadataEntry");
+    if (localMetaClass) {
+        gMetadataEntryClass = (jclass)env->NewGlobalRef(localMetaClass);
+        gMetadataEntryCtor = env->GetMethodID(gMetadataEntryClass, "<init>",
+            "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+        env->DeleteLocalRef(localMetaClass);
+    }
+
+    jclass localSecClass = env->FindClass("io/github/ahmadnaruto/libbbf/SectionEntry");
+    if (localSecClass) {
+        gSectionEntryClass = (jclass)env->NewGlobalRef(localSecClass);
+        gSectionEntryCtor = env->GetMethodID(gSectionEntryClass, "<init>",
+            "(Ljava/lang/String;JLjava/lang/String;)V");
+        env->DeleteLocalRef(localSecClass);
+    }
+
+    return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved) {
+    JNIEnv* env;
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return;
+    }
+    if (gStringClass) env->DeleteGlobalRef(gStringClass);
+    if (gUtf8Charset) env->DeleteGlobalRef(gUtf8Charset);
+    if (gMetadataEntryClass) env->DeleteGlobalRef(gMetadataEntryClass);
+    if (gSectionEntryClass) env->DeleteGlobalRef(gSectionEntryClass);
 }
 
 }
