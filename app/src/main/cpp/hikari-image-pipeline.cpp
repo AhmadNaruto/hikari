@@ -934,6 +934,12 @@ void denoise(uint32_t *pixels, int w, int h, float strength) {
   }
 }
 
+// Trade-off/Limitations of AVIR (avir::CImageResizer):
+// avir::CImageResizer::resizeImage() does not natively support custom destination scanline stride (output padding).
+// In Android Bitmaps, the stride (info.stride) can contain GPU memory alignment padding (e.g. aligned to 64 bytes).
+// When dst_stride != dw * 4, we must allocate a temporary contiguous buffer and perform row-by-row memory copies.
+// Do not attempt to bypass this by editing avir.h as it is a vendored library. For maximum performance under custom
+// strides without memory copying, prefer using lancir_resize() which natively supports strides via CLancIRParams.
 void avir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh, int dst_stride) {
   thread_local avir::CImageResizer<> ImageResizer(8);
   if (dst_stride == dw * 4) {
@@ -951,6 +957,15 @@ void lancir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh,
   thread_local avir::CLancIR ImageResizer;
   avir::CLancIRParams Params(0, dst_stride);
   ImageResizer.resizeImage((uint8_t*)src, sw, sh, (uint8_t*)dst, dw, dh, 4, &Params);
+}
+
+thread_local std::vector<uint32_t> gDecodeScratch;
+
+inline uint32_t* getScratchBuffer(size_t count) {
+  if (gDecodeScratch.size() < count) {
+    gDecodeScratch.resize(count);
+  }
+  return gDecodeScratch.data();
 }
 
 } // namespace hikari
@@ -1010,25 +1025,25 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
     int sw = gDecoder.getWidth(header);
     int sh = gDecoder.getHeight(header);
-    std::vector<uint32_t> temp(sw * sh);
-    gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
-    hikari::easu(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
+    uint32_t* temp = hikari::getScratchBuffer(sw * sh);
+    gDecoder.decodeImage(decoder, temp, sw * 4, sw * sh * 4);
+    hikari::easu(temp, (uint32_t *)pixels, sw, sh, info.width,
                  info.height);
   } else if (filters & 8) {
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
     int sw = gDecoder.getWidth(header);
     int sh = gDecoder.getHeight(header);
-    std::vector<uint32_t> temp(sw * sh);
-    gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
-    hikari::avir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
+    uint32_t* temp = hikari::getScratchBuffer(sw * sh);
+    gDecoder.decodeImage(decoder, temp, sw * 4, sw * sh * 4);
+    hikari::avir_resize(temp, (uint32_t *)pixels, sw, sh, info.width,
                         info.height, info.stride);
   } else if (filters & 16) {
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
     int sw = gDecoder.getWidth(header);
     int sh = gDecoder.getHeight(header);
-    std::vector<uint32_t> temp(sw * sh);
-    gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
-    hikari::lancir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
+    uint32_t* temp = hikari::getScratchBuffer(sw * sh);
+    gDecoder.decodeImage(decoder, temp, sw * 4, sw * sh * 4);
+    hikari::lancir_resize(temp, (uint32_t *)pixels, sw, sh, info.width,
                           info.height, info.stride);
   } else {
     gDecoder.setTargetSize(decoder, info.width, info.height);
