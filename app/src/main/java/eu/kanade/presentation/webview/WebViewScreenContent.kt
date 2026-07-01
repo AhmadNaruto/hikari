@@ -379,12 +379,14 @@ fun CookieEditorDialog(
             .map {
                 val parts = it.split("=", limit = 2)
                 if (parts.size == 2) {
-                    parts[0] to parts[1]
+                    Pair(parts[0], parts[1])
                 } else {
-                    parts[0] to ""
+                    Pair(parts[0], "")
                 }
             }
-        androidx.compose.runtime.toMutableStateList(parsed)
+        val list = androidx.compose.runtime.mutableStateListOf<Pair<String, String>>()
+        list.addAll(parsed)
+        list
     }
 
     AlertDialog(
@@ -411,7 +413,9 @@ fun CookieEditorDialog(
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        itemsIndexed(cookies) { index, item ->
+                        itemsIndexed(
+                            items = cookies
+                        ) { index: Int, item: Pair<String, String> ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -420,8 +424,8 @@ fun CookieEditorDialog(
                             ) {
                                 OutlinedTextField(
                                     value = item.first,
-                                    onValueChange = { newName ->
-                                        cookies[index] = newName to item.second
+                                    onValueChange = { newName: String ->
+                                        cookies[index] = Pair(newName, item.second)
                                     },
                                     label = { Text("Name") },
                                     modifier = Modifier
@@ -431,8 +435,8 @@ fun CookieEditorDialog(
                                 )
                                 OutlinedTextField(
                                     value = item.second,
-                                    onValueChange = { newValue ->
-                                        cookies[index] = item.first to newValue
+                                    onValueChange = { newValue: String ->
+                                        cookies[index] = Pair(item.first, newValue)
                                     },
                                     label = { Text("Value") },
                                     modifier = Modifier
@@ -458,7 +462,7 @@ fun CookieEditorDialog(
             Row {
                 TextButton(
                     onClick = {
-                        cookies.add("" to "")
+                        cookies.add(Pair("", ""))
                     }
                 ) {
                     Text("Add Cookie")
@@ -475,7 +479,9 @@ fun CookieEditorDialog(
                         
                         val httpUrl = currentUrl.toHttpUrlOrNull()
                         val domain = httpUrl?.host ?: host
-                        cookies.forEach { (name, value) ->
+                        cookies.forEach { pair: Pair<String, String> ->
+                            val name = pair.first
+                            val value = pair.second
                             if (name.isNotBlank()) {
                                 manager.setCookie(currentUrl, "$name=$value;Path=/;Domain=$domain")
                             }

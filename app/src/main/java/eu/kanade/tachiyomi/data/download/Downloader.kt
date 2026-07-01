@@ -43,6 +43,8 @@ import kotlinx.coroutines.supervisorScope
 import logcat.LogPriority
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.Response
+import okio.buffer
+import okio.source
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.storage.extension
 import tachiyomi.core.common.util.lang.launchIO
@@ -642,7 +644,7 @@ class Downloader(
                 val bytes = file.openInputStream().use { it.readBytes() }
                 
                 // Check if dimensions exceed WebP limit (16383)
-                val imageSource = okio.Okio.buffer(okio.Okio.source(bytes.inputStream()))
+                val imageSource = bytes.inputStream().source().buffer()
                 val options = ImageUtil.extractImageOptions(imageSource)
                 val isTooLargeForWebp = options.outWidth > 16383 || options.outHeight > 16383
                 
