@@ -105,6 +105,7 @@ internal fun LazyListScope.updatesLastUpdatedItem(
     }
 }
 
+@Composable
 internal fun LazyListScope.updatesUiItems(
     uiModels: List<UpdatesUiModel>,
     selectionMode: Boolean,
