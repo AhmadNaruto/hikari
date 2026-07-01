@@ -24,6 +24,10 @@ class DownloadPreferences(
 
     val downloadImageResize: Preference<Int> = preferenceStore.getInt("download_image_resize", 0)
     val downloadImageResizeFilter: Preference<Int> = preferenceStore.getInt("download_image_resize_filter", 0) // 0 = CLancIR, 1 = CImageResizer (AVIR)
+    
+    val downloadImageConvertEnabled: Preference<Boolean> = preferenceStore.getBoolean("download_image_convert_enabled", false)
+    val downloadImageConvertFormat: Preference<String> = preferenceStore.getString("download_image_convert_format", "webp")
+    val downloadImageConvertQuality: Preference<Int> = preferenceStore.getInt("download_image_convert_quality", 80)
 
     val autoDownloadWhileReading: Preference<Int> = preferenceStore.getInt("auto_download_while_reading", 0)
 

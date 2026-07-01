@@ -68,6 +68,9 @@ object SettingsDownloadScreen : SearchableSettings {
     @Composable
     private fun getGeneralGroup(downloadPreferences: DownloadPreferences): Preference.PreferenceGroup {
         val downloadImageResize by downloadPreferences.downloadImageResize.collectAsState()
+        val downloadImageConvertEnabled by downloadPreferences.downloadImageConvertEnabled.collectAsState()
+        val downloadImageConvertFormat by downloadPreferences.downloadImageConvertFormat.collectAsState()
+        val downloadImageConvertQuality by downloadPreferences.downloadImageConvertQuality.collectAsState()
         return Preference.PreferenceGroup(
             title = stringResource(MR.strings.pref_category_downloads),
             preferenceItems = persistentListOf(
@@ -157,6 +160,58 @@ object SettingsDownloadScreen : SearchableSettings {
                                     ),
                                     highlightKey = null,
                                 )
+                            }
+
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                color = HikariCardDefaults.dividerColor(),
+                            )
+
+                            PreferenceItem(
+                                item = Preference.PreferenceItem.SwitchPreference(
+                                    preference = downloadPreferences.downloadImageConvertEnabled,
+                                    title = "Convert & Compress Downloaded Images",
+                                    subtitle = "Use libvips to optimize downloaded images before saving",
+                                ),
+                                highlightKey = null,
+                            )
+
+                            if (downloadImageConvertEnabled) {
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                    color = HikariCardDefaults.dividerColor(),
+                                )
+
+                                PreferenceItem(
+                                    item = Preference.PreferenceItem.ListPreference(
+                                        preference = downloadPreferences.downloadImageConvertFormat,
+                                        entries = persistentMapOf(
+                                            "webp" to "WebP",
+                                            "jpg" to "JPEG",
+                                            "png" to "PNG",
+                                        ),
+                                        title = "Target Format",
+                                    ),
+                                    highlightKey = null,
+                                )
+
+                                if (downloadImageConvertFormat == "webp" || downloadImageConvertFormat == "jpg") {
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                                        color = HikariCardDefaults.dividerColor(),
+                                    )
+
+                                    PreferenceItem(
+                                        item = Preference.PreferenceItem.SliderPreference(
+                                            value = downloadImageConvertQuality,
+                                            valueRange = 1..100,
+                                            title = "Compression Quality",
+                                            subtitle = "Current: $downloadImageConvertQuality%. Lower = smaller file size.",
+                                            onValueChanged = { downloadPreferences.downloadImageConvertQuality.set(it) },
+                                        ),
+                                        highlightKey = null,
+                                    )
+                                }
                             }
 
                             HorizontalDivider(

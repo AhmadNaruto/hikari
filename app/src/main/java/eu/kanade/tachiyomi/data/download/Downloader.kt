@@ -184,6 +184,12 @@ class Downloader(
 
         isPaused = false
 
+        if (tachiyomi.core.common.util.system.VipsNative.isInitialized()) {
+            try {
+                tachiyomi.core.common.util.system.VipsNative.shutdown()
+            } catch (_: Throwable) {}
+        }
+
         DownloadJob.stop(context)
     }
 
@@ -492,8 +498,9 @@ class Downloader(
             // When the page is ready, set page path, progress (just in case) and status
             resizeImageIfNeeded(file)
             splitTallImageIfNeeded(page, tmpDir)
+            val finalFile = compressImagesIfNeeded(page, tmpDir, digitCount, file)
 
-            page.uri = file.uri
+            page.uri = finalFile.uri
             page.progress = 100
             page.status = Page.State.Ready
         } catch (e: Throwable) {
@@ -609,6 +616,59 @@ class Downloader(
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e) { "Failed to resize downloaded image" }
         }
+    }
+
+    private fun compressImagesIfNeeded(page: Page, tmpDir: UniFile, digitCount: Int, originalFile: UniFile): UniFile {
+        if (!downloadPreferences.downloadImageConvertEnabled.get()) return originalFile
+
+        val format = downloadPreferences.downloadImageConvertFormat.get()
+        val quality = downloadPreferences.downloadImageConvertQuality.get()
+        val filenamePrefix = "%0${digitCount}d".format(Locale.ENGLISH, page.number)
+
+        try {
+            if (!tachiyomi.core.common.util.system.VipsNative.safeInit()) {
+                logcat(LogPriority.ERROR) { "libvips failed to initialize, skipping image conversion" }
+                return originalFile
+            }
+
+            val files = tmpDir.listFiles()?.filter {
+                it.name.orEmpty().startsWith(filenamePrefix) && !it.name.orEmpty().endsWith(".tmp")
+            }.orEmpty()
+
+            var primaryFile = originalFile
+
+            for (file in files) {
+                val currentExt = file.name.orEmpty().substringAfterLast('.')
+                val bytes = file.openInputStream().use { it.readBytes() }
+                val compressedBytes = when (format.lowercase()) {
+                    "webp" -> tachiyomi.core.common.util.system.VipsNative.compressWebp(bytes, quality)
+                    "jpg", "jpeg" -> tachiyomi.core.common.util.system.VipsNative.compressJpeg(bytes, quality)
+                    "png" -> {
+                        val compression = ((100 - quality) * 9 / 100).coerceIn(0, 9)
+                        tachiyomi.core.common.util.system.VipsNative.compressPng(bytes, compression)
+                    }
+                    else -> null
+                }
+
+                if (compressedBytes != null) {
+                    val baseName = file.name.orEmpty().substringBeforeLast('.')
+                    val newFile = tmpDir.createFile("$baseName.$format")!!
+                    newFile.openOutputStream().use { it.write(compressedBytes) }
+                    
+                    if (baseName == filenamePrefix || baseName == "${filenamePrefix}__001") {
+                        primaryFile = newFile
+                    }
+                    
+                    file.delete()
+                }
+            }
+
+            return primaryFile
+        } catch (e: Exception) {
+            logcat(LogPriority.ERROR, e) { "Failed to convert images using libvips" }
+        }
+
+        return originalFile
     }
 
     /**
