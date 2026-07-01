@@ -45,6 +45,22 @@ import kotlinx.collections.immutable.persistentListOf
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.unit.dp
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 class WebViewWindow(webContent: WebContent, val navigator: WebViewNavigator) {
     var state by mutableStateOf(WebViewState(webContent))
@@ -84,6 +100,7 @@ fun WebViewScreenContent(
 
     var currentUrl by remember { mutableStateOf(url) }
     var isActive by remember { mutableStateOf(true) }
+    var showCookieDialog by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         onDispose { isActive = false }
@@ -252,6 +269,10 @@ fun WebViewScreenContent(
                                         title = stringResource(MR.strings.pref_clear_cookies),
                                         onClick = { onClearCookies(currentUrl) },
                                     ),
+                                    AppBar.OverflowAction(
+                                        title = "View & Edit Cookies",
+                                        onClick = { showCookieDialog = true },
+                                    ),
                                 ).builder().apply {
                                     if (windowStack.size > 1) {
                                         add(
@@ -329,4 +350,148 @@ fun WebViewScreenContent(
             )
         }
     }
+
+    if (showCookieDialog) {
+        CookieEditorDialog(
+            currentUrl = currentUrl,
+            onDismiss = { showCookieDialog = false }
+        )
+    }
+}
+
+@Composable
+fun CookieEditorDialog(
+    currentUrl: String,
+    onDismiss: () -> Unit
+) {
+    val host = remember(currentUrl) {
+        val httpUrl = currentUrl.toHttpUrlOrNull()
+        httpUrl?.host ?: currentUrl
+    }
+    
+    val manager = remember { android.webkit.CookieManager.getInstance() }
+    val rawCookie = remember(currentUrl) { manager.getCookie(currentUrl).orEmpty() }
+    
+    val cookies = remember(rawCookie) {
+        val parsed = rawCookie.split(";")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .map {
+                val parts = it.split("=", limit = 2)
+                if (parts.size == 2) {
+                    parts[0] to parts[1]
+                } else {
+                    parts[0] to ""
+                }
+            }
+        androidx.compose.runtime.toMutableStateList(parsed)
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = "Cookies: $host",
+                style = MaterialTheme.typography.titleMedium
+            )
+        },
+        text = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 400.dp)
+            ) {
+                if (cookies.isEmpty()) {
+                    Text(
+                        text = "No cookies found.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        itemsIndexed(cookies) { index, item ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                OutlinedTextField(
+                                    value = item.first,
+                                    onValueChange = { newName ->
+                                        cookies[index] = newName to item.second
+                                    },
+                                    label = { Text("Name") },
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(end = 4.dp),
+                                    singleLine = true
+                                )
+                                OutlinedTextField(
+                                    value = item.second,
+                                    onValueChange = { newValue ->
+                                        cookies[index] = item.first to newValue
+                                    },
+                                    label = { Text("Value") },
+                                    modifier = Modifier
+                                        .weight(1.5f)
+                                        .padding(end = 4.dp),
+                                    singleLine = true
+                                )
+                                IconButton(
+                                    onClick = { cookies.removeAt(index) }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Delete,
+                                        contentDescription = "Delete Cookie"
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Row {
+                TextButton(
+                    onClick = {
+                        cookies.add("" to "")
+                    }
+                ) {
+                    Text("Add Cookie")
+                }
+                Button(
+                    onClick = {
+                        val oldCookie = manager.getCookie(currentUrl)
+                        if (oldCookie != null) {
+                            oldCookie.split(";").forEach {
+                                val name = it.substringBefore("=").trim()
+                                manager.setCookie(currentUrl, "$name=;Max-Age=-1")
+                            }
+                        }
+                        
+                        val httpUrl = currentUrl.toHttpUrlOrNull()
+                        val domain = httpUrl?.host ?: host
+                        cookies.forEach { (name, value) ->
+                            if (name.isNotBlank()) {
+                                manager.setCookie(currentUrl, "$name=$value;Path=/;Domain=$domain")
+                            }
+                        }
+                        manager.flush()
+                        onDismiss()
+                    }
+                ) {
+                    Text("Save")
+                }
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }
