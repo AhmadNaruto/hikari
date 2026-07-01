@@ -342,10 +342,8 @@ uint8_t BBFBuilder::detectType(const char* fPath)
 
 }
 
-bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
+bool BBFBuilder::readFileToBuffer(const char* fPath, std::vector<uint8_t>& outBuffer)
 {
-    uint8_t mediaType = detectType(fPath);
-
     FILE* iImg = fopen(fPath, "rb");
     if (!iImg)
     {
@@ -357,14 +355,15 @@ bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
     long sizeVal = ftell(iImg);
     fseek(iImg, 0, SEEK_SET);
 
-    std::vector<uint8_t> buffer;
+    outBuffer.clear();
+
     if (sizeVal > 0)
     {
-        buffer.resize(sizeVal);
-        size_t readSize = fread(buffer.data(), 1, sizeVal, iImg);
+        outBuffer.resize(sizeVal);
+        size_t readSize = fread(outBuffer.data(), 1, sizeVal, iImg);
         if (readSize < (size_t)sizeVal)
         {
-            buffer.resize(readSize);
+            outBuffer.resize(readSize);
         }
     }
     else
@@ -373,10 +372,23 @@ bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
         size_t bytesRead;
         while ((bytesRead = fread(tempBuf, 1, sizeof(tempBuf), iImg)) > 0)
         {
-            buffer.insert(buffer.end(), tempBuf, tempBuf + bytesRead);
+            outBuffer.insert(outBuffer.end(), tempBuf, tempBuf + bytesRead);
         }
     }
+
     fclose(iImg);
+    return true;
+}
+
+bool BBFBuilder::addPage(const char* fPath, uint32_t pFlags, uint32_t aFlags)
+{
+    uint8_t mediaType = detectType(fPath);
+
+    std::vector<uint8_t> buffer;
+    if (!readFileToBuffer(fPath, buffer))
+    {
+        return false;
+    }
 
     uint64_t fileSize = buffer.size();
     XXH128_hash_t iHash = XXH3_128bits(buffer.data(), fileSize);
@@ -454,37 +466,11 @@ int64_t BBFBuilder::addAsset(const char* fPath, uint32_t aFlags)
 {
     uint8_t mediaType = detectType(fPath);
 
-    FILE* iImg = fopen(fPath, "rb");
-    if (!iImg)
+    std::vector<uint8_t> buffer;
+    if (!readFileToBuffer(fPath, buffer))
     {
-        fprintf(stderr, "[BBFCODEC] Unable to open %s for reading.\n", fPath);
         return -1;
     }
-
-    fseek(iImg, 0, SEEK_END);
-    long sizeVal = ftell(iImg);
-    fseek(iImg, 0, SEEK_SET);
-
-    std::vector<uint8_t> buffer;
-    if (sizeVal > 0)
-    {
-        buffer.resize(sizeVal);
-        size_t readSize = fread(buffer.data(), 1, sizeVal, iImg);
-        if (readSize < (size_t)sizeVal)
-        {
-            buffer.resize(readSize);
-        }
-    }
-    else
-    {
-        uint8_t tempBuf[16384];
-        size_t bytesRead;
-        while ((bytesRead = fread(tempBuf, 1, sizeof(tempBuf), iImg)) > 0)
-        {
-            buffer.insert(buffer.end(), tempBuf, tempBuf + bytesRead);
-        }
-    }
-    fclose(iImg);
 
     uint64_t fileSize = buffer.size();
     XXH128_hash_t iHash = XXH3_128bits(buffer.data(), fileSize);

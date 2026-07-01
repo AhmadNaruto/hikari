@@ -94,6 +94,7 @@ class BBFBuilder
         // Other Helpers
         void writePadding(uint64_t alignmentBoundary);
         uint8_t detectType(const char* iPath);
+        static bool readFileToBuffer(const char* fPath, std::vector<uint8_t>& outBuffer);
 };
 
 class BBFReader
