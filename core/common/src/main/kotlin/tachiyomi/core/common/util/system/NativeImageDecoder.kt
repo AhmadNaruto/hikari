@@ -25,6 +25,10 @@ object NativeImageDecoder {
     /** Bitmask for LANCIR fast high quality resizing */
     const val FILTER_LANCIR = 1 shl 4
 
+    /** True if the native hikari-image library was loaded successfully. */
+    var isAvailable: Boolean = false
+        private set
+
     init {
         try {
             System.loadLibrary("z")
@@ -36,13 +40,17 @@ object NativeImageDecoder {
             System.loadLibrary("gio-2.0")
             System.loadLibrary("girepository-2.0")
             System.loadLibrary("vips")
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
+            // UnsatisfiedLinkError (Error subclass) is thrown when a .so is missing —
+            // catching Throwable prevents class initialization failure → NoClassDefFoundError.
         }
         try {
             System.loadLibrary("hikari-image")
-        } catch (_: Exception) {
+            isAvailable = true
+        } catch (_: Throwable) {
         }
     }
+
 
     /**
      * Decodes pixel data directly into an existing [Bitmap]'s memory buffer.
@@ -60,6 +68,7 @@ object NativeImageDecoder {
         sharpeningStrength: Float = 1.0f,
         denoisingStrength: Float = 1.0f,
     ): Boolean {
+        if (!isAvailable) return false
         if (bitmap.config != Bitmap.Config.ARGB_8888 && bitmap.config != Bitmap.Config.RGB_565) {
             return false
         }
@@ -92,6 +101,7 @@ object NativeImageDecoder {
         sharpeningStrength: Float = 1.0f,
         denoisingStrength: Float = 1.0f,
     ): Boolean {
+        if (!isAvailable) return false
         if (bitmap.config != Bitmap.Config.ARGB_8888 && bitmap.config != Bitmap.Config.RGB_565) {
             return false
         }
@@ -114,6 +124,7 @@ object NativeImageDecoder {
         sharpeningStrength: Float = 1.0f,
         denoisingStrength: Float = 1.0f,
     ): Boolean {
+        if (!isAvailable) return false
         if (bitmap.config != Bitmap.Config.ARGB_8888) return false
         return nativeProcess(bitmap, filters, sharpeningStrength, denoisingStrength)
     }
@@ -127,6 +138,7 @@ object NativeImageDecoder {
      * @return A [HardwareBuffer] ready for GPU use, or null if allocation fails.
      */
     fun allocateHardwareBuffer(width: Int, height: Int): HardwareBuffer? {
+        if (!isAvailable) return null
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nativeDecodeToHardwareBuffer(width, height)
         } else {

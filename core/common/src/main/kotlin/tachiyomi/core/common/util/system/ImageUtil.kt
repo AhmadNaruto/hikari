@@ -232,15 +232,45 @@ object ImageUtil {
             val scale = targetWidth.toFloat() / srcWidth
             val targetHeight = (srcHeight * scale).toInt().coerceAtLeast(1)
 
-            val bitmap = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
-            val success = NativeImageDecoder.decode(
-                bitmap,
-                bytes,
-                filters = filters
-            )
+            val bitmap: Bitmap? = if (NativeImageDecoder.isAvailable) {
+                val b = Bitmap.createBitmap(targetWidth, targetHeight, Bitmap.Config.ARGB_8888)
+                val success = NativeImageDecoder.decode(
+                    b,
+                    bytes,
+                    filters = filters
+                )
+                if (success) b else { b.recycle(); null }
+            } else {
+                null
+            }
 
-            if (!success) {
-                bitmap.recycle()
+            val finalBitmap = bitmap ?: try {
+                var inSampleSize = 1
+                if (srcHeight > targetHeight || srcWidth > targetWidth) {
+                    val halfHeight = srcHeight / 2
+                    val halfWidth = srcWidth / 2
+                    while (halfHeight / inSampleSize >= targetHeight && halfWidth / inSampleSize >= targetWidth) {
+                        inSampleSize *= 2
+                    }
+                }
+                val decodeOptions = android.graphics.BitmapFactory.Options().apply {
+                    this.inSampleSize = inSampleSize
+                }
+                val decoded = android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.size, decodeOptions)
+                if (decoded != null) {
+                    val scaled = Bitmap.createScaledBitmap(decoded, targetWidth, targetHeight, true)
+                    if (scaled != decoded) {
+                        decoded.recycle()
+                    }
+                    scaled
+                } else {
+                    null
+                }
+            } catch (_: Throwable) {
+                null
+            }
+
+            if (finalBitmap == null) {
                 return false
             }
 
@@ -253,9 +283,9 @@ object ImageUtil {
             } ?: Bitmap.CompressFormat.JPEG
 
             imageFile.openOutputStream().use { output ->
-                bitmap.compress(format, 90, output)
+                finalBitmap.compress(format, 90, output)
             }
-            bitmap.recycle()
+            finalBitmap.recycle()
             return true
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e) { "Failed to resize downloaded image" }

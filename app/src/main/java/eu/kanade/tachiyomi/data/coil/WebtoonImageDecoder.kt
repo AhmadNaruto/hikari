@@ -62,7 +62,7 @@ class WebtoonImageDecoder(private val source: BufferedSource, private val option
         )
 
         var success = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && NativeImageDecoder.isAvailable) {
             success = NativeImageDecoder.decode(bitmap, bytes)
         }
 

@@ -116,6 +116,7 @@ class HikariImageDecoder(
     class Factory : Decoder.Factory {
         override fun create(result: SourceFetchResult, options: Options, imageLoader: ImageLoader): Decoder? {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return null
+            if (!NativeImageDecoder.isAvailable) return null
 
             val source = result.source.source()
             if (!isSupported(source)) return null

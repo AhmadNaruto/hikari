@@ -34,7 +34,7 @@ class FilteringImageRegionDecoder(
         if (preferences.readerSharpening.get()) filters = filters or NativeImageDecoder.FILTER_SHARPEN
         if (preferences.readerDenoising.get()) filters = filters or NativeImageDecoder.FILTER_DENOISE
 
-        if (filters != 0) {
+        if (filters != 0 && NativeImageDecoder.isAvailable) {
             NativeImageDecoder.process(
                 bitmap,
                 filters,
