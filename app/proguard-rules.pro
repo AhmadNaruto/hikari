@@ -54,6 +54,10 @@
 -keep,allowoptimization class rx.** { public protected *; }
 -keep,allowoptimization class app.cash.quickjs.** { public protected *; }
 -keep class uy.kohesive.injekt.** { *; }
+# Keep Mihon's Injekt patch — patchInjekt() replaces Injekt's DefaultRegistry at runtime via reflection.
+# Without this, R8 strips PatchedDefaultRegister and InjektKt, causing the
+# "TypeReference constructed without actual type information" crash in App.onCreate.
+-keep class dev.mihon.injekt.** { *; }
 
 # Injekt's FullTypeReference uses anonymous subclassing to capture generic type info at runtime.
 # R8 must NOT strip or rename the DI module classes, or any class registered via addSingletonFactory,
