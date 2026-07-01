@@ -934,14 +934,23 @@ void denoise(uint32_t *pixels, int w, int h, float strength) {
   }
 }
 
-void avir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
-  avir::CImageResizer<> ImageResizer(8);
-  ImageResizer.resizeImage((uint8_t*)src, sw, sh, 0, (uint8_t*)dst, dw, dh, 4, 0);
+void avir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh, int dst_stride) {
+  thread_local avir::CImageResizer<> ImageResizer(8);
+  if (dst_stride == dw * 4) {
+    ImageResizer.resizeImage((uint8_t*)src, sw, sh, 0, (uint8_t*)dst, dw, dh, 4, 0);
+  } else {
+    std::vector<uint8_t> temp_dst(dw * dh * 4);
+    ImageResizer.resizeImage((uint8_t*)src, sw, sh, 0, temp_dst.data(), dw, dh, 4, 0);
+    for (int y = 0; y < dh; ++y) {
+      std::memcpy((uint8_t*)dst + y * dst_stride, temp_dst.data() + y * dw * 4, dw * 4);
+    }
+  }
 }
 
-void lancir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh) {
-  avir::CLancIR ImageResizer;
-  ImageResizer.resizeImage((uint8_t*)src, sw, sh, (uint8_t*)dst, dw, dh, 4);
+void lancir_resize(uint32_t *src, uint32_t *dst, int sw, int sh, int dw, int dh, int dst_stride) {
+  thread_local avir::CLancIR ImageResizer;
+  avir::CLancIRParams Params(0, dst_stride);
+  ImageResizer.resizeImage((uint8_t*)src, sw, sh, (uint8_t*)dst, dw, dh, 4, &Params);
 }
 
 } // namespace hikari
@@ -1012,7 +1021,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     std::vector<uint32_t> temp(sw * sh);
     gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
     hikari::avir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
-                        info.height);
+                        info.height, info.stride);
   } else if (filters & 16) {
     const AImageDecoderHeaderInfo *header = gDecoder.getHeaderInfo(decoder);
     int sw = gDecoder.getWidth(header);
@@ -1020,7 +1029,7 @@ Java_tachiyomi_core_common_util_system_NativeImageDecoder_nativeDecode(
     std::vector<uint32_t> temp(sw * sh);
     gDecoder.decodeImage(decoder, temp.data(), sw * 4, sw * sh * 4);
     hikari::lancir_resize(temp.data(), (uint32_t *)pixels, sw, sh, info.width,
-                         info.height);
+                          info.height, info.stride);
   } else {
     gDecoder.setTargetSize(decoder, info.width, info.height);
     gDecoder.decodeImage(decoder, pixels, info.stride,

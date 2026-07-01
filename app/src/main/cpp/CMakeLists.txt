@@ -10,15 +10,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Optimization flags for high-performance math calculations (critical for AVIR/LANCIR)
+# Applied target-specific to avoid globally bloating other targets (like bbfjni)
+add_library(hikari-image SHARED hikari-image-pipeline.cpp)
+
 if(NOT MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -ffast-math")
+    target_compile_options(hikari-image PRIVATE -O3 -ffast-math)
 endif()
 
 find_library(jnigraphics-lib jnigraphics)
 find_library(log-lib log)
 find_library(android-lib android)
-
-add_library(hikari-image SHARED hikari-image-pipeline.cpp)
 
 target_link_libraries(hikari-image
         ${jnigraphics-lib}
