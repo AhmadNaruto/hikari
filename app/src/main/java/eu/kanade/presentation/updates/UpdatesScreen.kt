@@ -225,4 +225,13 @@ private fun UpdatesBottomBar(
 sealed interface UpdatesUiModel {
     data class Header(val date: LocalDate) : UpdatesUiModel
     data class Item(val item: UpdatesItem) : UpdatesUiModel
+    /**
+     * A collapsible group for a manga that has more than one chapter update on the same day.
+     * [items] are sorted newest-first. When collapsed only the first item is shown.
+     */
+    data class Group(
+        val mangaId: Long,
+        val mangaTitle: String,
+        val items: List<UpdatesItem>,
+    ) : UpdatesUiModel
 }

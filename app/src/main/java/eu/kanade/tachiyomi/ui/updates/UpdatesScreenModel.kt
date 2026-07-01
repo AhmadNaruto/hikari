@@ -9,7 +9,6 @@ import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import eu.kanade.core.preference.asState
 import eu.kanade.core.util.addOrRemove
-import eu.kanade.core.util.insertSeparators
 import eu.kanade.domain.chapter.interactor.SetReadStatus
 import eu.kanade.presentation.manga.components.ChapterDownloadAction
 import eu.kanade.presentation.updates.UpdatesUiModel
@@ -473,17 +472,47 @@ class UpdatesScreenModel(
         val selectionMode = selected.isNotEmpty()
 
         fun getUiModel(): List<UpdatesUiModel> {
-            return items
-                .map { UpdatesUiModel.Item(it) }
-                .insertSeparators { before, after ->
-                    val beforeDate = before?.item?.update?.dateFetch?.toLocalDate()
-                    val afterDate = after?.item?.update?.dateFetch?.toLocalDate()
-                    when {
-                        beforeDate != afterDate && afterDate != null -> UpdatesUiModel.Header(afterDate)
-                        // Return null to avoid adding a separator between two items.
-                        else -> null
+            // Group chapters by (manga, day), then emit Group when >1, else Item
+            val flatItems: List<UpdatesUiModel.Item> = items.map { UpdatesUiModel.Item(it) }
+
+            // Build flat list of (date, UiModel) entries – collapsing multi-chapter manga into Groups
+            data class DatedModel(val date: java.time.LocalDate, val model: UpdatesUiModel)
+
+            val datedModels: List<DatedModel> = buildList {
+                // Iterate over items grouped by (date, mangaId) to form groups
+                val grouped = items.groupBy { item ->
+                    item.update.dateFetch.toLocalDate() to item.update.mangaId
+                }
+                // Re-order by the date of the first chapter in each group, preserving original list order
+                val seen = mutableSetOf<Pair<java.time.LocalDate, Long>>()
+                for (item in items) {
+                    val key = item.update.dateFetch.toLocalDate() to item.update.mangaId
+                    if (seen.add(key)) {
+                        val groupItems = grouped[key]!!
+                        val date = key.first
+                        if (groupItems.size > 1) {
+                            add(DatedModel(date, UpdatesUiModel.Group(
+                                mangaId = item.update.mangaId,
+                                mangaTitle = item.update.mangaTitle,
+                                items = groupItems,
+                            )))
+                        } else {
+                            add(DatedModel(date, UpdatesUiModel.Item(groupItems.first())))
+                        }
                     }
                 }
+            }
+
+            // Insert date headers using insertSeparators logic
+            val result = mutableListOf<UpdatesUiModel>()
+            datedModels.forEachIndexed { index, datedModel ->
+                val prevDate = datedModels.getOrNull(index - 1)?.date
+                if (prevDate != datedModel.date) {
+                    result.add(UpdatesUiModel.Header(datedModel.date))
+                }
+                result.add(datedModel.model)
+            }
+            return result
         }
     }
 

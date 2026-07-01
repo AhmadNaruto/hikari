@@ -1,18 +1,27 @@
 package eu.kanade.presentation.updates
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.outlined.BookmarkAdd
 import androidx.compose.material.icons.outlined.BookmarkRemove
 import androidx.compose.material.icons.outlined.Done
@@ -24,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import me.saket.swipe.SwipeableActionsBox
@@ -31,6 +41,7 @@ import me.saket.swipe.SwipeAction
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -104,6 +115,10 @@ internal fun LazyListScope.updatesUiItems(
     onMultiBookmarkClicked: (List<UpdatesItem>, bookmark: Boolean) -> Unit,
     onMultiMarkAsReadClicked: (List<UpdatesItem>, read: Boolean) -> Unit,
 ) {
+    // Expansion state keyed by mangaId — lives as long as the LazyList composable lives
+    // Using a stable key on the item() call ensures it's also restored during scroll.
+    val expandedGroups = remember { mutableStateMapOf<Long, Boolean>() }
+
     uiModels.forEachIndexed { index, item ->
         when (item) {
             is UpdatesUiModel.Header -> {
@@ -114,7 +129,7 @@ internal fun LazyListScope.updatesUiItems(
                     val count = remember(uiModels, index) {
                         var c = 0
                         for (i in index + 1 until uiModels.size) {
-                            if (uiModels[i] is UpdatesUiModel.Item) c++ else break
+                            if (uiModels[i] is UpdatesUiModel.Item || uiModels[i] is UpdatesUiModel.Group) c++ else break
                         }
                         c
                     }
@@ -179,6 +194,186 @@ internal fun LazyListScope.updatesUiItems(
                         downloadStateProvider = updatesItem.downloadStateProvider,
                         downloadProgressProvider = updatesItem.downloadProgressProvider,
                     )
+                }
+            }
+
+            is UpdatesUiModel.Group -> {
+                // Collapsible group: one header card + animated list of chapter items
+                item(
+                    key = "updates-group-${item.mangaId}",
+                    contentType = "group-header",
+                ) {
+                    val isExpanded = expandedGroups[item.mangaId] ?: false
+                    UpdatesGroupItem(
+                        modifier = Modifier.animateItemFastScroll(),
+                        group = item,
+                        isExpanded = isExpanded,
+                        onToggleExpand = { expandedGroups[item.mangaId] = !isExpanded },
+                        selectionMode = selectionMode,
+                        onUpdateSelected = onUpdateSelected,
+                        onClickUpdate = onClickUpdate,
+                        onClickCover = onClickCover,
+                        onDownloadChapter = onDownloadChapter,
+                        onMultiBookmarkClicked = onMultiBookmarkClicked,
+                        onMultiMarkAsReadClicked = onMultiMarkAsReadClicked,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun UpdatesGroupItem(
+    group: UpdatesUiModel.Group,
+    isExpanded: Boolean,
+    onToggleExpand: () -> Unit,
+    selectionMode: Boolean,
+    onUpdateSelected: (UpdatesItem, Boolean, Boolean) -> Unit,
+    onClickCover: (UpdatesItem) -> Unit,
+    onClickUpdate: (UpdatesItem) -> Unit,
+    onDownloadChapter: (List<UpdatesItem>, ChapterDownloadAction) -> Unit,
+    onMultiBookmarkClicked: (List<UpdatesItem>, Boolean) -> Unit,
+    onMultiMarkAsReadClicked: (List<UpdatesItem>, Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val haptic = LocalHapticFeedback.current
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (isExpanded) 180f else 0f,
+        label = "arrow_rotation",
+    )
+    val representativeItem = group.items.first()
+    val allRead = group.items.all { it.update.read }
+    val textAlpha = if (allRead) DISABLED_ALPHA else 1f
+
+    Column(modifier = modifier) {
+        // ── Group header row (cover + title + count badge + expand arrow) ──
+        HikariGroupedListItem(
+            modifier = Modifier,
+            position = HikariListItemPosition.Single,
+            selected = false,
+            height = 72.dp,
+            onClick = onToggleExpand,
+            onLongClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            },
+        ) {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = MaterialTheme.padding.medium),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                MangaCover.Square(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxHeight(),
+                    data = representativeItem.update.coverData,
+                    onClick = { onClickCover(representativeItem) }.takeIf { !selectionMode },
+                )
+
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = MaterialTheme.padding.medium)
+                        .weight(1f),
+                ) {
+                    Text(
+                        text = group.mangaTitle,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = LocalContentColor.current.copy(alpha = textAlpha),
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (!allRead) {
+                            Icon(
+                                imageVector = Icons.Filled.Circle,
+                                contentDescription = stringResource(MR.strings.unread),
+                                modifier = Modifier.size(8.dp),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                        }
+                        // Badge: "3 chapters"
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.secondaryContainer,
+                                    shape = RoundedCornerShape(50),
+                                )
+                                .padding(horizontal = 8.dp, vertical = 2.dp),
+                        ) {
+                            Text(
+                                text = "${group.items.size} chapters",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                maxLines = 1,
+                            )
+                        }
+                    }
+                }
+
+                // Expand / collapse arrow
+                Icon(
+                    imageVector = Icons.Filled.ExpandMore,
+                    contentDescription = if (isExpanded) "Collapse" else "Expand",
+                    modifier = Modifier
+                        .padding(start = 4.dp)
+                        .size(20.dp)
+                        .rotate(arrowRotation),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+
+        // ── Collapsible chapter list ──
+        AnimatedVisibility(
+            visible = isExpanded,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            Column {
+                group.items.forEachIndexed { chIdx, updatesItem ->
+                    val position = when {
+                        chIdx == 0 && group.items.size == 1 -> ItemPosition.Single
+                        chIdx == 0 -> ItemPosition.First
+                        chIdx == group.items.lastIndex -> ItemPosition.Last
+                        else -> ItemPosition.Middle
+                    }
+                    val readProgress = updatesItem.update.lastPageRead
+                        .takeIf { !updatesItem.update.read && it > 0L }
+                        ?.let { stringResource(MR.strings.chapter_progress, it + 1) }
+
+                    // Indent slightly to visually nest under the header
+                    Box(modifier = Modifier.padding(start = 16.dp)) {
+                        UpdatesUiItem(
+                            modifier = Modifier,
+                            update = updatesItem.update,
+                            selected = updatesItem.selected,
+                            position = position,
+                            readProgress = readProgress,
+                            onLongClick = { onUpdateSelected(updatesItem, !updatesItem.selected, true) },
+                            onClick = {
+                                when {
+                                    selectionMode -> onUpdateSelected(updatesItem, !updatesItem.selected, false)
+                                    else -> onClickUpdate(updatesItem)
+                                }
+                            },
+                            onClickCover = null,
+                            onDownloadChapter = { action: ChapterDownloadAction ->
+                                onDownloadChapter(listOf(updatesItem), action)
+                            }.takeIf { !selectionMode },
+                            onToggleBookmark = {
+                                onMultiBookmarkClicked(listOf(updatesItem), !updatesItem.update.bookmark)
+                            }.takeIf { !selectionMode },
+                            onToggleRead = {
+                                onMultiMarkAsReadClicked(listOf(updatesItem), !updatesItem.update.read)
+                            }.takeIf { !selectionMode },
+                            downloadStateProvider = updatesItem.downloadStateProvider,
+                            downloadProgressProvider = updatesItem.downloadProgressProvider,
+                        )
+                    }
                 }
             }
         }
