@@ -414,7 +414,8 @@ class LibraryScreenModel(
             getLibraryManga.subscribe(),
             getLibraryItemPreferencesFlow(),
             downloadCache.changes,
-        ) { libraryManga, preferences, _ ->
+            sourceManager.isInitialized,
+        ) { libraryManga, preferences, _, _ ->
             libraryManga.map { manga ->
                 LibraryItem(
                     libraryManga = manga,
