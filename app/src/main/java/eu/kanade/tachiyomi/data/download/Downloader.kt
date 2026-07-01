@@ -640,7 +640,19 @@ class Downloader(
             for (file in files) {
                 val currentExt = file.name.orEmpty().substringAfterLast('.')
                 val bytes = file.openInputStream().use { it.readBytes() }
-                val compressedBytes = when (format.lowercase()) {
+                
+                // Check if dimensions exceed WebP limit (16383)
+                val imageSource = okio.Okio.buffer(okio.Okio.source(bytes.inputStream()))
+                val options = ImageUtil.extractImageOptions(imageSource)
+                val isTooLargeForWebp = options.outWidth > 16383 || options.outHeight > 16383
+                
+                val targetFormat = if (format.lowercase() == "webp" && isTooLargeForWebp) {
+                    "jpg"
+                } else {
+                    format.lowercase()
+                }
+
+                val compressedBytes = when (targetFormat) {
                     "webp" -> tachiyomi.core.common.util.system.VipsNative.compressWebp(bytes, quality)
                     "jpg", "jpeg" -> tachiyomi.core.common.util.system.VipsNative.compressJpeg(bytes, quality)
                     "png" -> {
@@ -652,7 +664,7 @@ class Downloader(
 
                 if (compressedBytes != null) {
                     val baseName = file.name.orEmpty().substringBeforeLast('.')
-                    val newFile = tmpDir.createFile("$baseName.$format")!!
+                    val newFile = tmpDir.createFile("$baseName.$targetFormat")!!
                     newFile.openOutputStream().use { it.write(compressedBytes) }
                     
                     if (baseName == filenamePrefix || baseName == "${filenamePrefix}__001") {
