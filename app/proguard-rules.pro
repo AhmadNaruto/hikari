@@ -1,10 +1,46 @@
+# Trade-off of -dontobfuscate:
+# Keeping -dontobfuscate allows stack traces in crash logs to be fully readable with original class/method names
+# without needing a mapping file. However, this means that R8 will not rename any class, method, or field,
+# which results in a slightly larger APK size compared to a fully obfuscated build. Shrinking (removing unused code)
+# and optimization are still fully active.
 -dontobfuscate
 -keepattributes Signature, InnerClasses, EnclosingMethod, Annotation
 
--keep class eu.kanade.** { *; }
--keep class tachiyomi.** { *; }
--keep class Hikari.** { *; }
--keep class hikari.** { *; }
+# Narrow keep rules instead of blanket keep rules for eu.kanade.**, tachiyomi.**, hikari.**
+# Keep classes and interfaces in the Source Extension API (called dynamically via reflection by extensions)
+-keep class eu.kanade.tachiyomi.source.** { public protected *; }
+-keep class tachiyomi.source.** { public protected *; }
+
+# Keep MainActivity explicitly because it is loaded dynamically by the widgets module via reflection
+-keep class eu.kanade.tachiyomi.ui.main.MainActivity
+
+# Keep Shizuku AIDL service implementation classes since they are loaded by name via reflection/Binder from Shizuku
+-keep class hikari.app.shizuku.** { *; }
+
+# GeckoView specific rules (required for GeckoView's internal JNI / Reflection logic)
+-keep class org.mozilla.geckoview.** { *; }
+-keep class org.mozilla.gecko.SysInfo { *; }
+-keep class org.mozilla.gecko.mozglue.JNIObject { *; }
+-keep class * extends org.mozilla.gecko.mozglue.JNIObject { *; }
+
+-keep @interface org.mozilla.gecko.annotation.JNITarget
+-keep @org.mozilla.gecko.annotation.JNITarget class *
+-keepclassmembers @org.mozilla.gecko.annotation.JNITarget class * { *; }
+-keepclassmembers class * { @org.mozilla.gecko.annotation.JNITarget *; }
+
+-dontwarn org.mozilla.geckoview.**
+-dontwarn mozilla.components.**
+
+# Keep custom WebView/Cookie components that might be accessed reflectively
+-keep class eu.kanade.tachiyomi.ui.webview.** { public protected *; }
+-keep class hikari.**.webview.** { public protected *; }
+-keep class hikari.**.cookie.** { public protected *; }
+
+# SubsamplingScaleImageView reflection field 'decoder'
+-keepclassmembers class com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView {
+    private com.davemorrissey.labs.subscaleview.decoder.ImageRegionDecoder decoder;
+}
+
 
 # Keep common dependencies used in extensions
 -keep,allowoptimization class androidx.preference.** { public protected *; }
@@ -67,6 +103,22 @@
     *** Companion;
 }
 -keepclasseswithmembers class eu.kanade.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+-keep,includedescriptorclasses class tachiyomi.**$$serializer { *; }
+-keepclassmembers class tachiyomi.** {
+    *** Companion;
+}
+-keepclasseswithmembers class tachiyomi.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+-keep,includedescriptorclasses class hikari.**$$serializer { *; }
+-keepclassmembers class hikari.** {
+    *** Companion;
+}
+-keepclasseswithmembers class hikari.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
 
