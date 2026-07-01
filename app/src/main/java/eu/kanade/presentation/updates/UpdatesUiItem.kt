@@ -105,10 +105,10 @@ internal fun LazyListScope.updatesLastUpdatedItem(
     }
 }
 
-@Composable
 internal fun LazyListScope.updatesUiItems(
     uiModels: List<UpdatesUiModel>,
     selectionMode: Boolean,
+    expandedGroups: androidx.compose.runtime.snapshots.SnapshotStateMap<Long, Boolean>,
     onUpdateSelected: (UpdatesItem, Boolean, Boolean) -> Unit,
     onClickCover: (UpdatesItem) -> Unit,
     onClickUpdate: (UpdatesItem) -> Unit,
@@ -116,9 +116,6 @@ internal fun LazyListScope.updatesUiItems(
     onMultiBookmarkClicked: (List<UpdatesItem>, bookmark: Boolean) -> Unit,
     onMultiMarkAsReadClicked: (List<UpdatesItem>, read: Boolean) -> Unit,
 ) {
-    // Expansion state keyed by mangaId — lives as long as the LazyList composable lives
-    // Using a stable key on the item() call ensures it's also restored during scroll.
-    val expandedGroups = remember { mutableStateMapOf<Long, Boolean>() }
 
     uiModels.forEachIndexed { index, item ->
         when (item) {

@@ -15,6 +15,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.util.fastAll
 import androidx.compose.ui.util.fastAny
@@ -58,6 +60,8 @@ fun UpdateScreen(
     BackHandler(enabled = state.selectionMode) {
         onSelectAll(false)
     }
+
+    val expandedGroups = remember { mutableStateMapOf<Long, Boolean>() }
 
     Scaffold(
         topBar = { scrollBehavior ->
@@ -105,6 +109,7 @@ fun UpdateScreen(
                         updatesUiItems(
                             uiModels = state.getUiModel(),
                             selectionMode = state.selectionMode,
+                            expandedGroups = expandedGroups,
                             onUpdateSelected = onUpdateSelected,
                             onClickCover = onClickCover,
                             onClickUpdate = onOpenChapter,
