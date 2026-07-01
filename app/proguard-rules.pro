@@ -55,6 +55,28 @@
 -keep,allowoptimization class app.cash.quickjs.** { public protected *; }
 -keep class uy.kohesive.injekt.** { *; }
 
+# Injekt's FullTypeReference uses anonymous subclassing to capture generic type info at runtime.
+# R8 must NOT strip or rename the DI module classes, or any class registered via addSingletonFactory,
+# otherwise FullTypeReference throws "TypeReference constructed without actual type information".
+-keep class eu.kanade.tachiyomi.di.** { *; }
+-keep class eu.kanade.domain.** { *; }
+-keep class tachiyomi.domain.** { *; }
+-keep class hikari.domain.** { *; }
+
+# Preference classes are instantiated by Injekt DI — their constructors must be kept intact
+-keep class tachiyomi.domain.download.service.** { *; }
+-keep class tachiyomi.domain.library.service.** { *; }
+-keep class tachiyomi.domain.backup.service.** { *; }
+-keep class tachiyomi.domain.storage.service.** { *; }
+-keep class tachiyomi.domain.updates.service.** { *; }
+-keep class eu.kanade.domain.base.** { *; }
+-keep class eu.kanade.domain.source.service.** { *; }
+-keep class eu.kanade.domain.track.service.** { *; }
+-keep class eu.kanade.domain.ui.** { *; }
+-keep class eu.kanade.tachiyomi.core.security.** { *; }
+-keep class eu.kanade.tachiyomi.network.NetworkPreferences { *; }
+-keep class eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences { *; }
+
 # From extensions-lib
 -keep,allowoptimization class eu.kanade.tachiyomi.network.interceptor.RateLimitInterceptorKt { public protected *; }
 -keep,allowoptimization class eu.kanade.tachiyomi.network.interceptor.SpecificHostRateLimitInterceptorKt { public protected *; }
