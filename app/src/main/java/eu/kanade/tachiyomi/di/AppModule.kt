@@ -42,6 +42,8 @@ import tachiyomi.source.local.image.LocalCoverManager
 import tachiyomi.source.local.io.LocalSourceFileSystem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
+import logcat.LogPriority
+import tachiyomi.core.common.util.system.logcat
 import uy.kohesive.injekt.api.InjektModule
 import uy.kohesive.injekt.api.InjektRegistrar
 import uy.kohesive.injekt.api.addSingleton
@@ -148,13 +150,17 @@ class AppModule(val app: Application) : InjektModule {
 
         // Asynchronously init expensive components for a faster cold start
         ContextCompat.getMainExecutor(app).execute {
-            get<NetworkHelper>()
+            runCatching { get<NetworkHelper>() }
+                .onFailure { logcat(LogPriority.ERROR, it) { "Failed to initialize NetworkHelper" } }
 
-            get<SourceManager>()
+            runCatching { get<SourceManager>() }
+                .onFailure { logcat(LogPriority.ERROR, it) { "Failed to initialize SourceManager" } }
 
-            get<Database>()
+            runCatching { get<Database>() }
+                .onFailure { logcat(LogPriority.ERROR, it) { "Failed to initialize Database" } }
 
-            get<DownloadManager>()
+            runCatching { get<DownloadManager>() }
+                .onFailure { logcat(LogPriority.ERROR, it) { "Failed to initialize DownloadManager" } }
         }
     }
 }

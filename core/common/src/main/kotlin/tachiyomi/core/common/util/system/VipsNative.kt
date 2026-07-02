@@ -3,8 +3,21 @@ package tachiyomi.core.common.util.system
 object VipsNative {
     
     private var initialized = false
+    private val libraryLoaded: Boolean = runCatching {
+        System.loadLibrary("z")
+        System.loadLibrary("intl")
+        System.loadLibrary("glib-2.0")
+        System.loadLibrary("gmodule-2.0")
+        System.loadLibrary("gobject-2.0")
+        System.loadLibrary("gthread-2.0")
+        System.loadLibrary("gio-2.0")
+        System.loadLibrary("girepository-2.0")
+        System.loadLibrary("vips")
+        System.loadLibrary("hikari-image")
+    }.isSuccess
 
     fun safeInit(): Boolean {
+        if (!libraryLoaded) return false
         if (initialized) return true
         return try {
             initialized = init()

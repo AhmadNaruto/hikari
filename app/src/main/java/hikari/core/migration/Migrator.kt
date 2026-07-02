@@ -6,6 +6,8 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
+import logcat.LogPriority
+import tachiyomi.core.common.util.system.logcat
 
 object Migrator {
 
@@ -36,6 +38,13 @@ object Migrator {
     }
 
     fun awaitAndRelease(): Boolean = runBlocking {
-        await().also { release() }
+        try {
+            await()
+        } catch (e: Throwable) {
+            logcat(LogPriority.ERROR, e) { "Migration failed" }
+            false
+        } finally {
+            release()
+        }
     }
 }
