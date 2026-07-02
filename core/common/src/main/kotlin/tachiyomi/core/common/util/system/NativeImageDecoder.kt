@@ -31,6 +31,7 @@ object NativeImageDecoder {
 
     init {
         try {
+            System.loadLibrary("c++_shared")
             System.loadLibrary("z")
             System.loadLibrary("intl")
             System.loadLibrary("glib-2.0")

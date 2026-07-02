@@ -1,6 +1,9 @@
 package eu.kanade.tachiyomi.data.download
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import com.hippo.unifile.UniFile
 import eu.kanade.domain.chapter.model.toSChapter
 import eu.kanade.domain.manga.model.getComicInfo
@@ -65,6 +68,7 @@ import tachiyomi.domain.track.interactor.GetTracks
 import tachiyomi.i18n.MR
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Locale
 
@@ -632,9 +636,9 @@ class Downloader(
         val filenamePrefix = "%0${digitCount}d".format(Locale.ENGLISH, page.number)
 
         try {
-            if (!tachiyomi.core.common.util.system.VipsNative.safeInit()) {
-                logcat(LogPriority.ERROR) { "libvips failed to initialize, skipping image conversion" }
-                return originalFile
+            val useVips = tachiyomi.core.common.util.system.VipsNative.safeInit()
+            if (!useVips) {
+                logcat(LogPriority.ERROR) { "libvips failed to initialize, falling back to Android image conversion" }
             }
 
             val files = tmpDir.listFiles()?.filter {
@@ -657,15 +661,7 @@ class Downloader(
                     format.lowercase()
                 }
 
-                val compressedBytes = when (targetFormat) {
-                    "webp" -> tachiyomi.core.common.util.system.VipsNative.compressWebp(bytes, quality)
-                    "jpg", "jpeg" -> tachiyomi.core.common.util.system.VipsNative.compressJpeg(bytes, quality)
-                    "png" -> {
-                        val compression = ((100 - quality) * 9 / 100).coerceIn(0, 9)
-                        tachiyomi.core.common.util.system.VipsNative.compressPng(bytes, compression)
-                    }
-                    else -> null
-                }
+                val compressedBytes = convertImageBytes(bytes, targetFormat, quality, useVips)
 
                 if (compressedBytes != null) {
                     val baseName = file.name.orEmpty().substringBeforeLast('.')
@@ -695,6 +691,51 @@ class Downloader(
         }
 
         return originalFile
+    }
+
+    private fun convertImageBytes(bytes: ByteArray, targetFormat: String, quality: Int, useVips: Boolean): ByteArray? {
+        if (useVips) {
+            val convertedBytes = runCatching {
+                when (targetFormat) {
+                    "webp" -> tachiyomi.core.common.util.system.VipsNative.compressWebp(bytes, quality)
+                    "jpg", "jpeg" -> tachiyomi.core.common.util.system.VipsNative.compressJpeg(bytes, quality)
+                    "png" -> {
+                        val compression = ((100 - quality) * 9 / 100).coerceIn(0, 9)
+                        tachiyomi.core.common.util.system.VipsNative.compressPng(bytes, compression)
+                    }
+                    else -> null
+                }
+            }.getOrNull()
+            if (convertedBytes != null) return convertedBytes
+        }
+
+        return convertImageBytesWithBitmapFactory(bytes, targetFormat, quality)
+    }
+
+    private fun convertImageBytesWithBitmapFactory(bytes: ByteArray, targetFormat: String, quality: Int): ByteArray? {
+        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return null
+        return try {
+            val format = when (targetFormat) {
+                "webp" -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    Bitmap.CompressFormat.WEBP_LOSSY
+                } else {
+                    @Suppress("DEPRECATION")
+                    Bitmap.CompressFormat.WEBP
+                }
+                "jpg", "jpeg" -> Bitmap.CompressFormat.JPEG
+                "png" -> Bitmap.CompressFormat.PNG
+                else -> return null
+            }
+            ByteArrayOutputStream().use { output ->
+                if (bitmap.compress(format, quality, output)) {
+                    output.toByteArray()
+                } else {
+                    null
+                }
+            }
+        } finally {
+            bitmap.recycle()
+        }
     }
 
     /**

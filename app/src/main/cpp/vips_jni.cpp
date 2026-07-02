@@ -137,7 +137,7 @@ Java_tachiyomi_core_common_util_system_VipsNative_compressPng(JNIEnv *env, jclas
 }
 
 JNIEXPORT void JNICALL
-Java_tachiyomi_core_common_util_system_VipsNative_shutdown(JNIEnv *env, jclass clazz) {
+Java_tachiyomi_core_common_util_system_VipsNative_nativeShutdown(JNIEnv *env, jclass clazz) {
     vips_shutdown();
     LOGI("Vips shutdown");
 }

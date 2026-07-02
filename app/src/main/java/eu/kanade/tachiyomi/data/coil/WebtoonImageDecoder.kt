@@ -33,10 +33,6 @@ class WebtoonImageDecoder(private val source: BufferedSource, private val option
         if (srcWidth <= 0 || srcHeight <= 0) return null
 
         val isExtremelyTall = srcHeight > srcWidth * 3
-        val exceedsTextureLimit =
-            srcHeight > ImageUtil.hardwareBitmapThreshold || srcWidth > ImageUtil.hardwareBitmapThreshold
-
-        if (!isExtremelyTall && !exceedsTextureLimit) return null
 
         logcat { "Tuning Webtoon image: ${srcWidth}x$srcHeight" }
 
@@ -106,10 +102,22 @@ class WebtoonImageDecoder(private val source: BufferedSource, private val option
             val type = source.peek().inputStream().use {
                 ImageUtil.findImageType(it)
             }
-            return when (type) {
+            val isSupportedType = when (type) {
                 ImageUtil.ImageType.JPEG, ImageUtil.ImageType.PNG, ImageUtil.ImageType.WEBP -> true
                 else -> false
             }
+            if (!isSupportedType) return false
+
+            val options = ImageUtil.extractImageOptions(source.peek())
+            val srcWidth = options.outWidth
+            val srcHeight = options.outHeight
+            if (srcWidth <= 0 || srcHeight <= 0) return false
+
+            val isExtremelyTall = srcHeight > srcWidth * 3
+            val exceedsTextureLimit =
+                srcHeight > ImageUtil.hardwareBitmapThreshold || srcWidth > ImageUtil.hardwareBitmapThreshold
+
+            return isExtremelyTall || exceedsTextureLimit
         }
     }
 }

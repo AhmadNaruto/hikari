@@ -1,9 +1,13 @@
 package tachiyomi.core.common.util.system
 
+import logcat.LogPriority
+
 object VipsNative {
     
     private var initialized = false
-    private val libraryLoaded: Boolean = runCatching {
+    private var libraryLoadError: Throwable? = null
+    private val libraryLoaded: Boolean = try {
+        System.loadLibrary("c++_shared")
         System.loadLibrary("z")
         System.loadLibrary("intl")
         System.loadLibrary("glib-2.0")
@@ -14,10 +18,17 @@ object VipsNative {
         System.loadLibrary("girepository-2.0")
         System.loadLibrary("vips")
         System.loadLibrary("hikari-image")
-    }.isSuccess
+        true
+    } catch (e: Throwable) {
+        libraryLoadError = e
+        false
+    }
 
     fun safeInit(): Boolean {
-        if (!libraryLoaded) return false
+        if (!libraryLoaded) {
+            logcat(LogPriority.ERROR, libraryLoadError) { "Failed to load libvips native dependencies" }
+            return false
+        }
         if (initialized) return true
         return try {
             initialized = init()
@@ -39,5 +50,11 @@ object VipsNative {
     
     external fun compressPng(input: ByteArray, compression: Int): ByteArray?
     
-    external fun shutdown()
+    fun shutdown() {
+        if (!initialized) return
+        runCatching { nativeShutdown() }
+        initialized = false
+    }
+
+    private external fun nativeShutdown()
 }
