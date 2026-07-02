@@ -499,8 +499,8 @@ class Downloader(
 
             // When the page is ready, set page path, progress (just in case) and status
             resizeImageIfNeeded(file)
-            splitTallImageIfNeeded(page, tmpDir)
-            val finalFile = compressImagesIfNeeded(page, tmpDir, digitCount, file)
+            val processedFile = splitTallImageIfNeeded(page, tmpDir, digitCount, file)
+            val finalFile = convertImageIfNeeded(page, tmpDir, digitCount, processedFile)
 
             page.uri = finalFile.uri
             page.progress = 100
@@ -584,22 +584,26 @@ class Downloader(
         return ImageUtil.getExtensionFromMimeType(mime) { file.openInputStream() }
     }
 
-    private fun splitTallImageIfNeeded(page: Page, tmpDir: UniFile) {
-        if (!downloadPreferences.splitTallImages.get()) return
+    private fun splitTallImageIfNeeded(page: Page, tmpDir: UniFile, digitCount: Int, originalFile: UniFile): UniFile {
+        if (!downloadPreferences.splitTallImages.get()) return originalFile
 
         try {
-            val filenamePrefix = "%03d".format(Locale.ENGLISH, page.number)
+            val filenamePrefix = "%0${digitCount}d".format(Locale.ENGLISH, page.number)
             val imageFile = tmpDir.listFiles()?.firstOrNull { it.name.orEmpty().startsWith(filenamePrefix) } ?: error(
                 context.stringResource(MR.strings.download_notifier_split_page_not_found, page.number),
             )
 
             // If the original page was previously split, then skip
-            if (imageFile.name.orEmpty().startsWith("${filenamePrefix}__")) return
+            if (imageFile.name.orEmpty().startsWith("${filenamePrefix}__")) return imageFile
 
-            ImageUtil.splitTallImage(tmpDir, imageFile, filenamePrefix)
+            if (ImageUtil.splitTallImage(tmpDir, imageFile, filenamePrefix)) {
+                return tmpDir.findFile("${filenamePrefix}__001.jpg") ?: originalFile
+            }
         } catch (e: Exception) {
             logcat(LogPriority.ERROR, e) { "Failed to split downloaded image" }
         }
+
+        return originalFile
     }
 
     private fun resizeImageIfNeeded(file: UniFile) {
@@ -620,7 +624,7 @@ class Downloader(
         }
     }
 
-    private fun compressImagesIfNeeded(page: Page, tmpDir: UniFile, digitCount: Int, originalFile: UniFile): UniFile {
+    private fun convertImageIfNeeded(page: Page, tmpDir: UniFile, digitCount: Int, originalFile: UniFile): UniFile {
         if (!downloadPreferences.downloadImageConvertEnabled.get()) return originalFile
 
         val format = downloadPreferences.downloadImageConvertFormat.get()
@@ -640,7 +644,6 @@ class Downloader(
             var primaryFile = originalFile
 
             for (file in files) {
-                val currentExt = file.name.orEmpty().substringAfterLast('.')
                 val bytes = file.openInputStream().use { it.readBytes() }
                 
                 // Check if dimensions exceed WebP limit (16383)
@@ -666,7 +669,10 @@ class Downloader(
 
                 if (compressedBytes != null) {
                     val baseName = file.name.orEmpty().substringBeforeLast('.')
-                    val newFile = tmpDir.createFile("$baseName.$targetFormat")!!
+                    val finalName = "$baseName.$targetFormat"
+                    val tempName = "$baseName.converted.tmp"
+                    tmpDir.findFile(tempName)?.delete()
+                    val newFile = tmpDir.createFile(tempName)!!
                     newFile.openOutputStream().use { it.write(compressedBytes) }
                     
                     if (baseName == filenamePrefix || baseName == "${filenamePrefix}__001") {
@@ -674,11 +680,17 @@ class Downloader(
                     }
                     
                     file.delete()
+                    tmpDir.findFile(finalName)?.delete()
+                    newFile.renameTo(finalName)
+                    val finalFile = tmpDir.findFile(finalName) ?: newFile
+                    if (baseName == filenamePrefix || baseName == "${filenamePrefix}__001") {
+                        primaryFile = finalFile
+                    }
                 }
             }
 
             return primaryFile
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             logcat(LogPriority.ERROR, e) { "Failed to convert images using libvips" }
         }
 
@@ -709,8 +721,8 @@ class Downloader(
             when {
                 fileName in listOf(COMIC_INFO_FILE, NOMEDIA_FILE) -> false
                 fileName.endsWith(".tmp") -> false
-                // Only count the first split page and not the others
-                fileName.contains("__") && !fileName.endsWith("__001.jpg") -> false
+                // Only count the first split page and not the others, regardless of converted extension
+                fileName.contains("__") && !fileName.substringBeforeLast('.').endsWith("__001") -> false
                 else -> true
             }
         }
